@@ -2,11 +2,11 @@
 
 Atualizado em 2026-10-06.
 
-## Estrutura
+## Estrutura atual
 
-O `ideias-ia-lab` agora é somente hub de organização na branch `main`.
+O `ideias-ia-lab` é somente hub de organização na branch `main`.
 
-O snapshot completo dos sete projetos ainda sem repositório próprio está preservado em `archive/pre-split-2026-10-06`.
+Nenhum frontend, backend, configuração Supabase ou migration de produto deve ser desenvolvido diretamente na `main`.
 
 ## Repositórios independentes ativos
 
@@ -14,22 +14,64 @@ O snapshot completo dos sete projetos ainda sem repositório próprio está pres
 - AgendaLeve — `HelioConde/agendaleve`
 - DocPronto — `HelioConde/docpronto`
 
-## Pendentes de criação física
+## Sete MVPs antigos — preparação concluída
 
-- VagaCerta — `HelioConde/vagacerta`
-- FalaPro — `HelioConde/falapro`
-- MontaPC — `HelioConde/montapc`
-- GameRadar — `HelioConde/gameradar`
-- Perto — `HelioConde/perto`
-- PratoPronto — `HelioConde/pratopronto`
-- Revisa — `HelioConde/revisa`
+Os projetos abaixo já foram convertidos para uma estrutura standalone, cada um em sua própria branch:
 
-A integração GitHub disponível nesta sessão não possui a operação de criação de repositórios. Por isso a separação de código foi preparada e preservada, mas os sete destinos ainda não puderam ser materializados.
+- VagaCerta — `split/vagacerta`
+- FalaPro — `split/falapro`
+- MontaPC — `split/montapc`
+- GameRadar — `split/gameradar`
+- Perto — `split/perto`
+- PratoPronto — `split/pratopronto`
+- Revisa — `split/revisa`
+
+Cada branch possui:
+- arquivos do produto na raiz;
+- canonical para o futuro GitHub Pages;
+- configuração pública própria do Supabase;
+- README e documentação fullstack;
+- Static QA próprio;
+- migrations específicas que já existiam no Lab.
+
+## Repositórios físicos ainda pendentes
+
+- `HelioConde/vagacerta`
+- `HelioConde/falapro`
+- `HelioConde/montapc`
+- `HelioConde/gameradar`
+- `HelioConde/perto`
+- `HelioConde/pratopronto`
+- `HelioConde/revisa`
+
+A integração GitHub disponível nesta sessão não expõe criação de repositórios. Portanto, a etapa de empacotamento foi concluída, mas a criação física dos sete destinos ainda depende dessa operação ficar disponível ou ser feita externamente.
+
+## Backup
+
+Snapshot integral anterior à separação:
+
+`archive/pre-split-2026-10-06`
+
+Commit:
+
+`689ed2d0961c13f15ceaf60ccb06403f965a9714`
+
+Não remover esse backup até os sete repositórios físicos estarem criados, publicados e testados.
 
 ## Backend
 
-O banco compartilhado continua sendo `pizzaria-db`. O código SQL específico está preservado na branch de backup e deve ser distribuído para os respectivos repositórios durante a migração.
+O banco compartilhado continua sendo `pizzaria-db`.
 
-## Regra daqui para frente
+A separação de repositórios não exige dividir o banco. Cada produto acessa apenas suas tabelas e policies próprias.
 
-Não adicionar frontend, backend ou migrations de produto na `main` deste hub.
+## Próxima etapa operacional
+
+Para cada branch `split/<produto>`:
+
+1. criar `HelioConde/<produto>`;
+2. importar a branch como `main`;
+3. habilitar GitHub Pages;
+4. confirmar CI;
+5. validar login/Supabase;
+6. validar o fluxo principal;
+7. atualizar o hub para “repositório ativo”.
