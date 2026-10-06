@@ -18,6 +18,18 @@ Na prática:
 - anúncios não podem atrapalhar o fluxo principal nem incentivar cliques acidentais;
 - a ativação da rede de anúncios depende de o produto estar publicado, com conteúdo e políticas adequadas.
 
+## Política de idiomas do portfólio
+
+**Todos os 41 produtos devem oferecer PT-BR e inglês.**
+
+- **PT-BR é o idioma principal, padrão e fallback**;
+- inglês é o segundo idioma obrigatório;
+- todo MVP deve possuir seletor de idioma e persistência da preferência quando possível;
+- fluxos críticos, mensagens e estados da interface precisam de paridade nos dois idiomas;
+- responsividade deve ser validada também com textos em inglês;
+- produtos indexáveis devem considerar SEO localizado;
+- nenhuma prioridade ou modelo de negócio elimina essa regra.
+
 ## Critérios usados
 
 A ordem combina quatro fatores:
@@ -117,6 +129,7 @@ Antes de mover para o próximo item da fila, o projeto atual deve cumprir pelo m
 - README próprio;
 - deploy funcional;
 - layout preparado para anúncios sem prejudicar o fluxo principal;
+- PT-BR e inglês disponíveis, com PT-BR como idioma principal;
 - backlog explícito para V2.
 
 Não é necessário transformar cada projeto em produto completo antes de testar o próximo. A meta é **validar o menor produto realmente utilizável**.
