@@ -206,3 +206,18 @@ Erros tratados separadamente:
 - erro genérico de upstream.
 
 O botão **Atualizar dados** reaproveita o mesmo Riot ID/servidor atual e executa nova hidratação sem reload.
+
+
+## Estado local de retenção
+
+O Riot Legacy mantém no máximo 5 buscas recentes em `localStorage`, contendo apenas:
+
+- Game Name;
+- Tag Line;
+- servidor/plataforma.
+
+A lista é deduplicada por Riot ID + servidor, pode ser limpa pelo usuário e não é enviada para tabela própria no backend.
+
+## Servidores
+
+O seletor expõe os shards já aceitos pelo backend gamer: BR, NA, LAN, LAS, EUW, EUNE, KR, JP, OCE, TR, RU, PH, SG, TH, TW e VN. O frontend deriva o routing regional necessário para ACCOUNT/MATCH APIs.
