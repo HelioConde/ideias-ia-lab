@@ -28,6 +28,29 @@ let currentUser = null;
 let cloudItems = [];
 let loading = false;
 
+function migrateLegacyLocal() {
+  if (localStorage.getItem(STORAGE_KEY)) return;
+  try {
+    const legacy = JSON.parse(localStorage.getItem('ideias-plus-02-vaga-certa') || '[]');
+    if (!Array.isArray(legacy) || !legacy.length) return;
+    const migrated = legacy.map(entry => {
+      const parts = String(entry.meta || '').split(' · ');
+      return normalizeLocal({
+        id: makeUuid(),
+        company: entry.title || '',
+        role: parts[0] || '',
+        notes: parts.slice(1).join(' · '),
+        status: 'saved',
+        createdAt: entry.time || Date.now(),
+        updatedAt: entry.time || Date.now()
+      });
+    }).filter(item => item.company && item.role);
+    if (migrated.length) writeLocal(migrated);
+  } catch {
+    // O protótipo anterior continua intacto se a migração não puder ser lida.
+  }
+}
+
 function escapeHtml(value = '') {
   return String(value).replace(/[&<>"']/g, char => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
@@ -561,6 +584,7 @@ function initAuth() {
   });
 }
 
+migrateLegacyLocal();
 renderBoard();
 updateAccountUi();
 initAuth();
