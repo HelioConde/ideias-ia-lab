@@ -123,12 +123,15 @@
         </section>
       </section>
 
+      <aside class="ad-slot" data-ad-slot="afterBuilder" hidden aria-label="Publicidade"></aside>
+
       <section class="saved-section">
         <div class="section-heading">
           <div><p class="eyebrow">MINHAS CONFIGURAÇÕES</p><h2>Builds salvas</h2></div>
           <p>Entre na conta para sincronizar em outros dispositivos.</p>
         </div>
         <div id="saved-builds" class="saved-builds"></div>
+        <aside class="ad-slot compact" data-ad-slot="beforeSavedBuilds" hidden aria-label="Publicidade"></aside>
       </section>
     </main>
 
@@ -176,7 +179,9 @@
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
   <script src="supabase-config.js"></script>
+  <script src="ads-config.js"></script>
   <script src="app.js"></script>
+  <script src="ads.js" defer></script>
   <script src="live-update.js" defer></script>
 </body>
 </html>
