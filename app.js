@@ -1,967 +1,194 @@
 (() => {
-  const form = document.querySelector('#riot-form');
-  const landing = document.querySelector('#landing-view');
-  const profile = document.querySelector('#profile-view');
-  const gameNameInput = document.querySelector('#game-name');
-  const tagLineInput = document.querySelector('#tag-line');
-  const platformInput = document.querySelector('#region');
-  const feedback = document.querySelector('#form-feedback');
-  const toast = document.querySelector('#toast');
-  const profileRiotId = document.querySelector('#profile-riot-id');
-  const shareRiotId = document.querySelector('#share-riot-id');
-  const backButton = document.querySelector('#back-to-search');
-  const sourceBadge = document.querySelector('#demo-badge');
-  const sourceNote = document.querySelector('#data-source-note');
-  const refreshButton = document.querySelector('#refresh-data');
-  const backend = window.RIOT_LEGACY_BACKEND || {};
-  const recentSearches = document.querySelector('#recent-searches');
-  const recentSearchesList = document.querySelector('#recent-searches-list');
-  const clearRecentSearches = document.querySelector('#clear-recent-searches');
-  const RECENT_SEARCHES_KEY = 'riot-legacy-recent-searches';
-  const RECENT_SEARCHES_LIMIT = 5;
+  const backend = window.LOL_MATCH_STORY_BACKEND || {};
+  const dictionaries = window.MATCH_STORY_I18N || {};
+  const state = { locale: localStorage.getItem('lms-locale') || 'pt', matches: [], selected: 0, lookup: null, live: false };
 
-  const demo = {
-    mastery: 684210,
-    games: 1284,
-    years: 8,
-    tftBest: 'Top 2',
-    placements: [1, 2, 2, 3, 4, 2, 1, 5],
-    board: [
-      ['A', 'L', '', '', 'S', '', ''],
-      ['', '', 'M', '', '', 'N', ''],
-      ['', 'K', '', 'A', '', '', ''],
-      ['', '', '', '', '', '', '']
-    ],
-    traits: ['Arcana', 'Scholar', 'Bastion'],
-    champions: [
-      { name: 'Ahri', games: 42, avgKda: 3.8 },
-      { name: 'Lux', games: 18, avgKda: 3.2 },
-      { name: 'Syndra', games: 11, avgKda: 2.9 }
-    ]
-  };
-
-  let live = { lol: null, tft: null };
-  let currentLookup = null;
-  let lookupSequence = 0;
-
-  function locale() {
-    return window.RiotLegacyI18n?.locale?.() || 'pt-BR';
-  }
-
-  function t(key) {
-    return window.RiotLegacyI18n?.t?.(key) || key;
-  }
-
-  function escapeHtml(value) {
-    return String(value ?? '').replace(/[&<>"']/g, char => ({
-      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-    })[char]);
-  }
-
-  function showToast(messageKey) {
-    toast.textContent = t(messageKey);
-    toast.classList.add('show');
-    window.setTimeout(() => toast.classList.remove('show'), 1800);
-  }
-
-  function readRecentSearches() {
-    try {
-      const value = JSON.parse(localStorage.getItem(RECENT_SEARCHES_KEY) || '[]');
-      return Array.isArray(value)
-        ? value
-          .filter(item => item && typeof item.gameName === 'string' && typeof item.tagLine === 'string')
-          .map(item => ({
-            gameName: item.gameName.slice(0, 16),
-            tagLine: item.tagLine.replace(/^#/, '').slice(0, 5),
-            platform: String(item.platform || 'br1').toLowerCase()
-          }))
-          .slice(0, RECENT_SEARCHES_LIMIT)
-        : [];
-    } catch {
-      return [];
+  const demoMatches = [
+    {
+      id:'demo-1', win:true, championName:'Ahri', championId:103, queue:'Ranked Solo', duration:2052, kills:10, deaths:3, assists:11,
+      cs:228, vision:31, kp:61, gold:12840, score:84, date:'Hoje',
+      titlePt:'A partida em que você não desistiu.', titleEn:'The match where you refused to give up.',
+      subtitlePt:'Um começo difícil, um mid game paciente e uma luta que virou tudo.', subtitleEn:'A rough start, a patient mid game, and one fight that changed everything.',
+      moments:[
+        {m:'08:14',pt:'Primeiro sinal de controle',en:'First sign of control',dpt:'Você evitou uma troca ruim e manteve a rota jogável até o primeiro recall.',den:'You avoided a bad trade and kept the lane playable until the first recall.'},
+        {m:'19:42',pt:'A luta que segurou o jogo',en:'The fight that kept the game alive',dpt:'Participação em três eliminações perto do dragão impediu o snowball adversário.',den:'Three takedown contributions near dragon stopped the enemy snowball.'},
+        {m:'27:08',pt:'O ponto de virada',en:'The turning point',dpt:'Um pick antes do Barão abriu a primeira janela real para assumir o mapa.',den:'A pick before Baron opened the first real window to take over the map.'}
+      ]
+    },
+    {
+      id:'demo-2', win:false, championName:'Jinx', championId:222, queue:'Ranked Solo', duration:1845, kills:8, deaths:7, assists:6,
+      cs:252, vision:18, kp:54, gold:12120, score:66, date:'Ontem',
+      titlePt:'Você teve dano. Faltou espaço para usar.', titleEn:'You had the damage. You lacked the space to use it.',
+      subtitlePt:'Boa economia, lutas difíceis e um fim decidido antes do seu pico completo.', subtitleEn:'Good economy, difficult fights, and an ending decided before your full spike.',
+      moments:[
+        {m:'10:02',pt:'Farm acima do ritmo',en:'Ahead on farm',dpt:'Você construiu uma base sólida de ouro sem precisar arriscar a rota.',den:'You built a solid gold base without over-risking lane.'},
+        {m:'21:33',pt:'Pressão sem proteção',en:'Pressure without protection',dpt:'O time entrou separado e você precisou recuar antes de conseguir bater livre.',den:'The team entered split and you had to retreat before getting free damage.'},
+        {m:'29:51',pt:'Última defesa',en:'Last defense',dpt:'O dano apareceu, mas a luta começou tarde demais para recuperar o mapa.',den:'The damage showed up, but the fight started too late to recover the map.'}
+      ]
+    },
+    {
+      id:'demo-3', win:true, championName:'Lux', championId:99, queue:'Normal Draft', duration:1677, kills:6, deaths:2, assists:15,
+      cs:173, vision:42, kp:70, gold:10480, score:91, date:'2 dias',
+      titlePt:'Você venceu antes do placar mostrar.', titleEn:'You won before the scoreboard showed it.',
+      subtitlePt:'Visão, picks e controle de espaço construíram uma vitória limpa.', subtitleEn:'Vision, picks, and space control built a clean win.',
+      moments:[
+        {m:'07:48',pt:'Primeira rotação útil',en:'First useful rotation',dpt:'Você saiu da rota na hora certa e transformou pressão em assistência.',den:'You left lane at the right time and turned pressure into an assist.'},
+        {m:'16:20',pt:'Mapa escuro para o rival',en:'A dark map for the enemy',dpt:'A vantagem de visão começou a gerar picks sem necessidade de luta longa.',den:'Vision advantage started creating picks without needing long fights.'},
+        {m:'24:44',pt:'Controle total',en:'Full control',dpt:'A última sequência de visão e zoneamento encerrou qualquer chance de contestação.',den:'The final chain of vision and zoning ended any chance to contest.'}
+      ]
     }
+  ];
+
+  const $ = (s) => document.querySelector(s);
+  const locale = () => state.locale;
+  const t = (k) => dictionaries[locale()]?.[k] || dictionaries.pt?.[k] || k;
+  const platformRegion = (p) => ({br1:'americas',na1:'americas',la1:'americas',la2:'americas',oc1:'sea',euw1:'europe',eun1:'europe',tr1:'europe',ru:'europe',kr:'asia',jp1:'asia'})[p] || 'americas';
+  const esc = (v='') => String(v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+  function championSplash(id){ return id ? `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${championKey(id)}_0.jpg` : ''; }
+  const championKeys = {103:'Ahri',222:'Jinx',99:'Lux',157:'Yasuo',266:'Aatrox',84:'Akali',145:'Kaisa',64:'LeeSin',238:'Zed',81:'Ezreal',22:'Ashe',412:'Thresh'};
+  function championKey(id){ return championKeys[Number(id)] || 'Ahri'; }
+
+  function applyI18n(){
+    document.documentElement.lang = locale()==='pt' ? 'pt-BR' : 'en';
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      if (key === 'heroTitle') el.innerHTML = t(key); else el.textContent = t(key);
+    });
+    $('#langBtn').textContent = locale()==='pt' ? 'EN' : 'PT';
+    if (state.matches.length) renderSelected();
   }
 
-  function writeRecentSearches(items) {
-    localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(items.slice(0, RECENT_SEARCHES_LIMIT)));
+  function toast(msg){
+    const el=$('#toast'); el.textContent=msg; el.classList.add('show');
+    clearTimeout(toast.timer); toast.timer=setTimeout(()=>el.classList.remove('show'),2600);
   }
 
-  function addRecentSearch(gameName, tagLine, platform) {
-    const entry = {
-      gameName: String(gameName || '').trim().slice(0, 16),
-      tagLine: String(tagLine || '').trim().replace(/^#/, '').slice(0, 5),
-      platform: String(platform || 'br1').toLowerCase()
+  function setSource(type, message){
+    const el=$('#sourceState'); el.className='source-state ' + type; el.textContent=message;
+  }
+
+  function normalizeMatch(raw, i){
+    const p = raw?.participant || raw?.player || raw?.self || raw;
+    const info = raw?.info || raw;
+    const duration = Number(info?.gameDuration || raw?.duration || raw?.gameDuration || 0);
+    const win = Boolean(p?.win ?? raw?.win);
+    const kills = Number(p?.kills ?? raw?.kills ?? 0), deaths = Number(p?.deaths ?? raw?.deaths ?? 0), assists = Number(p?.assists ?? raw?.assists ?? 0);
+    const cs = Number(p?.totalMinionsKilled ?? p?.cs ?? raw?.cs ?? 0) + Number(p?.neutralMinionsKilled ?? 0);
+    const vision = Number(p?.visionScore ?? raw?.visionScore ?? 0);
+    const gold = Number(p?.goldEarned ?? raw?.goldEarned ?? 0);
+    const championName = p?.championName || raw?.championName || 'Champion';
+    const championId = Number(p?.championId || raw?.championId || 0);
+    const kp = Math.min(100, Math.max(0, Number(raw?.killParticipation || p?.killParticipation || 0) * (Number(raw?.killParticipation || p?.killParticipation || 0) <= 1 ? 100 : 1))) || Math.min(95, 38 + assists * 2 + kills);
+    const score = Math.max(35, Math.min(98, Math.round(55 + (win?12:0) + kills*1.4 + assists*.7 - deaths*2 + vision*.2)));
+    const strong = kills + assists >= 15;
+    const titlePt = win ? (strong ? 'Você encontrou o momento e tomou a partida.' : 'Você transformou consistência em vitória.') : (deaths <= 4 ? 'Você resistiu. A partida escapou em outro lugar.' : 'A partida acelerou antes de você estabilizar.');
+    const titleEn = win ? (strong ? 'You found the moment and took over the match.' : 'You turned consistency into a win.') : (deaths <= 4 ? 'You held on. The match slipped elsewhere.' : 'The game accelerated before you stabilized.');
+    return {
+      id: raw?.metadata?.matchId || raw?.matchId || raw?.id || 'live-'+i, win, championName, championId, queue: raw?.queueName || raw?.queue || 'League of Legends',
+      duration, kills, deaths, assists, cs, vision, kp: Math.round(kp), gold, score, date: locale()==='pt'?'Recente':'Recent', titlePt, titleEn,
+      subtitlePt: win ? 'O jogo teve um ponto de aceleração claro — e você estava presente nele.' : 'Os números contam só metade. O contexto mostra onde a partida começou a escapar.',
+      subtitleEn: win ? 'The game had a clear acceleration point — and you were present for it.' : 'The numbers tell only half the story. Context shows where the match began to slip.',
+      moments: buildMoments({win,kills,deaths,assists,vision,duration})
     };
-    const key = `${entry.gameName.toLowerCase()}#${entry.tagLine.toLowerCase()}@${entry.platform}`;
-    const next = [
-      entry,
-      ...readRecentSearches().filter(item =>
-        `${item.gameName.toLowerCase()}#${item.tagLine.toLowerCase()}@${item.platform}` !== key
-      )
-    ].slice(0, RECENT_SEARCHES_LIMIT);
-    writeRecentSearches(next);
-    renderRecentSearches();
   }
 
-  function renderRecentSearches() {
-    if (!recentSearches || !recentSearchesList) return;
-    const items = readRecentSearches();
-    recentSearches.hidden = items.length === 0;
-    recentSearchesList.innerHTML = items.map((item, index) =>
-      `<button class="recent-search" type="button" data-recent-index="${index}"><strong>${escapeHtml(normalizedId(item.gameName, item.tagLine))}</strong><span>${escapeHtml(item.platform.toUpperCase())}</span></button>`
-    ).join('');
-  }
-
-  function openRecentSearch(index) {
-    const item = readRecentSearches()[Number(index)];
-    if (!item) return;
-    gameNameInput.value = item.gameName;
-    tagLineInput.value = item.tagLine;
-    if ([...platformInput.options].some(option => option.value === item.platform)) {
-      platformInput.value = item.platform;
-    }
-    feedback.hidden = true;
-    addRecentSearch(item.gameName, item.tagLine, item.platform);
-    showProfile(item.gameName, item.tagLine, item.platform);
-  }
-
-  function normalizedId(gameName, tagLine) {
-    return `${String(gameName || '').trim()}#${String(tagLine || '').trim().replace(/^#/, '')}`;
-  }
-
-  function validInput(gameName, tagLine) {
-    const gn = String(gameName || '').trim();
-    const tl = String(tagLine || '').trim().replace(/^#/, '');
-    return gn.length >= 3 && gn.length <= 16 && /^[A-Za-z0-9\p{L} ._-]+$/u.test(gn) &&
-      tl.length >= 3 && tl.length <= 5 && /^[A-Za-z0-9]+$/.test(tl);
-  }
-
-  function formatNumber(value) {
-    const number = Number(value);
-    return Number.isFinite(number) ? number.toLocaleString(locale()) : '—';
-  }
-
-  function platformRegion(platform) {
-    if (['br1', 'na1', 'la1', 'la2'].includes(platform)) return 'americas';
-    if (['kr', 'jp1'].includes(platform)) return 'asia';
-    if (['ph2', 'sg2', 'th2', 'tw2', 'vn2', 'oc1'].includes(platform)) return 'sea';
-    return 'europe';
-  }
-
-  function platformFromLegacyRegion(region) {
-    return ({ americas: 'br1', europe: 'euw1', asia: 'kr', sea: 'oc1' })[region] || 'br1';
-  }
-
-  function cleanTftName(value) {
-    return String(value || '')
-      .replace(/^TFT\d+_/i, '')
-      .replace(/^Set\d+_/i, '')
-      .replace(/^TFT_Item_/i, '')
-      .replace(/_/g, ' ')
-      .trim() || 'TFT';
-  }
-
-  function currentSignatureChampion() {
-    return live.lol?.championSummaries?.[0]?.name || demo.champions[0].name;
-  }
-
-  function currentMasteryPoints() {
-    return live.lol?.mastery?.[0]?.points || demo.mastery;
-  }
-
-  function currentLolMatches() {
-    return Array.isArray(live.lol?.matches) ? live.lol.matches : [];
-  }
-
-  function currentTftMatches() {
-    return Array.isArray(live.tft?.matches) ? live.tft.matches : [];
-  }
-
-  function setSourceState(state, detail = '') {
-    sourceBadge.dataset.sourceState = state;
-    if (refreshButton) {
-      refreshButton.disabled = state === 'loading';
-      refreshButton.textContent = state === 'loading' ? t('refreshing_data') : t('refresh_data');
-    }
-    sourceBadge.classList.toggle('live', state === 'live');
-    sourceBadge.classList.toggle('partial', state === 'partial');
-    sourceBadge.classList.toggle('loading', state === 'loading');
-
-    const english = locale() === 'en';
-    if (state === 'loading') {
-      sourceBadge.textContent = english ? 'CHECKING RIOT…' : 'CONSULTANDO RIOT…';
-      sourceNote.textContent = english
-        ? 'Loading public League and TFT data from the shared gamer backend.'
-        : 'Carregando dados públicos de League e TFT pelo backend gamer compartilhado.';
-      return;
-    }
-
-    if (state === 'live') {
-      sourceBadge.textContent = english ? 'RIOT DATA · LOL + TFT' : 'DADOS RIOT · LOL + TFT';
-      sourceNote.textContent = english
-        ? detail || 'League and TFT use recent Riot-backed data. Historical snapshots will expand the legacy over time.'
-        : detail || 'League e TFT usam dados recentes vindos da Riot. Snapshots históricos ampliarão o legado ao longo do tempo.';
-      return;
-    }
-
-    if (state === 'partial') {
-      sourceBadge.textContent = english ? 'PARTIAL RIOT DATA' : 'DADOS RIOT PARCIAIS';
-      sourceNote.textContent = detail || (english
-        ? 'One game has live Riot data; the unavailable section keeps the clearly identified demo fallback.'
-        : 'Um dos jogos tem dados Riot reais; a seção indisponível mantém o fallback demo claramente identificado.');
-      return;
-    }
-
-    sourceBadge.textContent = english ? 'DEMONSTRATIVE FALLBACK' : 'FALLBACK DEMONSTRATIVO';
-    sourceNote.textContent = detail || (english
-      ? 'The Riot backend did not return usable data for this lookup. The visual prototype remains available with demonstrative data.'
-      : 'O backend Riot não retornou dados utilizáveis para esta busca. O protótipo visual continua disponível com dados demonstrativos.');
-  }
-
-  function liveFailureMessage(results) {
-    const failures = results
-      .filter(result => result?.status === 'rejected')
-      .map(result => ({
-        code: String(result.reason?.code || ''),
-        status: Number(result.reason?.status || 0),
-        name: String(result.reason?.name || '')
-      }));
-
-    const english = locale() === 'en';
-    if (failures.some(item => item.code === 'player' || item.code === 'player_not_found' || item.status === 404)) {
-      return english
-        ? 'Riot ID was not found by the live backend. Check Game Name, Tag Line and server, then refresh.'
-        : 'O Riot ID não foi encontrado pelo backend ao vivo. Confira Game Name, Tag Line e servidor e tente atualizar.';
-    }
-    if (failures.some(item => item.code === 'rate_limited' || item.status === 429)) {
-      return english
-        ? 'Riot rate limit is temporarily active. The demo fallback remains available; try Refresh data again in a moment.'
-        : 'O limite temporário da Riot foi atingido. O fallback demo continua disponível; tente Atualizar dados novamente em instantes.';
-    }
-    if (failures.some(item => item.code === 'riot_api_key_rejected' || item.status === 401 || item.status === 403)) {
-      return english
-        ? 'The server-side Riot integration is temporarily unavailable. No key is exposed in this browser; try again later.'
-        : 'A integração server-side com a Riot está temporariamente indisponível. Nenhuma chave fica exposta neste navegador; tente novamente mais tarde.';
-    }
-    if (failures.some(item => item.name === 'AbortError')) {
-      return english
-        ? 'The Riot lookup took too long. The demo fallback was kept; use Refresh data to try again.'
-        : 'A consulta à Riot demorou demais. O fallback demo foi mantido; use Atualizar dados para tentar novamente.';
-    }
-    return english
-      ? 'Live Riot data is unavailable right now. The demonstrative fallback remains active and can be refreshed later.'
-      : 'Os dados Riot ao vivo estão indisponíveis agora. O fallback demonstrativo permanece ativo e pode ser atualizado depois.';
-  }
-
-  async function postPublicFunction(url, body) {
-    if (!url) throw new Error('backend_not_configured');
-    const controller = new AbortController();
-    const timer = window.setTimeout(() => controller.abort(), 14000);
-    try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-        signal: controller.signal
-      });
-      let data = null;
-      try { data = await response.json(); } catch {}
-      if (!response.ok || data?.error) {
-        const error = new Error(data?.message || 'riot_lookup_failed');
-        error.code = data?.error || String(response.status);
-        error.status = response.status;
-        throw error;
-      }
-      return data;
-    } finally {
-      window.clearTimeout(timer);
-    }
-  }
-
-  function renderBoard() {
-    const board = document.querySelector('#tft-board');
-    const label = document.querySelector('#board-label');
-    const latest = currentTftMatches()[0];
-    const liveUnits = Array.isArray(latest?.units) ? latest.units.slice(0, 12) : [];
-
-    if (live.tft && liveUnits.length) {
-      label.textContent = locale() === 'en' ? 'Units from latest match' : 'Unidades da partida mais recente';
-      const cells = Array.from({ length: 28 }, (_, index) => {
-        const unit = liveUnits[index];
-        if (!unit) return '';
-        const name = cleanTftName(unit.characterId);
-        return { short: name.slice(0, 1).toUpperCase(), name, tier: Number(unit.tier || 0) };
-      });
-      board.innerHTML = cells.map((unit, index) => {
-        if (!unit) return `<span class="hex-cell" aria-label="Empty" data-cell="${index}"></span>`;
-        return `<span class="hex-cell filled" title="${escapeHtml(unit.name)}" aria-label="${escapeHtml(unit.name)}" data-cell="${index}">${escapeHtml(unit.short)}<small>${unit.tier ? '★'.repeat(Math.min(3, unit.tier)) : ''}</small></span>`;
-      }).join('');
-      return;
-    }
-
-    label.textContent = t('board_label');
-    board.innerHTML = demo.board.flatMap((row, rowIndex) =>
-      row.map((value, colIndex) => {
-        const filled = Boolean(value);
-        return `<span class="hex-cell${filled ? ' filled' : ''}" aria-label="${filled ? 'Unit ' + value : 'Empty'}" data-row="${rowIndex}" data-col="${colIndex}">${value}</span>`;
-      })
-    ).join('');
-  }
-
-  function renderTraits() {
-    const el = document.querySelector('#trait-list');
-    const latest = currentTftMatches()[0];
-    const traits = live.tft && Array.isArray(latest?.traits)
-      ? latest.traits
-        .filter(item => Number(item?.numUnits || 0) > 0 && (Number(item?.style || 0) > 0 || Number(item?.numUnits || 0) >= 2))
-        .sort((a, b) => Number(b.style || 0) - Number(a.style || 0) || Number(b.numUnits || 0) - Number(a.numUnits || 0))
-        .slice(0, 6)
-        .map(item => cleanTftName(item.name))
-      : demo.traits;
-    el.innerHTML = traits.map(name => `<span class="trait">${escapeHtml(name)}</span>`).join('');
-  }
-
-  function renderPlacementBars() {
-    const el = document.querySelector('#placement-bars');
-    const placements = live.tft
-      ? currentTftMatches().map(match => Number(match.placement)).filter(value => value >= 1 && value <= 8)
-      : demo.placements;
-    const counts = Array.from({ length: 8 }, (_, index) =>
-      placements.filter(value => value === index + 1).length
-    );
-    const max = Math.max(...counts, 1);
-    el.innerHTML = counts.map((count, index) =>
-      `<div class="placement-bar"><span style="height:${Math.max(8, Math.round((count / max) * 100))}%"></span><small>${index + 1}</small></div>`
-    ).join('');
-  }
-
-  function renderChampions() {
-    const el = document.querySelector('#champion-list');
-    const champions = live.lol && Array.isArray(live.lol.championSummaries) && live.lol.championSummaries.length
-      ? live.lol.championSummaries.slice(0, 3)
-      : demo.champions;
-
-    el.innerHTML = champions.map(champion => {
-      const name = String(champion.name || 'Champion');
-      const games = Number(champion.games || 0);
-      const detail = live.lol
-        ? `${games} ${locale() === 'en' ? (games === 1 ? 'match' : 'matches') : (games === 1 ? 'partida' : 'partidas')}${champion.avgKda != null ? ' · KDA ' + Number(champion.avgKda).toLocaleString(locale(), { maximumFractionDigits: 2 }) : ''}`
-        : `${formatNumber(champion.games === 42 ? demo.mastery : champion.games * 18000)} mastery`;
-      return `<div class="champion"><div class="portrait">${escapeHtml(name.slice(0, 1).toUpperCase())}</div><h3>${escapeHtml(name)}</h3><span>${escapeHtml(detail)}</span></div>`;
-    }).join('');
-  }
-
-  function renderRoles() {
-    const stack = document.querySelector('#role-stack');
-    if (!live.lol) {
-      stack.innerHTML = `
-        <div class="role-row"><span>${t('role_mid')}</span><div class="role-track"><div class="role-fill" style="width:68%"></div></div><b>68%</b></div>
-        <div class="role-row"><span>${t('role_support')}</span><div class="role-track"><div class="role-fill" style="width:22%"></div></div><b>22%</b></div>
-        <div class="role-row"><span>${t('role_other')}</span><div class="role-track"><div class="role-fill" style="width:10%"></div></div><b>10%</b></div>`;
-      return;
-    }
-
-    const labels = { TOP: 'Top', JUNGLE: 'Jungle', MID: 'Mid', ADC: 'ADC', SUPPORT: locale() === 'en' ? 'Support' : 'Suporte' };
-    const counts = {};
-    currentLolMatches().forEach(match => {
-      const position = String(match.position || '');
-      if (position) counts[position] = (counts[position] || 0) + 1;
-    });
-    const entries = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 5);
-    const total = entries.reduce((sum, [, count]) => sum + count, 0) || 1;
-    stack.innerHTML = entries.length
-      ? entries.map(([position, count]) => {
-          const percent = Math.round(count / total * 100);
-          return `<div class="role-row"><span>${escapeHtml(labels[position] || position)}</span><div class="role-track"><div class="role-fill" style="width:${percent}%"></div></div><b>${percent}%</b></div>`;
-        }).join('')
-      : `<p class="empty-inline">${locale() === 'en' ? 'No Summoner’s Rift role sample available.' : 'Sem amostra de função em Summoner’s Rift.'}</p>`;
-  }
-
-  function renderLiveProfileFacts() {
-    const el = document.querySelector('#live-profile-facts');
-    if (!el) return;
-    if (!live.lol && !live.tft) {
-      el.hidden = true;
-      el.innerHTML = '';
-      return;
-    }
-
-    const english = locale() === 'en';
-    const platform = String(currentLookup?.platform || live.lol?.player?.platform || live.tft?.player?.platform || '').toUpperCase();
-    const level = Number(live.lol?.player?.level || live.tft?.player?.level || 0);
-    const lolRank = Array.isArray(live.lol?.ranked)
-      ? (live.lol.ranked.find(item => item?.queue === 'SOLO/DUO') || live.lol.ranked[0])
-      : null;
-    const tftRank = Array.isArray(live.tft?.ranked)
-      ? (live.tft.ranked.find(item => String(item?.queueType || '').toUpperCase().includes('RANKED')) || live.tft.ranked[0])
-      : null;
-
-    const facts = [];
-    if (platform) facts.push({ label: english ? 'Server' : 'Servidor', value: platform });
-    if (level > 0) facts.push({ label: english ? 'Account level' : 'Nível da conta', value: formatNumber(level) });
-    if (lolRank?.tier) {
-      facts.push({
-        label: 'LoL',
-        value: `${lolRank.tier} ${lolRank.rank || ''}${Number.isFinite(Number(lolRank.lp)) ? ' · ' + Number(lolRank.lp) + ' LP' : ''}`.trim()
-      });
-    }
-    if (tftRank?.tier) {
-      facts.push({
-        label: 'TFT',
-        value: `${tftRank.tier} ${tftRank.rank || ''}${Number.isFinite(Number(tftRank.leaguePoints)) ? ' · ' + Number(tftRank.leaguePoints) + ' LP' : ''}`.trim()
-      });
-    }
-
-    el.hidden = facts.length === 0;
-    el.innerHTML = facts.map(fact =>
-      `<span class="live-fact"><small>${escapeHtml(fact.label)}</small><strong>${escapeHtml(fact.value)}</strong></span>`
-    ).join('');
-  }
-
-  function renderSignature() {
-    const champion = currentSignatureChampion();
-    const games = Number(live.lol?.championSummaries?.[0]?.games || 0);
-    const position = live.lol?.summary?.primaryPosition || live.lol?.summary?.mainContext || 'MID';
-    const rank = live.lol?.ranked?.[0];
-    const rankLabel = rank?.tier ? `${rank.tier} ${rank.rank || ''}`.trim() : position;
-    const title = document.querySelector('#signature-title');
-    const text = document.querySelector('#signature-text');
-    const chip = document.querySelector('#signature-chip');
-
-    if (live.lol) {
-      title.textContent = locale() === 'en'
-        ? `${champion} is your recent signature`
-        : `${champion} é sua assinatura recente`;
-      text.textContent = locale() === 'en'
-        ? `Across the ${live.lol.summary?.matches || currentLolMatches().length} recent matches analyzed by Riot Legacy, ${champion} is the champion that appears most often. This is a recent-data signal, not a claim about your entire account history.`
-        : `Nas ${live.lol.summary?.matches || currentLolMatches().length} partidas recentes analisadas pelo Riot Legacy, ${champion} é o campeão que mais aparece. Este é um sinal da amostra recente, não uma afirmação sobre todo o histórico da conta.`;
-      chip.textContent = `${rankLabel.toUpperCase()} · ${games} ${locale() === 'en' ? 'GAMES' : 'JOGOS'} · ${champion.toUpperCase()}`;
-    } else {
-      title.textContent = t('signature_title');
-      text.textContent = t('signature_text');
-      chip.textContent = 'MID · 684K · AHRI';
-    }
-
-    const bg = document.querySelector('.profile-hero-bg');
-    const safeChampion = /^[A-Za-z0-9]+$/.test(champion) ? champion : 'Ahri';
-    bg.style.backgroundImage = `linear-gradient(90deg,rgba(5,10,16,.98) 5%,rgba(5,10,16,.78) 45%,rgba(5,10,16,.22)),linear-gradient(0deg,#050a10 0%,transparent 45%),url("https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${safeChampion}_0.jpg")`;
-  }
-
-  function renderTimeline() {
-    const title = document.querySelector('#timeline-title');
-    const timeline = document.querySelector('#legacy-timeline');
-    const subtitle = document.querySelector('#profile-subtitle');
-    const sharePeriod = document.querySelector('#share-period');
-    const hasLive = Boolean(live.lol || live.tft);
-
-    if (!hasLive) {
-      title.textContent = t('timeline_title');
-      subtitle.textContent = t('legacy_since');
-      sharePeriod.textContent = '2018 → 2026 · LoL + TFT';
-      timeline.innerHTML = `
-        <div class="timeline-item"><b>2018</b><h3>${t('timeline_2018')}</h3><p>${t('timeline_2018_text')}</p></div>
-        <div class="timeline-item"><b>2021</b><h3>${t('timeline_2021')}</h3><p>${t('timeline_2021_text')}</p></div>
-        <div class="timeline-item"><b>2024</b><h3>${t('timeline_2024')}</h3><p>${t('timeline_2024_text')}</p></div>
-        <div class="timeline-item"><b>2026</b><h3>${t('timeline_2026')}</h3><p>${t('timeline_2026_text')}</p></div>`;
-      return;
-    }
-
-    const english = locale() === 'en';
-    const platform = String(currentLookup?.platform || live.lol?.player?.platform || live.tft?.player?.platform || '').toUpperCase();
-    title.textContent = english ? 'Your recent Riot sample in chapters' : 'Sua amostra Riot recente em capítulos';
-    subtitle.textContent = english
-      ? `Recent Riot snapshot${platform ? ' · ' + platform : ''}`
-      : `Retrato Riot recente${platform ? ' · ' + platform : ''}`;
-    sharePeriod.textContent = english ? 'Recent Riot sample · LoL + TFT' : 'Amostra Riot recente · LoL + TFT';
-
-    const chapters = [];
-    if (live.lol) {
-      const matches = Number(live.lol.summary?.matches || currentLolMatches().length);
-      const context = live.lol.summary?.mainContext || 'LoL';
-      const winRate = live.lol.summary?.winRate;
-      chapters.push({
-        label: 'LOL',
-        title: english ? 'Your recent moment' : 'Seu momento recente',
-        text: english
-          ? `${matches} analyzed matches · ${context}${winRate != null ? ' · ' + winRate + '% win rate' : ''}.`
-          : `${matches} partidas analisadas · ${context}${winRate != null ? ' · ' + winRate + '% de win rate' : ''}.`
-      });
-
-      const top = live.lol.championSummaries?.[0];
-      if (top?.name) {
-        chapters.push({
-          label: String(top.name).toUpperCase(),
-          title: english ? 'Recent signature' : 'Assinatura recente',
-          text: english
-            ? `${top.name} appears in ${top.games || 0} matches from the analyzed sample.`
-            : `${top.name} aparece em ${top.games || 0} partidas da amostra analisada.`
-        });
-      }
-    }
-
-    if (live.tft) {
-      const summary = live.tft.summary || {};
-      const latest = currentTftMatches()[0] || {};
-      const setLabel = latest.setName || (latest.setNumber ? 'Set ' + latest.setNumber : 'TFT');
-      chapters.push({
-        label: 'TFT',
-        title: english ? 'Your recent set' : 'Seu set recente',
-        text: english
-          ? `${setLabel} · average placement ${summary.averagePlacement ?? '—'} · Top 4 ${summary.top4Rate ?? '—'}%.`
-          : `${setLabel} · colocação média ${summary.averagePlacement ?? '—'} · Top 4 ${summary.top4Rate ?? '—'}%.`
-      });
-    }
-
-    const timestamps = [
-      ...currentLolMatches().map(match => Number(match.playedAt || 0)),
-      ...currentTftMatches().map(match => Number(match.playedAt || 0))
-    ].filter(value => Number.isFinite(value) && value > 0);
-    if (timestamps.length) {
-      const latestAt = new Date(Math.max(...timestamps));
-      chapters.push({
-        label: latestAt.toLocaleDateString(locale(), { day: '2-digit', month: 'short' }).replace('.', '').toUpperCase(),
-        title: english ? 'Latest activity in this snapshot' : 'Atividade mais recente desta amostra',
-        text: english
-          ? 'This chapter comes from the most recent match returned by the Riot-backed sample.'
-          : 'Este capítulo vem da partida mais recente retornada pela amostra baseada nos dados Riot.'
-      });
-    }
-
-    timeline.innerHTML = chapters.slice(0, 4).map(chapter =>
-      `<div class="timeline-item"><b>${escapeHtml(chapter.label)}</b><h3>${escapeHtml(chapter.title)}</h3><p>${escapeHtml(chapter.text)}</p></div>`
-    ).join('');
-  }
-
-  function renderDynamicCopy() {
-    const mastery = currentMasteryPoints();
-    const lolMatches = live.lol?.summary?.matches;
-    const winRate = live.lol?.summary?.winRate;
-    const tftTop4 = live.tft?.summary?.top4Rate;
-    const averagePlacement = live.tft?.summary?.averagePlacement;
-
-    document.querySelector('#metric-mastery').textContent = formatNumber(mastery);
-    document.querySelector('#metric-games').textContent = formatNumber(lolMatches ?? demo.games);
-
-    const gamesLabel = document.querySelector('[data-i18n="games"]');
-    if (gamesLabel) gamesLabel.textContent = live.lol
-      ? (locale() === 'en' ? 'LoL matches analyzed' : 'Partidas LoL analisadas')
-      : t('games');
-
-    const thirdLabel = document.querySelector('#metric-third-label');
-    thirdLabel.textContent = live.lol ? (locale() === 'en' ? 'Recent win rate' : 'Win rate recente') : t('years');
-    document.querySelector('#metric-years').textContent = live.lol && winRate != null ? `${winRate}%` : String(demo.years);
-
-    const tftLabel = document.querySelector('#metric-tft-label');
-    tftLabel.textContent = live.tft ? (locale() === 'en' ? 'TFT Top 4 rate' : 'Top 4 no TFT') : t('top_finish');
-    document.querySelector('#metric-tft').textContent = live.tft && tftTop4 != null ? `${tftTop4}%` : demo.tftBest;
-    document.querySelector('#tft-average').textContent = live.tft && averagePlacement != null
-      ? Number(averagePlacement).toLocaleString(locale(), { maximumFractionDigits: 2 })
-      : (demo.placements.reduce((a, b) => a + b, 0) / demo.placements.length).toLocaleString(locale(), { maximumFractionDigits: 1 });
-
-    const champion = currentSignatureChampion();
-    document.querySelector('#share-signature').textContent = live.lol
-      ? (locale() === 'en' ? `${champion} · recent signature` : `${champion} · assinatura recente`)
-      : t('share_card_signature');
-    document.querySelector('#share-mastery').textContent = `${formatNumber(mastery)} mastery`;
-    document.querySelector('#share-tft').textContent = live.tft
-      ? `TFT · Top 4 ${tftTop4 ?? '—'}%`
-      : t('share_card_tft');
-
-    renderSignature();
-    renderChampions();
-    renderRoles();
-    renderBoard();
-    renderTraits();
-    renderPlacementBars();
-    renderTimeline();
-    renderLiveProfileFacts();
-  }
-
-  function setProfileIdentity(riotId) {
-    profileRiotId.textContent = riotId;
-    shareRiotId.textContent = riotId;
-    document.querySelector('#avatar-letter').textContent = riotId.charAt(0).toUpperCase();
-  }
-
-  function showProfile(gameName, tagLine, platform = 'br1', updateUrl = true) {
-    const riotId = normalizedId(gameName, tagLine);
-    currentLookup = { gameName: String(gameName).trim(), tagLine: String(tagLine).replace(/^#/, '').trim(), platform };
-    live = { lol: null, tft: null };
-    setProfileIdentity(riotId);
-    landing.hidden = true;
-    profile.hidden = false;
-    document.body.classList.add('profile-mode');
-    setSourceState('loading');
-    renderDynamicCopy();
-    activateTab('legacy');
-
-    if (updateUrl) {
-      const params = new URLSearchParams();
-      params.set('riotId', riotId);
-      params.set('server', platform);
-      history.replaceState({}, '', `?${params.toString()}`);
-    }
-    window.scrollTo({ top: 0, behavior: 'instant' });
-    loadLiveProfile(currentLookup);
-  }
-
-  async function loadLiveProfile(lookup) {
-    const sequence = ++lookupSequence;
-    const region = platformRegion(lookup.platform);
-    const common = {
-      gameName: lookup.gameName,
-      tagLine: lookup.tagLine,
-      platform: lookup.platform
-    };
-
-    const [lolResult, tftResult] = await Promise.allSettled([
-      postPublicFunction(backend.lolProfile, { ...common, region, limit: 20, matchLimit: 20 }),
-      postPublicFunction(backend.tftProfile, common)
-    ]);
-
-    if (sequence !== lookupSequence || !currentLookup ||
-        currentLookup.gameName !== lookup.gameName ||
-        currentLookup.tagLine !== lookup.tagLine ||
-        currentLookup.platform !== lookup.platform) return;
-
-    const lol = lolResult.status === 'fulfilled' ? lolResult.value : null;
-    const tft = tftResult.status === 'fulfilled' ? tftResult.value : null;
-    live = { lol, tft };
-
-    const canonical = lol?.player || tft?.player;
-    if (canonical?.gameName && canonical?.tagLine) {
-      setProfileIdentity(normalizedId(canonical.gameName, canonical.tagLine));
-    }
-
-    renderDynamicCopy();
-
-    const lolCount = Number(lol?.summary?.matches || 0);
-    const tftCount = Number(tft?.summary?.matches || 0);
-    if (lol && tft) {
-      const detail = locale() === 'en'
-        ? `Riot data loaded: ${lolCount} recent LoL matches and ${tftCount} TFT matches. The legacy chapters below use this recent sample.`
-        : `Dados Riot carregados: ${lolCount} partidas recentes de LoL e ${tftCount} partidas de TFT. Os capítulos abaixo usam esta amostra recente.`;
-      setSourceState('live', detail);
-      return;
-    }
-
-    if (lol || tft) {
-      const available = lol ? 'LoL' : 'TFT';
-      const missing = lol ? 'TFT' : 'LoL';
-      const missingResult = lol ? tftResult : lolResult;
-      const reason = missingResult.status === 'rejected'
-        ? liveFailureMessage([missingResult])
-        : '';
-      const detail = locale() === 'en'
-        ? `Live ${available} data loaded. ${missing} is using the demonstrative fallback.${reason ? ' ' + reason : ''}`
-        : `Dados reais de ${available} carregados. ${missing} usa o fallback demonstrativo.${reason ? ' ' + reason : ''}`;
-      setSourceState('partial', detail);
-      return;
-    }
-
-    setSourceState('demo', liveFailureMessage([lolResult, tftResult]));
-  }
-
-  function showLanding() {
-    lookupSequence++;
-    currentLookup = null;
-    live = { lol: null, tft: null };
-    profile.hidden = true;
-    landing.hidden = false;
-    document.body.classList.remove('profile-mode');
-    history.replaceState({}, '', location.pathname);
-    window.scrollTo({ top: 0, behavior: 'instant' });
-    gameNameInput.focus();
-  }
-
-  function activateTab(tab) {
-    document.querySelectorAll('[data-tab]').forEach(button => {
-      const active = button.dataset.tab === tab;
-      button.classList.toggle('active', active);
-      button.setAttribute('aria-selected', String(active));
-    });
-    document.querySelectorAll('[data-panel]').forEach(panel => {
-      panel.hidden = panel.dataset.panel !== tab;
-    });
-  }
-
-  function currentShareUrl() {
-    return location.href;
-  }
-
-  function shareText() {
-    const riotId = profileRiotId.textContent;
-    const champion = currentSignatureChampion();
-    const mastery = currentMasteryPoints();
-    if (live.lol || live.tft) {
-      return locale() === 'en'
-        ? `${riotId} · Riot Legacy — ${champion} as recent LoL signature, ${formatNumber(mastery)} mastery and a Riot-backed LoL + TFT snapshot.`
-        : `${riotId} · Riot Legacy — ${champion} como assinatura recente no LoL, ${formatNumber(mastery)} de maestria e um retrato LoL + TFT com dados Riot.`;
-    }
-    return locale() === 'en'
-      ? `${riotId} · Riot Legacy — Ahri signature champion, ${formatNumber(demo.mastery)} mastery and a demonstrative League + TFT story.`
-      : `${riotId} · Riot Legacy — Ahri como campeã assinatura, ${formatNumber(demo.mastery)} de maestria e uma história demonstrativa entre League + TFT.`;
-  }
-
-  function drawShareCard() {
-    const canvas = document.createElement('canvas');
-    canvas.width = 1200;
-    canvas.height = 630;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) throw new Error('canvas_unavailable');
-
-    const riotId = profileRiotId.textContent || 'Riot ID';
-    const champion = currentSignatureChampion();
-    const mastery = currentMasteryPoints();
-    const lolMatches = Number(live.lol?.summary?.matches || 0);
-    const winRate = live.lol?.summary?.winRate;
-    const tftTop4 = live.tft?.summary?.top4Rate;
-    const tftAverage = live.tft?.summary?.averagePlacement;
-    const sourceState = sourceBadge.dataset.sourceState || 'demo';
-    const english = locale() === 'en';
-
-    const bg = ctx.createLinearGradient(0, 0, 1200, 630);
-    bg.addColorStop(0, '#08111b');
-    bg.addColorStop(.55, '#101b2a');
-    bg.addColorStop(1, '#241f45');
-    ctx.fillStyle = bg;
-    ctx.fillRect(0, 0, 1200, 630);
-
-    const glow = ctx.createRadialGradient(1000, 80, 20, 1000, 80, 360);
-    glow.addColorStop(0, 'rgba(216,179,95,.28)');
-    glow.addColorStop(1, 'rgba(216,179,95,0)');
-    ctx.fillStyle = glow;
-    ctx.fillRect(640, 0, 560, 450);
-
-    ctx.fillStyle = 'rgba(255,255,255,.055)';
-    ctx.beginPath();
-    ctx.arc(1030, 500, 210, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.fillStyle = '#d8b35f';
-    ctx.font = '800 24px system-ui, sans-serif';
-    ctx.fillText('RIOT LEGACY', 72, 74);
-
-    const badge = sourceState === 'live'
-      ? (english ? 'RIOT DATA · LOL + TFT' : 'DADOS RIOT · LOL + TFT')
-      : sourceState === 'partial'
-        ? (english ? 'PARTIAL RIOT DATA' : 'DADOS RIOT PARCIAIS')
-        : (english ? 'DEMONSTRATIVE FALLBACK' : 'FALLBACK DEMONSTRATIVO');
-    ctx.font = '700 17px system-ui, sans-serif';
-    ctx.fillStyle = sourceState === 'live' ? '#9ce9df' : '#f2d996';
-    ctx.fillText(badge, 72, 112);
-
-    ctx.fillStyle = '#f6f8fa';
-    ctx.font = '800 58px system-ui, sans-serif';
-    ctx.fillText(riotId.slice(0, 28), 72, 205);
-
-    ctx.fillStyle = '#91a0b2';
-    ctx.font = '500 23px system-ui, sans-serif';
-    ctx.fillText(
-      live.lol
-        ? (english ? champion + ' · recent LoL signature' : champion + ' · assinatura recente no LoL')
-        : (english ? 'Visual legacy preview' : 'Prévia visual do legado'),
-      72,
-      247
-    );
-
-    const cards = [
-      {
-        label: english ? 'MASTERY' : 'MAESTRIA',
-        value: formatNumber(mastery)
-      },
-      {
-        label: english ? 'LOL SAMPLE' : 'AMOSTRA LOL',
-        value: live.lol ? String(lolMatches) : '—'
-      },
-      {
-        label: english ? 'WIN RATE' : 'WIN RATE',
-        value: live.lol && winRate != null ? winRate + '%' : '—'
-      },
-      {
-        label: english ? 'TFT TOP 4' : 'TOP 4 TFT',
-        value: live.tft && tftTop4 != null ? tftTop4 + '%' : '—'
-      }
+  function buildMoments(m){
+    const total=Math.max(1200,m.duration||1800), m1=Math.round(total*.25), m2=Math.round(total*.57), m3=Math.round(total*.82);
+    const fmt=s=>String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+    return [
+      {m:fmt(m1),pt:'Primeiro retrato da rota',en:'First lane snapshot',dpt:m.deaths<=2?'Você manteve a partida estável e preservou recursos.':'A fase inicial cobrou caro e passou a exigir recuperação.',den:m.deaths<=2?'You kept the match stable and preserved resources.':'The early game was costly and forced a recovery plan.'},
+      {m:fmt(m2),pt:'A partida mudou de escala',en:'The match changed scale',dpt:m.kills+m.assists>=12?'Sua participação começou a pesar nas lutas coletivas.':'As lutas cresceram, seu impacto ainda dependia de encontrar uma janela melhor.',den:m.kills+m.assists>=12?'Your participation started to matter in team fights.':'As fights grew, your impact still depended on finding a better window.'},
+      {m:fmt(m3),pt:m.win?'A janela decisiva':'O momento decisivo',en:m.win?'The decisive window':'The decisive moment',dpt:m.win?'O time converteu pressão em objetivo e o mapa finalmente abriu.':'A última sequência definiu o mapa antes de uma nova recuperação.',den:m.win?'The team converted pressure into an objective and the map finally opened.':'The final sequence decided the map before another recovery was possible.'}
     ];
-
-    cards.forEach((card, index) => {
-      const x = 72 + index * 258;
-      const y = 324;
-      ctx.fillStyle = 'rgba(255,255,255,.055)';
-      ctx.fillRect(x, y, 232, 126);
-      ctx.fillStyle = '#91a0b2';
-      ctx.font = '700 15px system-ui, sans-serif';
-      ctx.fillText(card.label, x + 18, y + 31);
-      ctx.fillStyle = '#f5efe1';
-      ctx.font = '800 31px system-ui, sans-serif';
-      ctx.fillText(card.value, x + 18, y + 79);
-    });
-
-    ctx.fillStyle = '#c9d2dc';
-    ctx.font = '600 20px system-ui, sans-serif';
-    const tftLine = live.tft && tftAverage != null
-      ? (english
-          ? 'TFT average placement: ' + Number(tftAverage).toLocaleString(locale(), { maximumFractionDigits: 2 })
-          : 'Colocação média TFT: ' + Number(tftAverage).toLocaleString(locale(), { maximumFractionDigits: 2 }))
-      : (english ? 'League + TFT visual legacy' : 'Legado visual de League + TFT');
-    ctx.fillText(tftLine, 72, 502);
-
-    ctx.fillStyle = '#718095';
-    ctx.font = '500 16px system-ui, sans-serif';
-    ctx.fillText(
-      english
-        ? 'Independent project · Riot Games and related properties belong to Riot Games, Inc.'
-        : 'Projeto independente · Riot Games e propriedades relacionadas pertencem à Riot Games, Inc.',
-      72,
-      570
-    );
-
-    ctx.textAlign = 'right';
-    ctx.fillStyle = 'rgba(242,217,150,.22)';
-    ctx.font = '900 118px system-ui, sans-serif';
-    ctx.fillText('RL', 1120, 585);
-    ctx.textAlign = 'left';
-
-    return canvas;
   }
 
-  function downloadShareCard() {
-    let canvas;
-    try {
-      canvas = drawShareCard();
-    } catch {
-      showToast('share_ready');
-      return;
-    }
-
-    canvas.toBlob(blob => {
-      if (!blob) {
-        showToast('share_ready');
-        return;
-      }
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      const slug = String(profileRiotId.textContent || 'riot-legacy')
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/^-|-$/g, '')
-        .slice(0, 48) || 'riot-legacy';
-      link.href = url;
-      link.download = `riot-legacy-${slug}.png`;
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      window.setTimeout(() => URL.revokeObjectURL(url), 0);
-      showToast('downloaded_card');
-    }, 'image/png');
+  function adaptResponse(data){
+    const list = data?.matches || data?.recentMatches || data?.data?.matches || [];
+    return Array.isArray(list) ? list.map(normalizeMatch) : [];
   }
 
-  async function copyLink() {
-    try {
-      await navigator.clipboard.writeText(currentShareUrl());
-      showToast('copied');
-    } catch {
-      showToast('share_ready');
+  async function fetchLive(lookup){
+    const controller = new AbortController(), timer=setTimeout(()=>controller.abort(),14000);
+    try{
+      const res=await fetch(backend.lolProfile,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+        gameName:lookup.gameName, tagLine:lookup.tagLine, platform:lookup.platform, region:platformRegion(lookup.platform), limit:12, matchLimit:12
+      }),signal:controller.signal});
+      let data=null; try{ data=await res.json(); }catch{}
+      if(!res.ok || data?.error) throw Object.assign(new Error(data?.message||'lookup_failed'),{status:res.status,code:data?.error});
+      return data;
+    }finally{ clearTimeout(timer); }
+  }
+
+  function renderRail(){
+    $('#matchRail').innerHTML=state.matches.map((m,i)=>`
+      <button class="match-pill ${i===state.selected?'active':''}" data-index="${i}">
+        <span class="mini-result ${m.win?'win':'loss'}">${m.win ? (locale()==='pt'?'V':'W') : (locale()==='pt'?'D':'L')}</span>
+        <span><strong>${esc(m.championName)}</strong><small>${m.kills}/${m.deaths}/${m.assists}</small></span>
+      </button>`).join('');
+    document.querySelectorAll('.match-pill').forEach(b=>b.addEventListener('click',()=>{state.selected=Number(b.dataset.index);renderRail();renderSelected();}));
+  }
+
+  function renderSelected(){
+    const m=state.matches[state.selected]; if(!m)return;
+    const mins=Math.floor(m.duration/60), secs=String(m.duration%60).padStart(2,'0');
+    $('#storyKicker').textContent=`${m.queue.toUpperCase()} • ${mins}:${secs}`;
+    $('#storyTitle').textContent=locale()==='pt'?m.titlePt:m.titleEn;
+    $('#storySubtitle').textContent=locale()==='pt'?m.subtitlePt:m.subtitleEn;
+    $('#resultBadge').textContent=m.win?(locale()==='pt'?'VITÓRIA':'VICTORY'):(locale()==='pt'?'DERROTA':'DEFEAT');
+    $('#resultBadge').className='result '+(m.win?'win':'loss');
+    $('#championName').textContent=m.championName; $('#kda').textContent=`${m.kills} / ${m.deaths} / ${m.assists}`;
+    $('#csValue').textContent=m.cs||'—'; $('#visionValue').textContent=m.vision||'—'; $('#kpValue').textContent=(m.kp||0)+'%';
+    $('#goldValue').textContent=m.gold? (m.gold/1000).toFixed(1)+'k':'—'; $('#impactScore').textContent=m.score;
+    $('#storyCard').style.setProperty('--cover', `url("${championSplash(m.championId)}")`);
+    $('#openingTitle').textContent=locale()==='pt' ? (m.deaths<=3?'Você construiu a partida sem se entregar cedo.':'O começo exigiu recuperação.') : (m.deaths<=3?'You built the game without giving it away early.':'The opening demanded recovery.');
+    $('#openingText').textContent=locale()==='pt' ? `Com ${m.cs||0} de farm e ${m.vision||0} de visão, o início mostra ${m.deaths<=3?'controle de risco':'um ritmo mais turbulento'} antes das lutas maiores.` : `With ${m.cs||0} CS and ${m.vision||0} vision, the opening shows ${m.deaths<=3?'risk control':'a more turbulent pace'} before larger fights.`;
+    $('#impactTitle').textContent=locale()==='pt'?`Impacto geral: ${m.score}/100.`:`Overall impact: ${m.score}/100.`;
+    $('#impactText').textContent=locale()==='pt'?`Você terminou com ${m.kills+m.assists} participações diretas em abates e ${m.deaths} mortes. O resumo prioriza o que isso significou no fluxo da partida.`:`You finished with ${m.kills+m.assists} direct takedown contributions and ${m.deaths} deaths. The summary focuses on what that meant in the flow of the match.`;
+    $('#endingTitle').textContent=locale()==='pt'?(m.win?'O último capítulo foi de conversão.':'O último capítulo mostra onde a recuperação parou.'):(m.win?'The final chapter was about conversion.':'The final chapter shows where the recovery stopped.');
+    $('#endingText').textContent=locale()==='pt'?(m.win?'A vantagem só importou quando virou espaço, objetivo e encerramento. Essa foi a assinatura desta vitória.':'Mesmo com momentos bons, a partida terminou antes de uma nova janela segura aparecer.'):(m.win?'The lead only mattered once it became space, objectives, and a finish. That was the signature of this win.':'Even with good moments, the match ended before another safe window appeared.');
+    $('#moments').innerHTML=m.moments.map(x=>`<div class="moment"><span class="moment-time">${x.m}</span><div><strong>${esc(locale()==='pt'?x.pt:x.en)}</strong><p>${esc(locale()==='pt'?x.dpt:x.den)}</p></div></div>`).join('');
+    const chips = locale()==='pt'
+      ? [`${m.kills+m.assists} participações`,`${m.vision} visão`,`${m.cs} CS`,m.win?'Vitória convertida':'Derrota revisável']
+      : [`${m.kills+m.assists} takedowns`,`${m.vision} vision`,`${m.cs} CS`,m.win?'Converted win':'Reviewable loss'];
+    $('#highlights').innerHTML=chips.map(x=>`<div class="highlight">${esc(x)}</div>`).join('');
+  }
+
+  function showStory(){
+    $('#storyApp').classList.remove('hidden'); $('#playerTitle').textContent=`${state.lookup.gameName}#${state.lookup.tagLine}`; renderRail(); renderSelected();
+    $('#storyApp').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
+  async function runLookup(useDemo=false){
+    const gameName=$('#gameName').value.trim(), tagLine=$('#tagLine').value.trim().replace('#',''), platform=$('#platform').value;
+    if(!gameName || !tagLine){toast(locale()==='pt'?'Preencha seu Riot ID.':'Enter your Riot ID.');return;}
+    state.lookup={gameName,tagLine,platform}; state.selected=0;
+    if(useDemo){state.matches=demoMatches;state.live=false;setSource('demo',locale()==='pt'?'Modo demonstrativo: história construída com dados de exemplo.':'Demo mode: story built with example data.');showStory();return;}
+    setSource('loading',locale()==='pt'?'Buscando suas partidas recentes…':'Loading your recent matches…');
+    try{
+      const data=await fetchLive(state.lookup), matches=adaptResponse(data);
+      if(!matches.length) throw new Error('empty_matches');
+      state.matches=matches; state.live=true;
+      const canonical=data?.player;
+      if(canonical?.gameName){state.lookup.gameName=canonical.gameName;state.lookup.tagLine=canonical.tagLine||tagLine;}
+      setSource('live',locale()==='pt'?`Dados Riot carregados: ${matches.length} partidas recentes.`:`Riot data loaded: ${matches.length} recent matches.`);
+      showStory();
+    }catch(err){
+      state.matches=demoMatches; state.live=false;
+      setSource('demo', locale()==='pt'?'Dados Riot indisponíveis agora. Mantivemos um exemplo claramente identificado para você conhecer a experiência.':'Riot data is unavailable right now. A clearly labeled example is shown so you can explore the experience.');
+      showStory();
     }
   }
 
-  async function shareLegacy() {
-    const payload = {
-      title: 'Riot Legacy · ' + profileRiotId.textContent,
-      text: shareText(),
-      url: currentShareUrl()
-    };
-    if (navigator.share) {
-      try {
-        await navigator.share(payload);
-        return;
-      } catch (error) {
-        if (error?.name === 'AbortError') return;
-      }
-    }
-    try {
-      await navigator.clipboard.writeText(`${payload.text}\n${payload.url}`);
-      showToast('share_ready');
-    } catch {
-      showToast('share_ready');
-    }
-  }
-
-  form.addEventListener('submit', event => {
-    event.preventDefault();
-    const gameName = gameNameInput.value;
-    const tagLine = tagLineInput.value;
-    if (!validInput(gameName, tagLine)) {
-      feedback.textContent = t('invalid_id');
-      feedback.hidden = false;
-      return;
-    }
-    feedback.hidden = true;
-    addRecentSearch(gameName, tagLine, platformInput.value);
-    showProfile(gameName, tagLine, platformInput.value);
+  $('#lookupForm').addEventListener('submit',e=>{e.preventDefault();runLookup(false);});
+  $('#demoBtn').addEventListener('click',()=>runLookup(true));
+  $('#refreshBtn').addEventListener('click',()=>runLookup(false));
+  $('#langBtn').addEventListener('click',()=>{state.locale=locale()==='pt'?'en':'pt';localStorage.setItem('lms-locale',state.locale);applyI18n();});
+  $('#shareBtn').addEventListener('click',async()=>{
+    const m=state.matches[state.selected]; if(!m)return;
+    const text=locale()==='pt'?`${m.championName} • ${m.kills}/${m.deaths}/${m.assists} • ${m.win?'Vitória':'Derrota'} — minha partida contada no LoL Match Story.`:`${m.championName} • ${m.kills}/${m.deaths}/${m.assists} • ${m.win?'Victory':'Defeat'} — my match told by LoL Match Story.`;
+    try{ if(navigator.share) await navigator.share({title:'LoL Match Story',text,url:location.href}); else {await navigator.clipboard.writeText(text+' '+location.href);toast(locale()==='pt'?'Resumo copiado.':'Summary copied.');} }catch{}
   });
 
-  recentSearchesList?.addEventListener('click', event => {
-    const button = event.target.closest('[data-recent-index]');
-    if (!button) return;
-    openRecentSearch(button.dataset.recentIndex);
-  });
-
-  clearRecentSearches?.addEventListener('click', () => {
-    localStorage.removeItem(RECENT_SEARCHES_KEY);
-    renderRecentSearches();
-  });
-
-  backButton.addEventListener('click', showLanding);
-
-  document.querySelectorAll('[data-tab]').forEach(button => {
-    button.addEventListener('click', () => activateTab(button.dataset.tab));
-  });
-
-  document.querySelector('#copy-link').addEventListener('click', copyLink);
-  document.querySelector('#share-legacy').addEventListener('click', shareLegacy);
-  document.querySelector('#share-card-action').addEventListener('click', shareLegacy);
-  document.querySelector('#download-card').addEventListener('click', downloadShareCard);
-  refreshButton?.addEventListener('click', () => {
-    if (!currentLookup) return;
-    setSourceState('loading');
-    loadLiveProfile({ ...currentLookup });
-  });
-
-  window.addEventListener('riot-legacy-language', () => {
-    renderDynamicCopy();
-    if (currentLookup) {
-      const state = sourceBadge.dataset.sourceState || 'demo';
-      if (state === 'loading') setSourceState('loading');
-      else if (state === 'live') {
-        const lolCount = Number(live.lol?.summary?.matches || 0);
-        const tftCount = Number(live.tft?.summary?.matches || 0);
-        setSourceState('live', locale() === 'en'
-          ? `Riot data loaded: ${lolCount} recent LoL matches and ${tftCount} TFT matches. The legacy chapters below use this recent sample.`
-          : `Dados Riot carregados: ${lolCount} partidas recentes de LoL e ${tftCount} partidas de TFT. Os capítulos abaixo usam esta amostra recente.`);
-      } else if (state === 'partial') {
-        const available = live.lol ? 'LoL' : 'TFT';
-        const missing = live.lol ? 'TFT' : 'LoL';
-        setSourceState('partial', locale() === 'en'
-          ? `Live ${available} data loaded. ${missing} is using the demonstrative fallback for this lookup.`
-          : `Dados reais de ${available} carregados. ${missing} usa o fallback demonstrativo nesta busca.`);
-      } else setSourceState('demo');
-    }
-    if (!feedback.hidden) feedback.textContent = t('invalid_id');
-  });
-
-  renderRecentSearches();
-
-  const params = new URLSearchParams(location.search);
-  const deepId = params.get('riotId');
-  if (deepId && deepId.includes('#')) {
-    const index = deepId.lastIndexOf('#');
-    const gameName = deepId.slice(0, index);
-    const tagLine = deepId.slice(index + 1);
-    const platform = params.get('server') || platformFromLegacyRegion(params.get('region'));
-    gameNameInput.value = gameName;
-    tagLineInput.value = tagLine;
-    platformInput.value = [...platformInput.options].some(option => option.value === platform) ? platform : 'br1';
-    showProfile(gameName, tagLine, platformInput.value, false);
-  }
+  applyI18n();
 })();
