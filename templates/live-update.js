@@ -2,7 +2,7 @@
   'use strict';
 
   const CHECK_INTERVAL_MS = 12_000;
-  const VERSION_URL = 'version.json';
+  const runtimeScript = document.currentScript;\n  const VERSION_URL = new URL('version.json', runtimeScript?.src || window.location.href).toString();
   const CACHE_BUST_PARAM = '__v';
   const LOCAL_HOSTS = new Set(['localhost', '127.0.0.1', '::1']);
 
