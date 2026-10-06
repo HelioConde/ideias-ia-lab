@@ -178,3 +178,29 @@ test('explica rate limit e mantém fallback demonstrativo', async ({ page }) => 
   await expect(page.locator('#data-source-note')).toContainText('limite temporário da Riot');
   await expect(page.getByRole('button', { name: 'Atualizar dados' })).toBeEnabled();
 });
+
+
+test('buscas recentes persistem servidor e reabrem o perfil', async ({ page }) => {
+  await page.locator('#game-name').fill('RecentPlayer');
+  await page.locator('#tag-line').fill('EUW');
+  await page.locator('#region').selectOption('euw1');
+  await page.getByRole('button', { name: /Ver meu legado/i }).click();
+
+  await page.getByRole('button', { name: /Novo perfil/i }).click();
+  await expect(page.locator('#recent-searches')).toBeVisible();
+  await expect(page.locator('#recent-searches-list .recent-search')).toHaveCount(1);
+  await expect(page.locator('#recent-searches-list')).toContainText('RecentPlayer#EUW');
+  await expect(page.locator('#recent-searches-list')).toContainText('EUW1');
+
+  await page.reload();
+  await expect(page.locator('#recent-searches-list .recent-search')).toHaveCount(1);
+  await page.locator('#recent-searches-list .recent-search').click();
+
+  await expect(page.locator('#profile-riot-id')).toHaveText('RecentPlayer#EUW');
+  await expect(page).toHaveURL(/server=euw1/);
+
+  await page.getByRole('button', { name: /Novo perfil/i }).click();
+  await expect(page.locator('#recent-searches-list .recent-search')).toHaveCount(1);
+  await page.getByRole('button', { name: 'Limpar', exact: true }).click();
+  await expect(page.locator('#recent-searches')).toBeHidden();
+});
