@@ -53,7 +53,7 @@ A fila agora é organizada por **prioridade real**, considerando proximidade de 
 | 6 | **TFT Wrapped** | TFT | P0 | [Protótipo standalone pronto](https://github.com/HelioConde/ideias-ia-lab/tree/split/tft-personal-wrapped) · repo físico pendente |
 | 7 | **PostPilot** | Criadores | P1 | [Repositório ativo](https://github.com/HelioConde/postpilot) |
 | 8 | **MontaPC** | Hardware | P1 | Repositório pendente |
-| 9 | **LoL Champion Journey** | LoL | P1 | Repositório pendente |
+| 9 | **LoL Champion Journey** | LoL | P1 | [MVP standalone pronto](https://github.com/HelioConde/ideias-ia-lab/tree/split/lol-champion-journey) · repo físico pendente |
 | 10 | **TFT Board Museum** | TFT | P1 | Repositório pendente |
 
 ➡️ **[Ver a fila completa com 41 projetos e justificativas](./PRIORIDADES_DESENVOLVIMENTO.md)**
