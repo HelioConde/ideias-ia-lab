@@ -88,3 +88,10 @@ a{color:inherit;text-decoration:none}
   .saved-card{grid-template-columns:1fr}.saved-actions{justify-content:flex-start}.section-heading{align-items:flex-start;flex-direction:column}
   .footer{flex-direction:column;gap:5px}.result-actions{display:grid;grid-template-columns:1fr 1fr}.result-actions .button{width:100%}
 }
+
+
+/* Monetização: os espaços abaixo só entram no layout quando ads.js remove [hidden]. */
+.ad-slot{margin:24px 0;padding:10px 12px;border:1px solid var(--line);border-radius:13px;background:#fff;min-height:110px;overflow:hidden}
+.ad-slot.compact{margin-top:18px;min-height:90px}
+.ad-label{display:block;margin-bottom:7px;color:var(--muted);font-size:9px;letter-spacing:.08em;text-transform:uppercase}
+.ad-slot .adsbygoogle{min-height:80px}
