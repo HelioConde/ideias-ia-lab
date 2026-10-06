@@ -137,7 +137,7 @@ a{color:inherit}
 .share-card:after{content:"RL";position:absolute;right:20px;bottom:-25px;color:rgba(255,255,255,.035);font-size:150px;font-weight:900;letter-spacing:-14px}
 .share-card .share-label{color:var(--gold);font-size:9px;font-weight:900;letter-spacing:1.4px}
 .share-card h3{margin:18px 0 4px;font-size:38px;letter-spacing:-2px}.share-card p{margin:0;color:#aeb9c5}.share-facts{display:flex;gap:9px;margin-top:60px;flex-wrap:wrap}.share-facts span{padding:8px 10px;border:1px solid var(--line);border-radius:999px;color:#cbd4dd;font-size:9px;font-weight:800}
-.share-panel .primary{margin-top:18px}
+
 .toast{position:fixed;z-index:999;left:50%;bottom:20px;transform:translate(-50%,30px);padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:#111c28;color:#fff;font-size:11px;opacity:0;pointer-events:none;transition:.18s}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 @keyframes spin{to{transform:rotate(360deg)}}@keyframes rise{from{opacity:.3;transform:translateY(8px)}to{opacity:1;transform:none}}
@@ -151,3 +151,6 @@ a{color:inherit}
 .demo-badge.loading:after{content:"";display:inline-block;width:7px;height:7px;margin-left:7px;border:1px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .8s linear infinite}
 .hex-cell small{display:block;margin-left:2px;color:var(--gold-soft);font-size:6px;letter-spacing:-1px}
 .empty-inline{margin:4px 0;color:var(--muted);font-size:11px;line-height:1.5}
+
+.share-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:9px;margin-top:18px}
+.share-actions .primary,.share-actions .secondary{margin-top:0}
