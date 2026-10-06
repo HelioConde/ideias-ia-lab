@@ -28,9 +28,9 @@ Atualizado em 06/10/2026.
 - [ ] Definir Production API key própria do produto quando elegível.
 - [x] Reutilizar backend gamer ZeroTwo.gg com Riot key server-side.
 - [x] Identificar `public-lol-profile` como backend inicial Riot ID → PUUID → League.
-- [ ] Conectar o frontend do Riot Legacy à `public-lol-profile`.
-- [ ] Substituir progressivamente o perfil demo por payload real.
-- [ ] Tratar conta inexistente, API indisponível e rate limit.
+- [x] Conectar o frontend do Riot Legacy à `public-lol-profile`.
+- [x] Conectar também `public-tft-profile` e substituir os blocos recentes de LoL/TFT por payload real, mantendo fallback explícito.
+- [x] Tratar conta inexistente, API indisponível, timeout e dados parciais com fallback identificado.
 - [ ] Validar um Riot ID real de LoL.
 - [ ] Validar um Riot ID real de TFT.
 - [ ] Criar snapshot/cache para não consultar toda a história a cada visita.
