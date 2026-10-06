@@ -4,17 +4,24 @@ Atualizado em 2026-10-06.
 
 Este arquivo transforma a fila de prioridades em uma sequência prática de execução.
 
+## Validação pós-MVP
+
+| Projeto | Estado | Acompanhamento |
+|---|---|---|
+| **AgendaLeve** | MVP técnico concluído / publicado | [Issue #1 — validação humana e configuração externa](https://github.com/HelioConde/agendaleve/issues/1) |
+| **DocPronto** | MVP técnico concluído / publicado | [Issue #1 — homologação humana e validação real](https://github.com/HelioConde/docpronto/issues/1) |
+
+Esses dois produtos **não ocupam mais vaga de implementação pesada**. Só voltam ao foco por bug crítico, segurança, feedback real ou decisão explícita.
+
 ## Em desenvolvimento / foco imediato
 
 | Ordem | Projeto | Estado | Próxima ação |
 |---:|---|---|---|
-| 1 | **AgendaLeve** | MVP publicado / validação avançada | contato, filtros, status, cancelamento e reagendamento seguro concluídos; faltam antiabuso externo e QA real |
-| 2 | **DocPronto** | Release candidate tecnicamente homologado | Edge Functions, RLS, link público live, PWA/offline, backup, feedback, anúncios preparados e QA Browser concluídos; falta somente rodada humana de cadastro/login/recuperação e duas contas reais |
-| 3 | **Riot Legacy** | Ideia priorizada | criar repositório próprio e protótipo visual |
-| 4 | **VagaCerta** | branch standalone pronta | criar repositório físico e publicar |
-| 5 | **LoL Match Story** | Ideia priorizada | criar MVP visual usando dados reais quando disponíveis |
-| 6 | **TFT Wrapped** | Ideia priorizada | criar retrospectiva mínima compartilhável |
-| 7 | **PostPilot** | MVP em evolução ativa | primeiro projeto executável após os P0 sem repositório: PT/EN, planejamento editorial, anúncios preparados, dashboard de produção e Browser E2E concluídos |
+| 1 | **Riot Legacy** | Próximo foco oficial | criar repositório próprio e iniciar protótipo visual navegável |
+| 2 | **VagaCerta** | branch standalone pronta | criar repositório físico e publicar |
+| 3 | **LoL Match Story** | Ideia priorizada | criar MVP visual usando dados reais quando disponíveis |
+| 4 | **TFT Wrapped** | Ideia priorizada | criar retrospectiva mínima compartilhável |
+| 5 | **PostPilot** | MVP em evolução leve | manter fora do WIP pesado enquanto Riot Legacy inicia |
 
 ## Definição de estados
 
@@ -29,6 +36,8 @@ Este arquivo transforma a fila de prioridades em uma sequência prática de exec
 - **Pausado** — não é prioridade atual, mas continua no portfólio.
 
 ## Gate para passar ao próximo projeto
+
+**AgendaLeve ✅ e DocPronto ✅ já cumpriram este gate e liberaram o WIP em 06/10/2026.**
 
 Um projeto pode deixar de ser foco principal quando cumprir:
 
@@ -54,16 +63,16 @@ Para evitar dezenas de produtos incompletos:
 
 ## Próximos blocos
 
-### Bloco A — lançar
-1. AgendaLeve — MVP publicado em validação avançada
-2. DocPronto — release candidate tecnicamente homologado; falta somente rodada humana de autenticação e duas contas reais
+### Bloco A — lançados / validação pós-MVP
+1. AgendaLeve — MVP técnico concluído; issue pós-MVP aberta
+2. DocPronto — MVP técnico concluído; issue pós-MVP aberta
 
-### Bloco B — provar diferencial gamer
+### Bloco B — provar diferencial gamer — **bloco atual**
 > Os três projetos prioritários abaixo ainda não possuem repositório físico. Outros repositórios gamer já criados podem avançar como protótipos exploratórios sem substituir esta prioridade.
 
-3. Riot Legacy
-4. LoL Match Story
-5. TFT Wrapped
+1. Riot Legacy — **próximo desenvolvimento pesado**
+2. LoL Match Story
+3. TFT Wrapped
 
 ### Bloco C — monetização/uso recorrente
 6. VagaCerta
