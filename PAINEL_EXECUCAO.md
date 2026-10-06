@@ -82,7 +82,7 @@ Para evitar dezenas de produtos incompletos:
 ### Bloco D — expansão gamer
 9. **TFT Comp Evolution — MVP funcional; comparação, tabuleiro 4x7, import JSON e Static QA concluídos**
 10. **OW Hero Pool Builder — MVP funcional; recomendação complementar, pools locais e Static QA concluídos**
-11. **LoL Champion Journey — MVP standalone pronto; jornada por campeão, PT-BR/EN, backend gamer, fallback demo e QA E2E preparada**
+11. **LoL Champion Journey — repositório físico ativo; MVP migrado, PT-BR/EN, backend gamer, fallback demo e QA E2E preparada**
 12. TFT Board Museum
 13. LoL Session Insights
 14. TFT Augment Memory
