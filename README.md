@@ -72,7 +72,7 @@ A fila agora é organizada por **prioridade real**, considerando proximidade de 
 
 - AgendaLeve: MVP técnico publicado; pendências humanas/externas centralizadas na [issue #1](https://github.com/HelioConde/agendaleve/issues/1).
 - DocPronto: MVP técnico publicado; homologação humana centralizada na [issue #1](https://github.com/HelioConde/docpronto/issues/1).
-- **Desenvolvimento pesado atual: Riot Legacy.** Protótipo standalone navegável já iniciado e validado por Static QA + Browser E2E.
+- **Desenvolvimento pesado atual: Riot Legacy.** Protótipo standalone navegável com LoL + TFT reais via backend gamer, fallback demonstrativo explícito, PNG compartilhável e Static QA + Browser E2E verdes.
 - Novas features nos dois SaaS ficam pausadas até aparecer feedback real, bug crítico ou decisão explícita de retomada.
 
 ## Destaque estratégico — Riot Legacy
@@ -105,14 +105,18 @@ As novas ideias de LoL, TFT e Overwatch estão organizadas na fila oficial e dev
 ## Protótipo gamer standalone em desenvolvimento
 
 - **Riot Legacy** — [`split/riot-legacy`](https://github.com/HelioConde/ideias-ia-lab/tree/split/riot-legacy)
-  - landing + perfil demonstrativo LoL/TFT;
-  - Riot ID e deep link;
+  - landing + perfil híbrido com LoL/TFT reais e fallback demonstrativo;
+  - Riot ID + servidor + deep link;
+  - backend gamer ZeroTwo.gg (`bieihhaobdztjyoweewa`);
+  - `public-lol-profile` + `public-tft-profile`;
   - PT-BR/EN;
-  - card compartilhável;
+  - timeline recente baseada na amostra Riot;
+  - atualização de dados sem reload;
+  - card compartilhável + download PNG;
   - anúncios preparados;
   - Static QA ✅;
   - Browser E2E ✅;
-  - repositório físico e GitHub Pages ainda pendentes.
+  - repositório físico, validação com Riot IDs reais e GitHub Pages ainda pendentes.
 
 ## Branches standalone preparadas
 
