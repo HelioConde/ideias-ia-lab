@@ -184,3 +184,25 @@ Durante desenvolvimento, as funções gamer existentes servem como backend de pr
 3. usar a credencial aprovada para o produto/funções correspondentes;
 4. manter os secrets no mesmo Supabase gamer, mas com nomes separados se houver mais de uma credencial ativa;
 5. nunca mover essas credenciais para o frontend.
+
+
+## Estados de consulta
+
+A experiência pública não bloqueia o perfil enquanto a Riot responde.
+
+Estados visuais:
+
+- `loading` — consulta LoL/TFT em andamento;
+- `live` — LoL + TFT carregados;
+- `partial` — somente uma das fontes carregou;
+- `demo` — fallback demonstrativo.
+
+Erros tratados separadamente:
+
+- Riot ID não encontrado;
+- rate limit (429);
+- credencial Riot server-side rejeitada/indisponível;
+- timeout;
+- erro genérico de upstream.
+
+O botão **Atualizar dados** reaproveita o mesmo Riot ID/servidor atual e executa nova hidratação sem reload.
