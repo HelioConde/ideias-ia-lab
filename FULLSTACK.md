@@ -57,21 +57,29 @@ Fontes candidatas:
 - `tft-league-v1`;
 - endpoints suportados no Developer Portal no momento da implementação.
 
-## Backend
+## Backend gamer existente
 
-Não usar `pizzaria-db`.
+**Banco oficial para Riot Legacy: Supabase ZeroTwo.gg**
 
-Riot Legacy pertence à infraestrutura gamer. O backend deve ficar separado da linha SaaS geral e pode reaproveitar infraestrutura gamer já existente quando isso for explicitamente decidido.
+- project ref: `bieihhaobdztjyoweewa`;
+- URL pública: `https://bieihhaobdztjyoweewa.supabase.co`;
+- infraestrutura compartilhada pelos produtos gamer;
+- `RIOT_API_KEY` já existe como secret server-side;
+- cache Riot já existe em `riot_player_cache` e `lol_match_cache`;
+- Edge Function existente `public-lol-profile` já resolve Riot ID → PUUID e consulta League;
+- Edge Function existente `riot-lol-player` atende o fluxo autenticado do ZeroTwo.
+
+**Não usar `pizzaria-db` e não criar outro Supabase para o Riot Legacy.**
+
+A reutilização é da infraestrutura gamer, não da chave no navegador. O frontend do Riot Legacy pode conhecer somente a URL e a publishable key pública do Supabase. A `RIOT_API_KEY`, service role e demais secrets permanecem nas Edge Functions.
 
 Regras:
-- Riot API key apenas em secret server-side;
-- uma Production API key por produto;
-- nenhuma chave em `app.js`, HTML, GitHub Pages ou localStorage;
-- rate limiting no backend;
-- cache por endpoint/PUUID;
-- timeouts e fallback de erro;
-- payload mínimo para o frontend;
-- logs sem API key ou PII desnecessária.
+- nunca copiar `RIOT_API_KEY` para `app.js`, HTML, GitHub Pages, localStorage ou Git;
+- reutilizar `public-lol-profile` antes de criar nova função;
+- criar uma Edge Function nova apenas quando a narrativa do Riot Legacy exigir payload que a função existente não possa fornecer de forma limpa;
+- reutilizar cache por Riot ID/PUUID e partidas;
+- rate limiting e chamadas Riot continuam server-side;
+- logs sem API key, tokens ou PUUID desnecessário no browser.
 
 ## Modelo de dados sugerido
 
