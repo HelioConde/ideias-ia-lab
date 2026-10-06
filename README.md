@@ -21,6 +21,24 @@ Esta é uma regra transversal do portfólio e deve ser considerada desde o MVP d
 
 A implementação de anúncios reais só deve ser ativada quando o produto e a rede escolhida estiverem prontos para isso. Antes disso, o layout pode usar slots/reservas estruturais sem anúncios falsos.
 
+## Regra global de idiomas
+
+**Todos os produtos do Ideias IA Lab terão suporte a Português do Brasil (PT-BR) e Inglês (EN).**
+
+O **PT-BR é o idioma principal e padrão** de todo o portfólio. O inglês é o idioma secundário obrigatório.
+
+Regras:
+
+- primeira experiência e fallback padrão em **PT-BR**;
+- todo produto deve oferecer seletor claro entre **PT-BR** e **English**;
+- a escolha de idioma deve ser persistida quando tecnicamente possível;
+- fluxos principais, navegação, formulários, mensagens de erro/sucesso, estados vazios/loading e páginas essenciais devem existir nos dois idiomas;
+- datas, números, moedas e formatos devem respeitar o locale ativo;
+- novos recursos não devem ser considerados concluídos se a interface pública ficar disponível apenas em um dos dois idiomas;
+- em páginas indexáveis, title, description, Open Graph e conteúdo SEO devem ter versões localizadas quando aplicável;
+- quando houver URLs específicas por idioma, usar uma estrutura consistente e metadados `hreflang`;
+- **PT-BR continua sendo a fonte principal de conteúdo e a experiência padrão**, mesmo quando o navegador do usuário estiver em outro idioma.
+
 ## Ordem oficial de desenvolvimento
 
 A fila agora é organizada por **prioridade real**, considerando proximidade de lançamento, monetização, diferencial e risco técnico.
