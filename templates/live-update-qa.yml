@@ -1,0 +1,36 @@
+name: Live Update QA
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  live-update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate live-update contract
+        shell: bash
+        run: |
+          set -e
+          test -f live-update.js
+          test -f version.json
+          test -f .github/workflows/live-version.yml
+          node --check live-update.js
+
+          mapfile -t html_files < <(find . -type f -name '*.html' -not -path './.git/*')
+          if [ "${#html_files[@]}" -eq 0 ]; then
+            echo "No HTML pages yet."
+            exit 0
+          fi
+
+          for file in "${html_files[@]}"; do
+            grep -q 'live-update.js' "$file"
+          done
+
+          grep -Eq '12000|12_000' live-update.js
+          grep -q 'visibilitychange' live-update.js
+          grep -Eq "cache:[[:space:]]*['\"]no-store['\"]" live-update.js
