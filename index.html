@@ -42,11 +42,11 @@
             <form id="riot-form" class="riot-form" novalidate>
               <label class="field">
                 <span data-i18n="game_name">Game Name</span>
-                <input id="game-name" name="gameName" autocomplete="off" maxlength="24" placeholder="HelioConde">
+                <input id="game-name" name="gameName" autocomplete="off" minlength="3" maxlength="16" placeholder="HelioConde" aria-describedby="riot-id-help">
               </label>
               <label class="field">
                 <span data-i18n="tag_line">Tag Line</span>
-                <input id="tag-line" name="tagLine" autocomplete="off" maxlength="8" placeholder="BR1">
+                <input id="tag-line" name="tagLine" autocomplete="off" minlength="3" maxlength="5" placeholder="BR1" aria-describedby="riot-id-help">
               </label>
               <label class="field">
                 <span data-i18n="region">Roteamento</span>
@@ -56,9 +56,10 @@
                   <option value="asia">Asia</option>
                 </select>
               </label>
-              <button class="primary" type="submit" data-i18n="submit">Ver meu legado</button>
+              <button id="lookup-submit" class="primary" type="submit" data-i18n="submit">Ver meu legado</button>
             </form>
-            <p id="form-feedback" class="form-feedback" role="alert" hidden></p>
+            <p id="riot-id-help" class="field-help" data-i18n="riot_id_help">Game Name: 3–16 caracteres. Tag Line: 3–5 letras ou números.</p>
+            <p id="form-feedback" class="form-feedback" role="status" aria-live="polite" aria-atomic="true" hidden></p>
             <div class="hero-notes">
               <span>🔒 <strong data-i18n="privacy">Nunca pedimos sua senha da Riot.</strong></span>
               <span>◇ <span data-i18n="demo_note">Protótipo atual: os dados exibidos após a busca são demonstrativos.</span></span>
@@ -234,6 +235,7 @@
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
   <script src="./i18n.js"></script>
+  <script src="./backend-config.js"></script>
   <script src="./app.js"></script>
 </body>
 </html>
