@@ -71,6 +71,26 @@ Os sete MVPs antigos já possuem uma branch com o projeto na raiz, canonical do 
 
 A etapa pendente é somente criar cada repositório físico e importar a branch correspondente.
 
+## Automação para todas as 41 ideias
+
+O hub agora possui `scripts/create-all-idea-repos.ps1`, que representa **toda a fila oficial de 41 projetos**.
+
+A automação trata cada projeto de acordo com o estado atual:
+
+- **3 repositórios já ativos**: preserva `agendaleve`, `docpronto` e `postpilot`;
+- **7 MVPs com código pronto**: cria o repositório e envia a branch `split/*` como `main`;
+- **31 ideias novas**: cria um repositório próprio com README inicial contendo área, prioridade, posição na fila, objetivo de MVP e regra de organização.
+
+Execução no Windows:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\\scripts\\create-all-idea-repos.ps1
+```
+
+Por padrão os repositórios novos são públicos. Use `-Private` para criá-los privados.
+
+O script nunca sobrescreve uma `main` existente sem `-Force`.
+
 ## Criação automatizada dos sete repositórios
 
 No Windows, o hub inclui `scripts/create-split-repos.ps1`.
@@ -115,5 +135,7 @@ Essa branch deve permanecer intacta até os sete repositórios antigos pendentes
 ## Regra
 
 **Não desenvolver funcionalidades de produto diretamente neste repositório.**
+
+Toda nova ideia deve receber um nome de repositório assim que entrar na fila oficial. O Lab mantém apenas ranking, links, decisões e automações de criação.
 
 Quando uma ideia for promovida para desenvolvimento, ela deve ganhar um repositório próprio e permanecer aqui apenas como item de roadmap.
