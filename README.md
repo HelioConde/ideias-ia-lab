@@ -37,7 +37,7 @@ As duas funções usam a Riot key somente no servidor. Quando respondem, o perfi
 
 Quando uma fonte não responde ou o jogador não possui dados naquele jogo, somente aquela parte mantém o fallback demonstrativo e a interface informa o estado claramente.
 
-A timeline de longo prazo ainda não deve ser interpretada como histórico completo da conta; snapshots históricos entram numa etapa posterior.
+Com dados Riot ativos, a aba Legado troca a timeline fictícia por capítulos da amostra recente. A trajetória histórica de temporadas/anos continua sendo uma etapa posterior baseada em snapshots reais.
 
 ## Backend gamer
 
@@ -70,6 +70,10 @@ Neste protótipo os espaços são apenas reservados estruturalmente. Anúncios r
 - revisão de UX para impedir anúncios perto de controles críticos.
 
 Consulte [ADS_SETUP.md](./ADS_SETUP.md).
+
+### Regra antes do lançamento standalone
+
+O Supabase gamer e as funções existentes podem ser reutilizados no desenvolvimento do protótipo. Antes de publicar o Riot Legacy como produto independente, o registro do produto e a credencial Riot aplicável devem ser revisados para que a chave usada em produção corresponda ao produto/status aprovado.
 
 ## Idiomas
 
