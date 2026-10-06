@@ -143,23 +143,18 @@ Antes de expandir código:
 - marcar claramente `IDEIA`, `PREPARADO`, `EM DESENVOLVIMENTO`, `MVP`, `QA`, `PUBLICADO` ou `PAUSADO`;
 - nunca sobrescrever uma `main` existente automaticamente.
 
-### Lote 1 — colocar os mais próximos de lançamento no ar
+### Lote 1 — colocar os mais próximos de lançamento no ar — **CONCLUÍDO**
 
-Implementação pesada:
-- AgendaLeve
-- DocPronto
+Implementação pesada concluída:
+- AgendaLeve — MVP técnico publicado; validação pós-MVP em issue própria;
+- DocPronto — MVP técnico publicado; homologação humana em issue própria.
 
-Exploratório:
-- Riot Legacy
+O gate de saída foi cumprido pelos dois produtos em 06/10/2026.
 
-Saída esperada:
-- ambos SaaS com fluxo principal funcional, backend integrado, QA e deploy;
-- Riot Legacy com protótipo visual navegável e arquitetura de dados decidida.
+### Lote 2 — provar diferenciais — **ATUAL**
 
-### Lote 2 — provar diferenciais
-
-- Riot Legacy passa para implementação pesada;
-- VagaCerta entra como segundo projeto;
+- **Riot Legacy passa para implementação pesada como próximo foco oficial**;
+- VagaCerta entra como segundo projeto quando o repositório físico estiver materializado;
 - LoL Match Story fica como protótipo exploratório.
 
 ### Lote 3 — produtos compartilháveis / aquisição orgânica
@@ -307,6 +302,22 @@ Quando aplicável:
 6. Backlog V2.
 7. Atualizar o hub com status e URL.
 
+## Gate concluído — AgendaLeve e DocPronto
+
+Em 06/10/2026, os dois primeiros SaaS cumpriram o gate necessário para liberar o WIP:
+
+- fluxo principal funcional;
+- mobile utilizável;
+- dados/backend integrados;
+- QA crítico e Browser E2E;
+- deploy em GitHub Pages;
+- PT-BR/EN;
+- preparação para anúncios;
+- README/backlog atualizados;
+- nenhum bloqueador P0/P1 conhecido.
+
+As pendências restantes foram movidas para issues pós-MVP e não impedem o início do Riot Legacy.
+
 ## Gate de saída do foco principal
 
 Um projeto só sai da implementação pesada quando:
@@ -367,8 +378,8 @@ Portanto, documentos antigos que ainda marcam esses projetos como “pendentes�
 
 ## Próxima ação
 
-1. terminar o saneamento do inventário;
-2. não tentar criar vários repositórios em sequência enquanto o GitHub estiver aplicando secondary rate limit;
-3. iniciar desenvolvimento pesado por **AgendaLeve + DocPronto**;
-4. manter **Riot Legacy** como protótipo exploratório;
-5. concluir cada gate antes de puxar o próximo item da fila.
+1. manter AgendaLeve e DocPronto apenas em validação pós-MVP, sem ampliar escopo;
+2. iniciar **Riot Legacy** como próximo desenvolvimento pesado oficial;
+3. materializar VagaCerta como segundo projeto quando o repositório físico estiver disponível;
+4. manter LoL Match Story como protótipo exploratório;
+5. continuar respeitando o gate de saída antes de puxar o item seguinte da fila.
