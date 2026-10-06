@@ -135,6 +135,8 @@ test('carrega LoL e TFT reais pelo backend gamer e substitui o fallback', async 
   await expect(page.locator('#legacy-timeline')).toContainText('Seu momento recente');
   await expect(page.locator('#share-period')).toHaveText('Amostra Riot recente · LoL + TFT');
   await expect(page.locator('#share-period')).not.toContainText('2018');
+  await page.getByRole('button', { name: 'Atualizar dados' }).click();
+  await expect(page.locator('#demo-badge')).toHaveText('DADOS RIOT · LOL + TFT');
   await expect(page).toHaveURL(/server=br1/);
 });
 
