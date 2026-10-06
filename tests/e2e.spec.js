@@ -143,7 +143,7 @@ test('baixa o card compartilhável como PNG', async ({ page }) => {
   await page.locator('#game-name').fill('CardPlayer');
   await page.locator('#tag-line').fill('BR1');
   await page.getByRole('button', { name: /Ver meu legado/i }).click();
-  await page.getByRole('button', { name: 'Compartilhar' }).click();
+  await page.getByRole('button', { name: 'Compartilhar', exact: true }).click();
 
   const downloadPromise = page.waitForEvent('download');
   await page.getByRole('button', { name: 'Baixar card PNG' }).click();
