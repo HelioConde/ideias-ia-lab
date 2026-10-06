@@ -1,6 +1,8 @@
 param(
   [switch]$Force,
-  [switch]$Private
+  [switch]$Private,
+  [switch]$ConfigurePages,
+  [int]$MutationDelaySeconds = 2
 )
 
 $ErrorActionPreference = "Stop"
@@ -79,6 +81,37 @@ function Test-GhSuccess {
   return ($Code -eq 0)
 }
 
+function Invoke-GhCapture {
+  param([string[]]$GhArgs)
+
+  $Previous = $ErrorActionPreference
+  try {
+    $ErrorActionPreference = "SilentlyContinue"
+    $Output = (& gh @GhArgs 2>&1 | Out-String)
+    $Code = $LASTEXITCODE
+  }
+  catch {
+    $Output = $_.Exception.Message
+    $Code = 1
+  }
+  finally {
+    $ErrorActionPreference = $Previous
+  }
+
+  return [pscustomobject]@{
+    Success = ($Code -eq 0)
+    ExitCode = $Code
+    Output = [string]$Output
+    SecondaryRateLimit = ([string]$Output -match "secondary rate limit|temporarily blocked from content creation|HTTP 429")
+  }
+}
+
+function Pause-AfterMutation {
+  if ($MutationDelaySeconds -gt 0) {
+    Start-Sleep -Seconds $MutationDelaySeconds
+  }
+}
+
 function Test-RepoExists {
   param([string]$FullRepo)
   return (Test-GhSuccess -GhArgs @("api", "repos/$FullRepo"))
@@ -92,89 +125,6 @@ function Test-MainBranchExists {
 function Test-PagesExists {
   param([string]$FullRepo)
   return (Test-GhSuccess -GhArgs @("api", "repos/$FullRepo/pages"))
-}
-
-function Get-ReadmeInfo {
-  param([string]$FullRepo)
-
-  for ($Attempt = 1; $Attempt -le 8; $Attempt++) {
-    $Previous = $ErrorActionPreference
-    try {
-      $ErrorActionPreference = "SilentlyContinue"
-      $Raw = & gh api "repos/$FullRepo/contents/README.md" 2>$null
-      $Code = $LASTEXITCODE
-    }
-    catch {
-      $Raw = $null
-      $Code = 1
-    }
-    finally {
-      $ErrorActionPreference = $Previous
-    }
-
-    if ($Code -eq 0 -and $Raw) {
-      return ($Raw | ConvertFrom-Json)
-    }
-
-    Start-Sleep -Seconds 2
-  }
-
-  throw "README was not available for $FullRepo after repository creation."
-}
-
-function Set-IdeaReadme {
-  param($Project, [string]$FullRepo)
-
-  $Readme = @"
-# $($Project.Name)
-
-**Area:** $($Project.Area)
-**Priority:** $($Project.Priority)
-**Queue position:** #$($Project.Rank)
-
-$($Project.Description)
-
-## Status
-
-Idea registered in the **Ideias IA Lab** portfolio. This repository is the independent workspace for research, prototype and product development.
-
-## First-version goal
-
-Build the smallest usable MVP that validates the central product idea before increasing scope.
-
-## Minimum criteria before expanding
-
-- usable MVP;
-- main flow working;
-- usable on mobile;
-- authentication/data when needed;
-- QA for critical flows;
-- updated README;
-- working deploy;
-- explicit V2 backlog.
-
-## Organization
-
-Portfolio priority and decisions remain centralized at:
-
-https://github.com/HelioConde/ideias-ia-lab
-
-Product code must stay in this repository, not in the Lab.
-"@
-
-  $ReadmeInfo = Get-ReadmeInfo -FullRepo $FullRepo
-  $Encoded = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($Readme))
-  $Payload = @{
-    message = "docs: initialize product repository"
-    content = $Encoded
-    sha = $ReadmeInfo.sha
-    branch = "main"
-  } | ConvertTo-Json -Compress
-
-  $Payload | & gh api --method PUT "repos/$FullRepo/contents/README.md" --input - | Out-Null
-  if ($LASTEXITCODE -ne 0) {
-    throw "Could not initialize README for $FullRepo."
-  }
 }
 
 Assert-Command "gh"
@@ -192,6 +142,7 @@ $TempRoot = Join-Path $env:TEMP ("ideias-ia-all-repos-" + [Guid]::NewGuid().ToSt
 $Created = 0
 $Initialized = 0
 $Preserved = 0
+$StoppedBySecondaryRateLimit = $false
 
 try {
   Write-Host "Cloning hub..." -ForegroundColor Cyan
@@ -232,11 +183,18 @@ try {
 
       $Exists = Test-RepoExists $FullRepo
       if (-not $Exists) {
-        & gh repo create $FullRepo $VisibilityFlag --description $Project.Description --disable-wiki
-        if ($LASTEXITCODE -ne 0) {
-          throw "Could not create $FullRepo."
+        $Create = Invoke-GhCapture -GhArgs @("repo", "create", $FullRepo, $VisibilityFlag, "--description", $Project.Description, "--disable-wiki")
+        if (-not $Create.Success) {
+          if ($Create.SecondaryRateLimit) {
+            Write-Warning "GitHub secondary content-creation rate limit reached. Progress was preserved."
+            Write-Warning "Stopped before creating $FullRepo. Re-run this same script later; existing repositories will be skipped."
+            $StoppedBySecondaryRateLimit = $true
+            break
+          }
+          throw "Could not create $FullRepo. $($Create.Output)"
         }
         $Created++
+        Pause-AfterMutation
       }
       elseif ((Test-MainBranchExists $FullRepo) -and -not $Force) {
         Write-Warning "main already exists and was preserved. Use -Force only if you intentionally want to replace it."
@@ -254,32 +212,29 @@ try {
         throw "Could not push $($Project.Branch) to $FullRepo."
       }
 
-      & gh api --method PATCH "repos/$FullRepo" -f "default_branch=main" | Out-Null
-      if ($LASTEXITCODE -ne 0) {
-        Write-Warning "Could not set main as default branch for $FullRepo."
-      }
+      Pause-AfterMutation
 
-      & gh repo edit $FullRepo --description $Project.Description --homepage "https://$($Owner.ToLower()).github.io/$($Project.Repo)/" | Out-Null
-      if ($LASTEXITCODE -ne 0) {
-        Write-Warning "Could not update description/homepage for $FullRepo."
-      }
+      if ($ConfigurePages) {
+        & gh api --method PATCH "repos/$FullRepo" -f "default_branch=main" | Out-Null
+        Pause-AfterMutation
 
-      $PagesPayload = @{
-        source = @{
-          branch = "main"
-          path = "/"
+        & gh repo edit $FullRepo --description $Project.Description --homepage "https://$($Owner.ToLower()).github.io/$($Project.Repo)/" | Out-Null
+        Pause-AfterMutation
+
+        $PagesPayload = @{
+          source = @{
+            branch = "main"
+            path = "/"
+          }
+        } | ConvertTo-Json -Compress
+
+        if (Test-PagesExists $FullRepo) {
+          $PagesPayload | & gh api --method PUT "repos/$FullRepo/pages" --input - | Out-Null
         }
-      } | ConvertTo-Json -Compress
-
-      if (Test-PagesExists $FullRepo) {
-        $PagesPayload | & gh api --method PUT "repos/$FullRepo/pages" --input - | Out-Null
-      }
-      else {
-        $PagesPayload | & gh api --method POST "repos/$FullRepo/pages" --input - | Out-Null
-      }
-
-      if ($LASTEXITCODE -ne 0) {
-        Write-Warning "Repository was created, but GitHub Pages may need manual activation: $FullRepo."
+        else {
+          $PagesPayload | & gh api --method POST "repos/$FullRepo/pages" --input - | Out-Null
+        }
+        Pause-AfterMutation
       }
 
       $Initialized++
@@ -294,14 +249,20 @@ try {
         continue
       }
 
-      & gh repo create $FullRepo $VisibilityFlag --description $Project.Description --disable-wiki --add-readme
-      if ($LASTEXITCODE -ne 0) {
-        throw "Could not create $FullRepo."
+      $Create = Invoke-GhCapture -GhArgs @("repo", "create", $FullRepo, $VisibilityFlag, "--description", $Project.Description, "--disable-wiki", "--add-readme")
+      if (-not $Create.Success) {
+        if ($Create.SecondaryRateLimit) {
+          Write-Warning "GitHub secondary content-creation rate limit reached. Progress was preserved."
+          Write-Warning "Stopped before creating $FullRepo. Re-run this same script later; existing repositories will be skipped."
+          $StoppedBySecondaryRateLimit = $true
+          break
+        }
+        throw "Could not create $FullRepo. $($Create.Output)"
       }
 
       $Created++
-      Set-IdeaReadme -Project $Project -FullRepo $FullRepo
       $Initialized++
+      Pause-AfterMutation
       Write-Host "Repository created with initial README."
     }
   }
@@ -311,6 +272,10 @@ try {
   Write-Host "Created: $Created"
   Write-Host "Initialized/updated: $Initialized"
   Write-Host "Preserved: $Preserved"
+  if ($StoppedBySecondaryRateLimit) {
+    Write-Host "Stopped cleanly because GitHub activated a secondary content-creation rate limit." -ForegroundColor Yellow
+    Write-Host "No completed repository will be recreated on the next run."
+  }
 }
 finally {
   if (Test-Path $TempRoot) {
