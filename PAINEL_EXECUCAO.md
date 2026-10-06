@@ -9,7 +9,7 @@ Este arquivo transforma a fila de prioridades em uma sequência prática de exec
 | Ordem | Projeto | Estado | Próxima ação |
 |---:|---|---|---|
 | 1 | **AgendaLeve** | MVP publicado / validação avançada | contato, filtros, status, cancelamento e reagendamento seguro concluídos; faltam antiabuso externo e QA real |
-| 2 | **DocPronto** | MVP em validação avançada | pipeline, WhatsApp, aceite público e clientes reutilizáveis concluídos; faltam branding, planos e validação real |
+| 2 | **DocPronto** | Homologação automatizada | fluxo comercial, aceite público, clientes reutilizáveis e QA Node concluídos; Browser E2E adicionado, faltam autenticação real em duas contas e revisão visual final |
 | 3 | **Riot Legacy** | Ideia priorizada | criar repositório próprio e protótipo visual |
 | 4 | **VagaCerta** | branch standalone pronta | criar repositório físico e publicar |
 | 5 | **LoL Match Story** | Ideia priorizada | criar MVP visual usando dados reais quando disponíveis |
@@ -55,7 +55,7 @@ Para evitar dezenas de produtos incompletos:
 
 ### Bloco A — lançar
 1. AgendaLeve — MVP publicado em validação avançada
-2. DocPronto — MVP funcional em validação avançada
+2. DocPronto — homologação automatizada em andamento
 
 ### Bloco B — provar diferencial gamer
 > Os três projetos prioritários abaixo ainda não possuem repositório físico. Outros repositórios gamer já criados podem avançar como protótipos exploratórios sem substituir esta prioridade.
