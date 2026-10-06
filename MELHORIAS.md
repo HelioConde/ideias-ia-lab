@@ -26,8 +26,10 @@ Atualizado em 06/10/2026.
 - [ ] Publicar GitHub Pages.
 - [ ] Registrar proposta no Riot Developer Portal.
 - [ ] Definir Production API key própria do produto quando elegível.
-- [ ] Criar backend server-side para Riot ID → PUUID.
-- [ ] Substituir perfil demo por payload real.
+- [x] Reutilizar backend gamer ZeroTwo.gg com Riot key server-side.
+- [x] Identificar `public-lol-profile` como backend inicial Riot ID → PUUID → League.
+- [ ] Conectar o frontend do Riot Legacy à `public-lol-profile`.
+- [ ] Substituir progressivamente o perfil demo por payload real.
 - [ ] Tratar conta inexistente, API indisponível e rate limit.
 - [ ] Validar um Riot ID real de LoL.
 - [ ] Validar um Riot ID real de TFT.
