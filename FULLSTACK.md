@@ -171,3 +171,16 @@ O carregamento é paralelo e resiliente:
 - novos links usam `server` para preservar a plataforma Riot escolhida.
 
 O Browser E2E mocka as duas Edge Functions e valida a hidratação do perfil, sem depender da disponibilidade externa da Riot no CI.
+
+
+## Regra de credencial para publicação standalone
+
+O projeto compartilha a infraestrutura gamer do ZeroTwo, mas **compartilhar banco não significa assumir que uma Production API key registrada para outro produto pode ser reutilizada indefinidamente**.
+
+Durante desenvolvimento, as funções gamer existentes servem como backend de protótipo. Antes do deploy público standalone do Riot Legacy:
+
+1. revisar o status do produto no Riot Developer Portal;
+2. registrar o Riot Legacy quando necessário;
+3. usar a credencial aprovada para o produto/funções correspondentes;
+4. manter os secrets no mesmo Supabase gamer, mas com nomes separados se houver mais de uma credencial ativa;
+5. nunca mover essas credenciais para o frontend.
