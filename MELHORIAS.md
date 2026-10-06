@@ -48,7 +48,7 @@ Atualizado em 06/10/2026.
 - [ ] TFT: unidades/traits assinatura.
 - [ ] TFT: distribuição de colocações.
 - [ ] TFT: retrospectiva por set.
-- [ ] Cards exportáveis como imagem.
+- [x] Cards exportáveis como imagem PNG gerada localmente no navegador.
 - [ ] Perfil público opcional.
 - [ ] Tema visual baseado no campeão assinatura.
 
