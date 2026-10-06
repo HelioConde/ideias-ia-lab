@@ -3,21 +3,149 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#f8f8f7">
-  <meta name="description" content="Organize matérias, data da prova e minutos por dia em um plano de revisão.">
+  <meta name="theme-color" content="#f7f6f2">
+  <meta name="description" content="Crie metas de estudo, veja o que estudar hoje e acompanhe seu desempenho em questões.">
   <meta property="og:title" content="Revisa — Plano de estudos para provas e concursos">
-  <meta property="og:description" content="Organize matérias, data da prova e minutos por dia em um plano de revisão.">
+  <meta property="og:description" content="Organize matérias, sessões diárias e treino de questões em um só lugar.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://helioconde.github.io/ideias-ia-lab/09-revisa-ai/">
   <link rel="canonical" href="https://helioconde.github.io/ideias-ia-lab/09-revisa-ai/">
   <title>Revisa — Plano de estudos para provas e concursos</title>
-  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
-<body data-site="09-revisa-ai">
-  <div id="app"></div>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="../">Revisa<span>.</span></a>
+      <div class="top-actions">
+        <span id="sync-status" class="sync-status" role="status">Carregando…</span>
+        <button id="account-open" class="button ghost" type="button">Entrar / sincronizar</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div>
+          <p class="eyebrow">PLANO DE ESTUDOS E REVISÃO</p>
+          <h1>Abra o Revisa e saiba<br><span>o que estudar agora.</span></h1>
+          <p class="hero-copy">Transforme prova, matérias e tempo disponível em blocos diários. Depois, acompanhe o progresso e treine com questões.</p>
+        </div>
+        <button id="new-goal" class="hero-cta" type="button">
+          <span>+</span>
+          <div><strong>Nova meta</strong><small>Criar outro plano de estudo</small></div>
+        </button>
+      </section>
+
+      <section id="empty-state" class="empty-state">
+        <div class="empty-icon">▤</div>
+        <h2>Crie sua primeira meta</h2>
+        <p>Informe a prova, a data, as matérias e quantos minutos você consegue estudar por dia.</p>
+        <button class="button primary" type="button" data-new-goal>Criar plano de estudos</button>
+      </section>
+
+      <div id="dashboard" hidden>
+        <section class="goal-bar">
+          <div>
+            <label for="goal-select">Meta ativa</label>
+            <select id="goal-select"></select>
+          </div>
+          <button id="archive-goal" class="button text" type="button">Arquivar meta</button>
+        </section>
+
+        <section class="metrics">
+          <article><span>Dias até a prova</span><strong id="metric-days">—</strong><small id="metric-date">—</small></article>
+          <article><span>Tempo por dia</span><strong id="metric-minutes">—</strong><small>minutos planejados</small></article>
+          <article><span>Sessões concluídas</span><strong id="metric-progress">—</strong><small id="metric-progress-detail">—</small></article>
+          <article><span>Acerto em questões</span><strong id="metric-accuracy">—</strong><small id="metric-attempts">—</small></article>
+        </section>
+
+        <section class="dashboard-grid">
+          <section class="panel today-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">HOJE</p>
+                <h2>Continue estudando</h2>
+              </div>
+              <span id="today-total" class="today-total">0 min</span>
+            </div>
+            <div id="today-sessions" class="session-list"></div>
+          </section>
+
+          <section class="panel practice-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">QUESTÕES</p>
+                <h2>Treino rápido</h2>
+              </div>
+              <select id="question-subject" aria-label="Filtrar questões por matéria"></select>
+            </div>
+            <div id="question-area" class="question-area"></div>
+          </section>
+        </section>
+
+        <section class="panel week-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">PRÓXIMOS DIAS</p>
+              <h2>Seu plano em sequência</h2>
+            </div>
+            <p>O plano inicial cobre uma janela de até 90 dias e pode ser recriado quando necessário.</p>
+          </div>
+          <div id="week-plan" class="week-plan"></div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <strong>Revisa</strong>
+      <span>Questões do banco inicial são autorais e demonstrativas. O plano organiza estudo; não garante aprovação nem nota.</span>
+    </footer>
+  </div>
+
+  <dialog id="goal-dialog" class="dialog" aria-labelledby="goal-title">
+    <div class="dialog-head">
+      <div><p class="eyebrow">NOVA META</p><h2 id="goal-title">Monte seu plano</h2></div>
+      <button id="goal-close" class="icon-button" type="button" aria-label="Fechar">×</button>
+    </div>
+    <form id="goal-form">
+      <label class="field"><span>Nome da prova ou objetivo</span><input name="examName" maxlength="120" placeholder="Ex.: Concurso de TI" required></label>
+      <div class="form-grid">
+        <label class="field"><span>Data da prova</span><input name="examDate" type="date" required></label>
+        <label class="field"><span>Minutos por dia</span><input name="minutes" type="number" min="15" max="240" step="5" value="60" required></label>
+      </div>
+      <label class="field"><span>Matérias</span><input name="subjects" maxlength="600" placeholder="Ex.: Matemática, Português, Tecnologia" required></label>
+      <label class="field"><span>Meta de acerto (%)</span><input name="targetScore" type="number" min="1" max="100" step="1" value="80"></label>
+      <button class="button primary full" type="submit">Criar plano diário</button>
+      <p class="form-message" id="goal-message" role="status" aria-live="polite"></p>
+    </form>
+  </dialog>
+
+  <dialog id="account-dialog" class="dialog account-dialog" aria-labelledby="account-title">
+    <div class="dialog-head">
+      <div><p class="eyebrow">SUA CONTA</p><h2 id="account-title">Sincronize seus estudos</h2></div>
+      <button id="account-close" class="icon-button" type="button" aria-label="Fechar">×</button>
+    </div>
+    <p class="dialog-copy">Sem conta, suas metas continuam salvas neste dispositivo.</p>
+    <form id="auth-form">
+      <label class="field"><span>E-mail</span><input name="email" type="email" autocomplete="email" required></label>
+      <label class="field"><span>Senha</span><input name="password" type="password" minlength="8" autocomplete="current-password" required></label>
+      <button class="button primary full" type="submit">Entrar</button>
+      <div class="account-actions">
+        <button id="sign-up" class="button ghost" type="button">Criar conta</button>
+        <button id="reset-password" class="button text" type="button">Esqueci a senha</button>
+      </div>
+    </form>
+    <div id="account-profile" hidden>
+      <p>Conectado como <strong id="account-email"></strong></p>
+      <button id="import-local" class="button ghost full" type="button" hidden>Importar dados deste dispositivo</button>
+      <button id="sign-out" class="button ghost full" type="button">Sair da conta</button>
+    </div>
+    <p id="account-message" class="form-message" role="status" aria-live="polite"></p>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
   <script src="../supabase-config.js"></script>
-  <script src="../data.js"></script>
-  <script src="../assets/app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
