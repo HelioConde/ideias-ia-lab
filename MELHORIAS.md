@@ -30,6 +30,7 @@ Atualizado em 06/10/2026.
 - [x] Identificar `public-lol-profile` como backend inicial Riot ID → PUUID → League.
 - [x] Conectar o frontend do Riot Legacy à `public-lol-profile`.
 - [x] Conectar também `public-tft-profile` e substituir os blocos recentes de LoL/TFT por payload real, mantendo fallback explícito.
+- [x] Garantir que a timeline ao vivo usa capítulos da amostra recente, sem misturar datas demonstrativas com o selo de dados Riot.
 - [x] Tratar conta inexistente, API indisponível, timeout e dados parciais com fallback identificado.
 - [ ] Validar um Riot ID real de LoL.
 - [ ] Validar um Riot ID real de TFT.
