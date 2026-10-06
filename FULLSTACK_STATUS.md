@@ -25,13 +25,16 @@ Os dois projetos liberaram vagas de WIP para o próximo ciclo.
 
 - **Riot Legacy** — `split/riot-legacy` — **em desenvolvimento**
   - árvore standalone própria;
-  - fluxo Riot ID → perfil demonstrativo;
-  - LoL + TFT;
+  - fluxo Riot ID + servidor → perfil LoL/TFT;
+  - dados reais via `public-lol-profile` e `public-tft-profile`;
+  - fallback demonstrativo apenas quando a fonte estiver indisponível;
+  - timeline recente baseada na amostra Riot;
   - PT-BR/EN;
-  - compartilhamento/deep link;
+  - compartilhamento, deep link e card PNG;
+  - atualização dos dados sem reload;
   - slots de anúncios;
   - Static QA e Browser E2E verdes;
-  - repositório físico `HelioConde/riot-legacy` ainda pendente.
+  - validação com Riot IDs reais e repositório físico `HelioConde/riot-legacy` ainda pendentes.
 
 ## Sete MVPs antigos — preparação concluída
 
@@ -79,9 +82,10 @@ Não remover esse backup até os sete repositórios físicos estarem criados, pu
 
 ## Backend
 
-O banco compartilhado continua sendo `pizzaria-db`.
-
-A separação de repositórios não exige dividir o banco. Cada produto acessa apenas suas tabelas e policies próprias.
+- Produtos gerais/SaaS continuam usando a infraestrutura compartilhada definida para o portfólio, incluindo `pizzaria-db` quando aplicável.
+- **Projetos gamer Riot/TFT usam o Supabase gamer do ZeroTwo.gg** (`bieihhaobdztjyoweewa`).
+- Riot Legacy **não usa `pizzaria-db`**.
+- `RIOT_API_KEY` permanece exclusivamente nas Edge Functions do backend gamer.
 
 ## Próxima etapa operacional
 
