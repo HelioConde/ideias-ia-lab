@@ -50,7 +50,7 @@ A fila agora é organizada por **prioridade real**, considerando proximidade de 
 | 3 | **Riot Legacy** | LoL + TFT | P0 | [Protótipo standalone em desenvolvimento](https://github.com/HelioConde/ideias-ia-lab/tree/split/riot-legacy) · repo físico pendente |
 | 4 | **VagaCerta** | Carreira | P0 | Repositório pendente |
 | 5 | **LoL Match Story** | LoL | P0 | Repositório pendente |
-| 6 | **TFT Wrapped** | TFT | P0 | Repositório pendente |
+| 6 | **TFT Wrapped** | TFT | P0 | [Protótipo standalone pronto](https://github.com/HelioConde/ideias-ia-lab/tree/split/tft-personal-wrapped) · repo físico pendente |
 | 7 | **PostPilot** | Criadores | P1 | [Repositório ativo](https://github.com/HelioConde/postpilot) |
 | 8 | **MontaPC** | Hardware | P1 | Repositório pendente |
 | 9 | **LoL Champion Journey** | LoL | P1 | Repositório pendente |
@@ -92,6 +92,7 @@ Protótipo atual: [`split/riot-legacy`](https://github.com/HelioConde/ideias-ia-
 | AgendaLeve | [MVP técnico concluído](https://github.com/HelioConde/agendaleve) · [validação pós-MVP](https://github.com/HelioConde/agendaleve/issues/1) |
 | DocPronto | [MVP técnico concluído](https://github.com/HelioConde/docpronto) · [validação pós-MVP](https://github.com/HelioConde/docpronto/issues/1) |
 | PostPilot | https://github.com/HelioConde/postpilot |
+| TFT Wrapped | [branch standalone pronta](https://github.com/HelioConde/ideias-ia-lab/tree/split/tft-personal-wrapped) · `HelioConde/tft-personal-wrapped` ainda será criado |
 | VagaCerta | [branch standalone pronta](https://github.com/HelioConde/ideias-ia-lab/tree/split/vagacerta) · `HelioConde/vagacerta` ainda será criado |
 | MontaPC | [branch standalone pronta](https://github.com/HelioConde/ideias-ia-lab/tree/split/montapc) · `HelioConde/montapc` ainda será criado |
 | Revisa | [branch standalone pronta](https://github.com/HelioConde/ideias-ia-lab/tree/split/revisa) · `HelioConde/revisa` ainda será criado |
@@ -129,6 +130,7 @@ Os sete MVPs antigos já possuem uma branch com o projeto na raiz, canonical do 
 - `split/perto`
 - `split/pratopronto`
 - `split/revisa`
+- `split/tft-personal-wrapped`
 
 A etapa pendente é somente criar cada repositório físico e importar a branch correspondente.
 
