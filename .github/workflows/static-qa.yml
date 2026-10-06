@@ -54,3 +54,44 @@ jobs:
               throw "Branch de migração ausente do script: $_"
             }
           }
+
+      - name: Validate all idea repositories manifest
+        shell: pwsh
+        run: |
+          $errors = $null
+          [System.Management.Automation.Language.Parser]::ParseFile(
+            (Resolve-Path "scripts/create-all-idea-repos.ps1"),
+            [ref]$null,
+            [ref]$errors
+          ) | Out-Null
+          if ($errors.Count -gt 0) {
+            $errors | ForEach-Object { Write-Error $_.Message }
+            exit 1
+          }
+
+          $script = Get-Content "scripts/create-all-idea-repos.ps1" -Raw
+          $repos = [regex]::Matches($script, 'Repo="([^"]+)"') | ForEach-Object { $_.Groups[1].Value }
+          if ($repos.Count -ne 41) {
+            throw "Esperados 41 repositórios no manifesto; encontrados $($repos.Count)."
+          }
+          if (($repos | Sort-Object -Unique).Count -ne 41) {
+            throw "Há nomes de repositório duplicados no manifesto."
+          }
+
+          @(
+            "agendaleve","docpronto","riot-legacy","vagacerta","lol-match-story",
+            "tft-personal-wrapped","postpilot","montapc","lol-champion-journey",
+            "tft-board-museum","revisa","lol-session-insights","tft-augment-memory",
+            "ow-vod-timeline","gameradar","lol-champion-pool","tft-item-lab",
+            "ow-map-master","falapro","tft-placement-dna","lol-loss-explorer",
+            "tft-comp-evolution","ow-scrim-manager","lol-role-mastery",
+            "tft-meta-journal","ow-improvement-roadmap","lol-challenge-hub",
+            "ow-hero-pool-builder","tft-unit-journey","lol-comeback-index",
+            "ow-hero-journal","tft-economy-review","ow-replay-notes",
+            "lol-lane-lab","ow-ultimate-lab","lol-death-map","tft-match-timeline",
+            "ow-teamfight-review","ow-crosshair-lab","pratopronto","perto"
+          ) | ForEach-Object {
+            if (-not $repos.Contains($_)) {
+              throw "Repositório ausente do manifesto: $_"
+            }
+          }
