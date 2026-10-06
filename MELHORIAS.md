@@ -43,7 +43,7 @@ Atualizado em 06/10/2026.
 - [x] Expor no seletor todos os shards já suportados pelo backend gamer.
 
 
-- [ ] Determinar campeão assinatura com regra explicável.
+- [x] Determinar campeão assinatura com regra explicável — maior frequência na amostra recente; KDA médio como desempate.
 - [ ] Mostrar primeira/mais antiga partida disponível quando os dados permitirem.
 - [ ] Linha do tempo por temporadas/anos.
 - [ ] Top campeões com evolução de maestria.
