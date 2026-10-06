@@ -12,6 +12,7 @@
   const backButton = document.querySelector('#back-to-search');
   const sourceBadge = document.querySelector('#demo-badge');
   const sourceNote = document.querySelector('#data-source-note');
+  const refreshButton = document.querySelector('#refresh-data');
   const backend = window.RIOT_LEGACY_BACKEND || {};
 
   const demo = {
@@ -112,6 +113,10 @@
 
   function setSourceState(state, detail = '') {
     sourceBadge.dataset.sourceState = state;
+    if (refreshButton) {
+      refreshButton.disabled = state === 'loading';
+      refreshButton.textContent = state === 'loading' ? t('refreshing_data') : t('refresh_data');
+    }
     sourceBadge.classList.toggle('live', state === 'live');
     sourceBadge.classList.toggle('partial', state === 'partial');
     sourceBadge.classList.toggle('loading', state === 'loading');
@@ -767,6 +772,11 @@
   document.querySelector('#share-legacy').addEventListener('click', shareLegacy);
   document.querySelector('#share-card-action').addEventListener('click', shareLegacy);
   document.querySelector('#download-card').addEventListener('click', downloadShareCard);
+  refreshButton?.addEventListener('click', () => {
+    if (!currentLookup) return;
+    setSourceState('loading');
+    loadLiveProfile({ ...currentLookup });
+  });
 
   window.addEventListener('riot-legacy-language', () => {
     renderDynamicCopy();
