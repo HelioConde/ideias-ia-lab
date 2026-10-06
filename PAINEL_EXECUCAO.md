@@ -21,7 +21,7 @@ Esses dois produtos **não ocupam mais vaga de implementação pesada**. Só vol
 | 2 | **VagaCerta** | branch standalone pronta | criar repositório físico e publicar |
 | 3 | **LoL Match Story** | Ideia priorizada | criar MVP visual usando dados reais quando disponíveis |
 | 4 | **TFT Wrapped** | Ideia priorizada | criar retrospectiva mínima compartilhável |
-| 5 | **PostPilot** | MVP em evolução leve | manter fora do WIP pesado enquanto Riot Legacy inicia |
+| 5 | **PostPilot** | MVP técnico avançado / evolução leve | P1 concluído, RLS homologado, PWA/offline, feedback, calendário, edição, templates e checklist verdes; falta rodada humana de autenticação e validação com usuários |
 
 ## Definição de estados
 
@@ -76,7 +76,7 @@ Para evitar dezenas de produtos incompletos:
 
 ### Bloco C — monetização/uso recorrente
 6. VagaCerta
-7. PostPilot — desenvolvimento retomado; PT/EN, planejamento editorial, anúncios preparados, dashboard de produção e Browser E2E concluídos
+7. PostPilot — P1 técnico concluído; RLS, PWA/offline, calendário, edição, templates, checklist, feedback e Browser E2E verdes; seguir apenas com autenticação humana/validação antes de P2
 8. MontaPC
 
 ### Bloco D — expansão gamer
