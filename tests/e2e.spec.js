@@ -71,9 +71,9 @@ test('carrega LoL e TFT reais pelo backend gamer e substitui o fallback', async 
       ranked: [{ queue: 'SOLO/DUO', tier: 'GOLD', rank: 'II', lp: 42, wins: 20, losses: 15, winRate: 57 }],
       mastery: [{ championId: 99, level: 7, points: 999999 }],
       championSummaries: [
-        { name: 'Lux', games: 6, avgKda: 4.1 },
         { name: 'Ahri', games: 4, avgKda: 3.3 },
-        { name: 'Syndra', games: 2, avgKda: 2.7 }
+        { name: 'Syndra', games: 2, avgKda: 2.7 },
+        { name: 'Lux', games: 6, avgKda: 4.1 }
       ],
       summary: {
         matches: 12,
@@ -124,6 +124,8 @@ test('carrega LoL e TFT reais pelo backend gamer e substitui o fallback', async 
   await expect(page.locator('#demo-badge')).toHaveText('DADOS RIOT · LOL + TFT');
   await expect(page.locator('#profile-riot-id')).toHaveText('RealPlayer#BR1');
   await expect(page.locator('#signature-title')).toContainText('Lux');
+  await expect(page.locator('#signature-text')).toContainText('maior frequência de partidas');
+  await expect(page.locator('#signature-chip')).toContainText('6 JOGOS');
   await expect(page.locator('#metric-mastery')).toContainText('999.999');
   await expect(page.locator('#metric-games')).toHaveText('12');
   await expect(page.locator('#metric-years')).toHaveText('58%');
