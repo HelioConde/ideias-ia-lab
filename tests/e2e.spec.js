@@ -84,8 +84,12 @@ test('carrega LoL e TFT reais pelo backend gamer e substitui o fallback', async 
         mainContext: 'RANKED'
       },
       matches: [
-        { position: 'MID' }, { position: 'MID' }, { position: 'MID' },
-        { position: 'SUPPORT' }, { position: 'MID' }, { position: 'SUPPORT' }
+        { position: 'MID', playedAt: Date.UTC(2026, 8, 1) },
+        { position: 'MID', playedAt: Date.UTC(2026, 8, 7) },
+        { position: 'MID', playedAt: Date.UTC(2026, 8, 12) },
+        { position: 'SUPPORT', playedAt: Date.UTC(2026, 8, 18) },
+        { position: 'MID', playedAt: Date.UTC(2026, 8, 24) },
+        { position: 'SUPPORT', playedAt: Date.UTC(2026, 9, 2) }
       ]
     })
   }));
@@ -139,6 +143,8 @@ test('carrega LoL e TFT reais pelo backend gamer e substitui o fallback', async 
   await expect(page.locator('#data-source-note')).toContainText('12 partidas recentes de LoL');
   await expect(page.locator('#timeline-title')).toContainText('amostra Riot recente');
   await expect(page.locator('#legacy-timeline')).toContainText('Seu momento recente');
+  await expect(page.locator('#legacy-timeline')).toContainText('Janela histórica disponível');
+  await expect(page.locator('#legacy-timeline')).toContainText('Partida mais antiga disponível');
   await expect(page.locator('#share-period')).toHaveText('Amostra Riot recente · LoL + TFT');
   await expect(page.locator('#share-period')).not.toContainText('2018');
   await page.getByRole('button', { name: 'Atualizar dados' }).click();
