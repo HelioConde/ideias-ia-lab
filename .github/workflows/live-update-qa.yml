@@ -1,5 +1,5 @@
 name: Live Update QA
-on: { push: { branches: [main] }, pull_request: { branches: [main] } }
+on: { push: { branches: [main, "split/montapc"] }, pull_request: { branches: [main, "split/montapc"] } }
 jobs:
   live-update:
     runs-on: ubuntu-latest
