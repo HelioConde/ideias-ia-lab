@@ -127,6 +127,50 @@ function Test-PagesExists {
   return (Test-GhSuccess -GhArgs @("api", "repos/$FullRepo/pages"))
 }
 
+function Set-IdeaRepositoryReadme {
+  param(
+    [string]$FullRepo,
+    [hashtable]$Project
+  )
+
+  $Readme = @"
+# $($Project.Name)
+
+$($Project.Description)
+
+## Status
+
+**IDEIA** — fila #$($Project.Rank) · prioridade $($Project.Priority) · área $($Project.Area).
+
+## Regras globais do Ideias IA Lab
+
+- **Monetização:** o produto deve nascer preparado para monetização por anúncios. Outras receitas podem existir como complemento.
+- **Idiomas:** o produto deve oferecer **Português do Brasil (PT-BR)** e **English (EN)**.
+- **Idioma principal:** **PT-BR é o idioma padrão e fallback**; inglês é o segundo idioma obrigatório.
+- O MVP deve prever seletor de idioma, persistência da preferência e paridade dos fluxos principais nos dois idiomas.
+- UX/UI deve considerar anúncios sem atrapalhar o fluxo principal e sem causar cliques acidentais.
+- Desktop e mobile devem ser validados tanto em PT-BR quanto em inglês.
+
+## Desenvolvimento
+
+O código deste produto deve permanecer neste repositório. O ideias-ia-lab é somente o hub de organização.
+
+Seguir a ordem, os gates e a Definition of Done definidos no plano mestre do portfólio.
+"@
+
+  $ReadmeSha = (& gh api "repos/$FullRepo/contents/README.md" --jq ".sha" 2>$null | Out-String).Trim()
+  if ([string]::IsNullOrWhiteSpace($ReadmeSha)) {
+    throw "Could not find README.md in $FullRepo after repository creation."
+  }
+
+  $Encoded = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($Readme))
+  & gh api --method PUT "repos/$FullRepo/contents/README.md" -f "message=docs: initialize portfolio rules" -f "content=$Encoded" -f "sha=$ReadmeSha" -f "branch=main" | Out-Null
+
+  if ($LASTEXITCODE -ne 0) {
+    throw "Could not initialize README rules in $FullRepo."
+  }
+}
+
 Assert-Command "gh"
 Assert-Command "git"
 
@@ -263,7 +307,9 @@ try {
       $Created++
       $Initialized++
       Pause-AfterMutation
-      Write-Host "Repository created with initial README."
+      Set-IdeaRepositoryReadme -FullRepo $FullRepo -Project $Project
+      Pause-AfterMutation
+      Write-Host "Repository created with portfolio rules in README."
     }
   }
 
