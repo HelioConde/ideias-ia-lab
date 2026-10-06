@@ -377,6 +377,47 @@
       : `<p class="empty-inline">${locale() === 'en' ? 'No Summoner’s Rift role sample available.' : 'Sem amostra de função em Summoner’s Rift.'}</p>`;
   }
 
+  function renderLiveProfileFacts() {
+    const el = document.querySelector('#live-profile-facts');
+    if (!el) return;
+    if (!live.lol && !live.tft) {
+      el.hidden = true;
+      el.innerHTML = '';
+      return;
+    }
+
+    const english = locale() === 'en';
+    const platform = String(currentLookup?.platform || live.lol?.player?.platform || live.tft?.player?.platform || '').toUpperCase();
+    const level = Number(live.lol?.player?.level || live.tft?.player?.level || 0);
+    const lolRank = Array.isArray(live.lol?.ranked)
+      ? (live.lol.ranked.find(item => item?.queue === 'SOLO/DUO') || live.lol.ranked[0])
+      : null;
+    const tftRank = Array.isArray(live.tft?.ranked)
+      ? (live.tft.ranked.find(item => String(item?.queueType || '').toUpperCase().includes('RANKED')) || live.tft.ranked[0])
+      : null;
+
+    const facts = [];
+    if (platform) facts.push({ label: english ? 'Server' : 'Servidor', value: platform });
+    if (level > 0) facts.push({ label: english ? 'Account level' : 'Nível da conta', value: formatNumber(level) });
+    if (lolRank?.tier) {
+      facts.push({
+        label: 'LoL',
+        value: `${lolRank.tier} ${lolRank.rank || ''}${Number.isFinite(Number(lolRank.lp)) ? ' · ' + Number(lolRank.lp) + ' LP' : ''}`.trim()
+      });
+    }
+    if (tftRank?.tier) {
+      facts.push({
+        label: 'TFT',
+        value: `${tftRank.tier} ${tftRank.rank || ''}${Number.isFinite(Number(tftRank.leaguePoints)) ? ' · ' + Number(tftRank.leaguePoints) + ' LP' : ''}`.trim()
+      });
+    }
+
+    el.hidden = facts.length === 0;
+    el.innerHTML = facts.map(fact =>
+      `<span class="live-fact"><small>${escapeHtml(fact.label)}</small><strong>${escapeHtml(fact.value)}</strong></span>`
+    ).join('');
+  }
+
   function renderSignature() {
     const champion = currentSignatureChampion();
     const games = Number(live.lol?.championSummaries?.[0]?.games || 0);
@@ -533,6 +574,7 @@
     renderTraits();
     renderPlacementBars();
     renderTimeline();
+    renderLiveProfileFacts();
   }
 
   function setProfileIdentity(riotId) {
