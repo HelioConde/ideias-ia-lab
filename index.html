@@ -49,11 +49,18 @@
                 <input id="tag-line" name="tagLine" autocomplete="off" minlength="3" maxlength="5" placeholder="BR1" aria-describedby="riot-id-help">
               </label>
               <label class="field">
-                <span data-i18n="region">Roteamento</span>
-                <select id="region" name="region">
-                  <option value="americas">Americas</option>
-                  <option value="europe">Europe</option>
-                  <option value="asia">Asia</option>
+                <span data-i18n="server">Servidor</span>
+                <select id="region" name="platform">
+                  <option value="br1">BR</option>
+                  <option value="na1">NA</option>
+                  <option value="la1">LAN</option>
+                  <option value="la2">LAS</option>
+                  <option value="euw1">EUW</option>
+                  <option value="eun1">EUNE</option>
+                  <option value="kr">KR</option>
+                  <option value="jp1">JP</option>
+                  <option value="oc1">OCE</option>
+                  <option value="tr1">TR</option>
                 </select>
               </label>
               <button id="lookup-submit" class="primary" type="submit" data-i18n="submit">Ver meu legado</button>
@@ -113,7 +120,7 @@
         <section class="profile-hero">
           <div class="profile-hero-bg"></div>
           <div class="profile-hero-content">
-            <span id="demo-badge" class="demo-badge" data-i18n="demo_badge">DADOS DEMONSTRATIVOS</span>
+            <span id="demo-badge" class="demo-badge" data-source-state="demo">DADOS DEMONSTRATIVOS</span>
             <div class="profile-id-row">
               <div class="avatar" id="avatar-letter">H</div>
               <div class="profile-identity">
@@ -125,7 +132,7 @@
               <button id="share-legacy" class="primary" type="button" data-i18n="share">Compartilhar legado</button>
               <button id="copy-link" class="secondary" type="button" data-i18n="copy">Copiar link</button>
             </div>
-            <p class="demo-explain" data-i18n="demo_explain">O Riot ID personaliza esta prévia; estatísticas reais entram quando o backend Riot estiver conectado.</p>
+            <p id="data-source-note" class="demo-explain" aria-live="polite">O Riot ID personaliza esta prévia; estatísticas reais entram quando o backend Riot estiver conectado.</p>
           </div>
         </section>
 
@@ -140,15 +147,15 @@
           <div class="profile-grid">
             <article class="story-card signature">
               <p class="eyebrow" data-i18n="signature_kicker">SUA ASSINATURA</p>
-              <h2 data-i18n="signature_title">Ahri define esta conta</h2>
-              <p data-i18n="signature_text">Anos de presença, maestria e recorrência transformaram a Raposa de Nove Caudas no rosto desta história.</p>
-              <span class="signature-chip">MID · 684K · AHRI</span>
+              <h2 id="signature-title">Ahri define esta conta</h2>
+              <p id="signature-text">Anos de presença, maestria e recorrência transformaram a Raposa de Nove Caudas no rosto desta história.</p>
+              <span id="signature-chip" class="signature-chip">MID · 684K · AHRI</span>
             </article>
             <div class="metrics">
               <article class="metric"><span data-i18n="mastery">Maestria</span><strong id="metric-mastery">684.210</strong></article>
               <article class="metric"><span data-i18n="games">Partidas lembradas</span><strong id="metric-games">1.284</strong></article>
-              <article class="metric"><span data-i18n="years">Anos de história</span><strong id="metric-years">8</strong></article>
-              <article class="metric"><span data-i18n="top_finish">Melhor fase TFT</span><strong id="metric-tft">Top 2</strong></article>
+              <article class="metric"><span id="metric-third-label" data-i18n="years">Anos de história</span><strong id="metric-years">8</strong></article>
+              <article class="metric"><span id="metric-tft-label" data-i18n="top_finish">Melhor fase TFT</span><strong id="metric-tft">Top 2</strong></article>
             </div>
 
             <article class="timeline-card">
@@ -167,7 +174,7 @@
           <div class="league-layout">
             <article class="league-card">
               <h2 data-i18n="league_title">Seu DNA em League</h2>
-              <div class="champion-row">
+              <div id="champion-list" class="champion-row">
                 <div class="champion"><div class="portrait">A</div><h3>Ahri</h3><span>684K mastery</span></div>
                 <div class="champion"><div class="portrait">L</div><h3>Lux</h3><span>331K mastery</span></div>
                 <div class="champion"><div class="portrait">S</div><h3>Syndra</h3><span>208K mastery</span></div>
@@ -175,7 +182,7 @@
             </article>
             <article class="league-card">
               <h2>Roles</h2>
-              <div class="role-stack">
+              <div id="role-stack" class="role-stack">
                 <div class="role-row"><span data-i18n="role_mid">Mid</span><div class="role-track"><div class="role-fill" style="width:68%"></div></div><b>68%</b></div>
                 <div class="role-row"><span data-i18n="role_support">Suporte</span><div class="role-track"><div class="role-fill" style="width:22%"></div></div><b>22%</b></div>
                 <div class="role-row"><span data-i18n="role_other">Outras</span><div class="role-track"><div class="role-fill" style="width:10%"></div></div><b>10%</b></div>
@@ -188,10 +195,10 @@
           <div class="tft-layout">
             <article class="tft-card tft-board-wrap">
               <h2 data-i18n="tft_title">Sua memória de TFT</h2>
-              <p class="eyebrow" data-i18n="board_label">Board assinatura</p>
+              <p id="board-label" class="eyebrow" data-i18n="board_label">Board assinatura</p>
               <div id="tft-board" class="tft-board"></div>
               <p class="eyebrow" style="margin-top:20px" data-i18n="traits_label">Traits recorrentes</p>
-              <div class="trait-list">
+              <div id="trait-list" class="trait-list">
                 <span class="trait">Arcana</span><span class="trait">Scholar</span><span class="trait">Bastion</span>
               </div>
             </article>
@@ -212,9 +219,9 @@
               <h3 id="share-riot-id">HelioConde#BR1</h3>
               <p>2018 → 2026 · LoL + TFT</p>
               <div class="share-facts">
-                <span data-i18n="share_card_signature">Ahri · campeã assinatura</span>
-                <span>684K mastery</span>
-                <span data-i18n="share_card_tft">TFT · melhor fase: Top 2</span>
+                <span id="share-signature" data-i18n="share_card_signature">Ahri · campeã assinatura</span>
+                <span id="share-mastery">684K mastery</span>
+                <span id="share-tft" data-i18n="share_card_tft">TFT · melhor fase: Top 2</span>
               </div>
             </div>
             <button id="share-card-action" class="primary" type="button" data-i18n="share_action">Compartilhar este card</button>
