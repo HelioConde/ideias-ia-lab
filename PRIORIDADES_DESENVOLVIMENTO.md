@@ -4,12 +4,26 @@ Atualizado em 2026-10-06.
 
 Este arquivo define a **ordem oficial de desenvolvimento do portfólio**. O `ideias-ia-lab` continua sendo apenas o hub de organização: cada produto deve ter seu próprio repositório.
 
+## Política de monetização do portfólio
+
+**Todos os projetos desta fila serão monetizados por anúncios.**
+
+A publicidade é a camada comum de monetização dos 41 produtos. Modelos citados nesta lista — como assinatura, afiliados, créditos, premium ou B2B — devem ser interpretados como **receitas complementares**, não como substitutos dos anúncios.
+
+Na prática:
+
+- todo MVP deve nascer preparado para receber anúncios;
+- UX/UI deve prever slots adequados para desktop e mobile;
+- retenção, conteúdo útil, SEO e retorno do usuário ganham peso porque sustentam inventário publicitário saudável;
+- anúncios não podem atrapalhar o fluxo principal nem incentivar cliques acidentais;
+- a ativação da rede de anúncios depende de o produto estar publicado, com conteúdo e políticas adequadas.
+
 ## Critérios usados
 
 A ordem combina quatro fatores:
 
 1. **Proximidade de lançamento** — quanto do produto já existe e pode ser colocado no ar rapidamente.
-2. **Potencial de receita/uso** — clareza de monetização, recorrência e tamanho do problema.
+2. **Potencial de receita/uso** — potencial de tráfego, retenção e inventário de anúncios, além de receitas complementares, recorrência e tamanho do problema.
 3. **Diferencial** — quanto a ideia se destaca de alternativas existentes.
 4. **Risco técnico/comercial** — dependência de APIs, dados, marketplace bilateral ou infraestrutura pesada.
 
@@ -23,11 +37,11 @@ A ordem combina quatro fatores:
 | 4 | **VagaCerta** | Carreira | P0 | Dor frequente, valor claro e bom potencial freemium | `HelioConde/vagacerta` — pendente |
 | 5 | **LoL Match Story** | LoL | P0 | Transforma partidas em histórias visuais compartilháveis | `HelioConde/lol-match-story` — pendente |
 | 6 | **TFT Wrapped** | TFT | P0 | Retrospectiva altamente compartilhável por semana/mês/set | `HelioConde/tft-personal-wrapped` — pendente |
-| 7 | **PostPilot** | Criadores | P1 | Já separado e com modelo de assinatura/créditos | [HelioConde/postpilot](https://github.com/HelioConde/postpilot) |
-| 8 | **MontaPC** | Hardware | P1 | Forte intenção de compra e monetização por afiliados | `HelioConde/montapc` — pendente |
+| 7 | **PostPilot** | Criadores | P1 | Já separado, com potencial de anúncios; assinatura/créditos podem complementar a receita | [HelioConde/postpilot](https://github.com/HelioConde/postpilot) |
+| 8 | **MontaPC** | Hardware | P1 | Forte intenção de compra, bom potencial de anúncios e afiliados como receita complementar | `HelioConde/montapc` — pendente |
 | 9 | **LoL Champion Journey** | LoL | P1 | Excelente encaixe com nostalgia, maestria e identidade do jogador | `HelioConde/lol-champion-journey` — pendente |
 | 10 | **TFT Board Museum** | TFT | P1 | Galeria visual das melhores boards; simples e compartilhável | `HelioConde/tft-board-museum` — pendente |
-| 11 | **Revisa** | Educação | P1 | Dor recorrente e assinatura/pacotes viáveis | `HelioConde/revisa` — pendente |
+| 11 | **Revisa** | Educação | P1 | Dor recorrente, potencial de anúncios e assinatura/pacotes como complemento | `HelioConde/revisa` — pendente |
 | 12 | **LoL Session Insights** | LoL | P1 | Analisa comportamento ao longo da sessão em vez de partida isolada | `HelioConde/lol-session-insights` — pendente |
 | 13 | **TFT Augment Memory** | TFT | P1 | Histórico pessoal de augments e combinações | `HelioConde/tft-augment-memory` — pendente |
 | 14 | **OW VOD Timeline** | Overwatch | P1 | Útil mesmo sem API oficial forte; revisão visual por vídeo | `HelioConde/ow-vod-timeline` — pendente |
@@ -102,6 +116,7 @@ Antes de mover para o próximo item da fila, o projeto atual deve cumprir pelo m
 - QA dos fluxos críticos;
 - README próprio;
 - deploy funcional;
+- layout preparado para anúncios sem prejudicar o fluxo principal;
 - backlog explícito para V2.
 
 Não é necessário transformar cada projeto em produto completo antes de testar o próximo. A meta é **validar o menor produto realmente utilizável**.
