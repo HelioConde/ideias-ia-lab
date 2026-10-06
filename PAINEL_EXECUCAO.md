@@ -9,7 +9,7 @@ Este arquivo transforma a fila de prioridades em uma sequência prática de exec
 | Ordem | Projeto | Estado | Próxima ação |
 |---:|---|---|---|
 | 1 | **AgendaLeve** | MVP publicado / validação avançada | contato, filtros, status, cancelamento e reagendamento seguro concluídos; faltam antiabuso externo e QA real |
-| 2 | **DocPronto** | Release candidate técnico | fluxo comercial, aceite público, clientes reutilizáveis, PDF A4 longo, PWA offline, conversão e QA Browser concluídos; falta homologação autenticada em duas contas e link público contra backend real |
+| 2 | **DocPronto** | Release candidate técnico | fluxo comercial, modelos rápidos, logo, follow-up, timeline de status, aceite textual opcional, PWA offline, conversão, anúncios preparados e QA Browser concluídos; faltam homologação autenticada em duas contas, deploy das Edge Functions novas e link público contra backend real |
 | 3 | **Riot Legacy** | Ideia priorizada | criar repositório próprio e protótipo visual |
 | 4 | **VagaCerta** | branch standalone pronta | criar repositório físico e publicar |
 | 5 | **LoL Match Story** | Ideia priorizada | criar MVP visual usando dados reais quando disponíveis |
