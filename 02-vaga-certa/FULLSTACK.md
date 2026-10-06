@@ -3,9 +3,11 @@
 Repositório individual planejado: `HelioConde/vagacerta`.
 
 ## Produto
-Organizador de candidaturas com histórico, próxima ação, personalização de currículo e preparação para entrevista.
+
+Organizador de candidaturas com histórico, funil por etapa, compatibilidade e próximos passos.
 
 ## Backend compartilhado
+
 Supabase `pizzaria-db`.
 
 Tabelas:
@@ -13,21 +15,39 @@ Tabelas:
 - `vagacerta_documents`: currículos/cartas ligados opcionalmente a uma candidatura.
 - `product_subscriptions`: plano por produto.
 
-Os dados são privados por usuário e protegidos por RLS.
+Dados privados são protegidos por RLS.
 
-## Estado atual
-O protótipo salva localmente sem conta e, com Supabase Auth, persiste candidaturas em `vagacerta_applications`.
+## Implementado
 
-## Próximas entregas
-- Kanban Saved → Applied → Interview → Offer/Rejected.
+- modo local sem conta;
+- Supabase Auth;
+- sincronização da conta;
+- importação do protótipo local antigo;
+- CRUD completo de candidaturas;
+- etapas Salva → Candidatada → Entrevista → Proposta/Encerrada;
+- mudança de status direto no card;
+- busca por empresa, cargo ou anotação;
+- filtro por status;
+- score de compatibilidade opcional;
+- salário/pretensão;
+- link da vaga;
+- métricas de total, candidaturas, entrevistas e compatibilidade média;
+- layout responsivo;
+- CI validando o frontend dedicado.
+
+## Próximas entregas de produto
+
+- currículos personalizados em `vagacerta_documents`;
 - score de compatibilidade explicado por requisito;
-- versões de currículo por vaga;
-- lembrete de follow-up;
-- painel de métricas simples;
-- integração de IA somente por backend/Edge Function.
+- data e lembrete de follow-up;
+- preparação de entrevista ligada à candidatura;
+- importação de vaga por URL quando houver integração permitida;
+- IA somente via backend/Edge Function.
 
 ## Monetização
+
 Freemium; premium para currículos personalizados, histórico avançado, preparação de entrevistas e automações.
 
 ## QA obrigatório
-Isolamento RLS, duplicidade de vagas, URLs inválidas, estados de candidatura, mobile, teclado, loading/erro/vazio e importação/exportação.
+
+Isolamento RLS, duplicidade, URLs inválidas, troca de status, score 0–100, mobile, teclado, estados loading/erro/vazio e importação local → nuvem.
