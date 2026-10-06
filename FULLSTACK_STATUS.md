@@ -75,3 +75,23 @@ Para cada branch `split/<produto>`:
 5. validar login/Supabase;
 6. validar o fluxo principal;
 7. atualizar o hub para “repositório ativo”.
+
+
+## Prioridade operacional atual
+
+A ordem oficial não é mais definida por este arquivo. Consultar:
+
+- `PRIORIDADES_DESENVOLVIMENTO.md` — ranking global;
+- `PAINEL_EXECUCAO.md` — trabalho atual e próximos blocos;
+- `ROADMAP_GAMES.md` — LoL, TFT e Overwatch.
+
+### Foco imediato
+
+1. AgendaLeve — finalizar MVP/QA/deploy;
+2. DocPronto — finalizar MVP/QA/deploy;
+3. Riot Legacy — primeiro grande protótipo gamer visual;
+4. VagaCerta — materializar o repositório standalone;
+5. LoL Match Story;
+6. TFT Wrapped.
+
+A regra de WIP recomendada é manter no máximo dois produtos em implementação pesada e um protótipo exploratório em paralelo.
