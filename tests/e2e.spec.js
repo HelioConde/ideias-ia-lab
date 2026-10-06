@@ -85,3 +85,12 @@ test("deep link restaura a jornada", async ({page}) => {
   await expect(page.locator("#profile-view")).toBeVisible();
   await expect(page.locator("#profile-riot-id")).toHaveText("RealPlayer#BR1");
 });
+test("gera card PNG do campeão selecionado", async ({page}) => {
+  await page.locator("#game-name").fill("RealPlayer");
+  await page.locator("#tag-line").fill("BR1");
+  await page.getByRole("button",{name:/Ver minha jornada/i}).click();
+  const downloadPromise=page.waitForEvent("download");
+  await page.getByRole("button",{name:"Baixar card PNG"}).click();
+  const download=await downloadPromise;
+  expect(download.suggestedFilename()).toBe("champion-journey-lux.png");
+});
