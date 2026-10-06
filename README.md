@@ -64,6 +64,30 @@ Os sete MVPs antigos já possuem uma branch com o projeto na raiz, canonical do 
 
 A etapa pendente é somente criar cada repositório físico e importar a branch correspondente.
 
+## Criação automatizada dos sete repositórios
+
+No Windows, o hub inclui `scripts/create-split-repos.ps1`.
+
+Pré-requisitos:
+- Git;
+- GitHub CLI (`gh`);
+- `gh auth login` concluído.
+
+A partir de um clone deste hub:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\\scripts\\create-split-repos.ps1
+```
+
+O script:
+1. cria os sete repositórios públicos que ainda não existirem;
+2. envia cada `split/<produto>` como `main`;
+3. define `main` como branch padrão;
+4. configura descrição/homepage;
+5. tenta habilitar GitHub Pages na raiz.
+
+Por segurança, se um destino já possuir uma `main`, ele é ignorado. Use `-Force` somente quando quiser substituir conscientemente essa branch.
+
 ## Backup de segurança
 
 Antes de limpar a `main`, o estado completo dos protótipos e migrations foi preservado em:
