@@ -11,8 +11,15 @@ Nenhum frontend, backend, configuração Supabase ou migration de produto deve s
 ## Repositórios independentes ativos
 
 - PostPilot — `HelioConde/postpilot`
-- AgendaLeve — `HelioConde/agendaleve`
-- DocPronto — `HelioConde/docpronto`
+- AgendaLeve — `HelioConde/agendaleve` — **MVP técnico concluído / validação pós-MVP**
+- DocPronto — `HelioConde/docpronto` — **MVP técnico concluído / validação pós-MVP**
+
+## MVPs técnicos concluídos
+
+- **AgendaLeve** — publicado, CI verde e backend ativo; pendências externas/manuais na [issue #1](https://github.com/HelioConde/agendaleve/issues/1).
+- **DocPronto** — publicado, CI verde e backend ativo; homologação humana na [issue #1](https://github.com/HelioConde/docpronto/issues/1).
+
+Os dois projetos liberaram vagas de WIP para o próximo ciclo.
 
 ## Sete MVPs antigos — preparação concluída
 
@@ -87,11 +94,12 @@ A ordem oficial não é mais definida por este arquivo. Consultar:
 
 ### Foco imediato
 
-1. AgendaLeve — finalizar MVP/QA/deploy;
-2. DocPronto — finalizar MVP/QA/deploy;
-3. Riot Legacy — primeiro grande protótipo gamer visual;
-4. VagaCerta — materializar o repositório standalone;
-5. LoL Match Story;
-6. TFT Wrapped.
+1. **Riot Legacy — próximo desenvolvimento pesado oficial**;
+2. VagaCerta — materializar o repositório standalone;
+3. LoL Match Story;
+4. TFT Wrapped;
+5. PostPilot — manter apenas evolução leve enquanto o novo P0 inicia.
+
+AgendaLeve e DocPronto saíram da implementação pesada. Suas pendências restantes estão em issues pós-MVP e não bloqueiam o próximo projeto.
 
 A regra de WIP recomendada é manter no máximo dois produtos em implementação pesada e um protótipo exploratório em paralelo.
