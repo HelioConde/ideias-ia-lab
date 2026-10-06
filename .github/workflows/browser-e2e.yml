@@ -2,7 +2,7 @@ name: Browser E2E
 
 on:
   push:
-    branches: [main, "split/riot-legacy"]
+    branches: [main, "split/lol-match-story"]
   pull_request:
 
 jobs:
