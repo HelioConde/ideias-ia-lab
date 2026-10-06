@@ -21,6 +21,18 @@ Nenhum frontend, backend, configuração Supabase ou migration de produto deve s
 
 Os dois projetos liberaram vagas de WIP para o próximo ciclo.
 
+## Protótipo gamer atual
+
+- **Riot Legacy** — `split/riot-legacy` — **em desenvolvimento**
+  - árvore standalone própria;
+  - fluxo Riot ID → perfil demonstrativo;
+  - LoL + TFT;
+  - PT-BR/EN;
+  - compartilhamento/deep link;
+  - slots de anúncios;
+  - Static QA e Browser E2E verdes;
+  - repositório físico `HelioConde/riot-legacy` ainda pendente.
+
 ## Sete MVPs antigos — preparação concluída
 
 Os projetos abaixo já foram convertidos para uma estrutura standalone, cada um em sua própria branch:
@@ -94,7 +106,7 @@ A ordem oficial não é mais definida por este arquivo. Consultar:
 
 ### Foco imediato
 
-1. **Riot Legacy — próximo desenvolvimento pesado oficial**;
+1. **Riot Legacy — desenvolvimento pesado atual; protótipo standalone já iniciado e validado**;
 2. VagaCerta — materializar o repositório standalone;
 3. LoL Match Story;
 4. TFT Wrapped;
