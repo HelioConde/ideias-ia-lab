@@ -4,6 +4,23 @@ Este repositório é **somente o hub de organização** do portfólio.
 
 O código de cada produto deve viver em um repositório GitHub próprio. A `main` não contém frontend, backend, migrations ou configuração Supabase dos produtos.
 
+## Regra global de monetização
+
+**Todos os produtos do Ideias IA Lab serão monetizados por anúncios.**
+
+Esta é uma regra transversal do portfólio e deve ser considerada desde o MVP de cada produto:
+
+- a experiência deve prever espaços de anúncio sem prejudicar o fluxo principal;
+- anúncios não podem bloquear ações essenciais, formulários, leitura, gameplay analysis ou navegação;
+- mobile e desktop devem reservar áreas adequadas para anúncios sem causar layout shift relevante;
+- páginas públicas, conteúdo indexável e fluxos de retorno devem ser pensados também para retenção e inventário publicitário;
+- consentimento, privacidade, políticas da plataforma de anúncios e requisitos legais devem ser respeitados;
+- o produto nunca deve inventar cliques, visualizações ou usar padrões enganosos para aumentar receita;
+- assinatura, afiliados, créditos, recursos premium ou outras receitas podem existir futuramente, mas serão **complementares** à monetização por anúncios;
+- nenhum produto deve remover a preparação para anúncios apenas porque outro modelo de receita também faça sentido.
+
+A implementação de anúncios reais só deve ser ativada quando o produto e a rede escolhida estiverem prontos para isso. Antes disso, o layout pode usar slots/reservas estruturais sem anúncios falsos.
+
 ## Ordem oficial de desenvolvimento
 
 A fila agora é organizada por **prioridade real**, considerando proximidade de lançamento, monetização, diferencial e risco técnico.
