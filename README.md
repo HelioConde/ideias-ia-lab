@@ -40,15 +40,29 @@ Destino planejado: `HelioConde/riot-legacy`.
 | AgendaLeve | https://github.com/HelioConde/agendaleve |
 | DocPronto | https://github.com/HelioConde/docpronto |
 | PostPilot | https://github.com/HelioConde/postpilot |
-| VagaCerta | `HelioConde/vagacerta` — criação pendente |
-| MontaPC | `HelioConde/montapc` — criação pendente |
-| Revisa | `HelioConde/revisa` — criação pendente |
-| GameRadar | `HelioConde/gameradar` — criação pendente |
-| FalaPro | `HelioConde/falapro` — criação pendente |
-| PratoPronto | `HelioConde/pratopronto` — criação pendente |
-| Perto | `HelioConde/perto` — criação pendente |
+| VagaCerta | [branch standalone pronta](https://github.com/HelioConde/ideias-ia-lab/tree/split/vagacerta) · `HelioConde/vagacerta` ainda será criado |
+| MontaPC | [branch standalone pronta](https://github.com/HelioConde/ideias-ia-lab/tree/split/montapc) · `HelioConde/montapc` ainda será criado |
+| Revisa | [branch standalone pronta](https://github.com/HelioConde/ideias-ia-lab/tree/split/revisa) · `HelioConde/revisa` ainda será criado |
+| GameRadar | [branch standalone pronta](https://github.com/HelioConde/ideias-ia-lab/tree/split/gameradar) · `HelioConde/gameradar` ainda será criado |
+| FalaPro | [branch standalone pronta](https://github.com/HelioConde/ideias-ia-lab/tree/split/falapro) · `HelioConde/falapro` ainda será criado |
+| PratoPronto | [branch standalone pronta](https://github.com/HelioConde/ideias-ia-lab/tree/split/pratopronto) · `HelioConde/pratopronto` ainda será criado |
+| Perto | [branch standalone pronta](https://github.com/HelioConde/ideias-ia-lab/tree/split/perto) · `HelioConde/perto` ainda será criado |
 
 As novas ideias de LoL, TFT e Overwatch estão organizadas na fila oficial e devem receber repositórios independentes quando entrarem em desenvolvimento.
+
+## Branches standalone preparadas
+
+Os sete MVPs antigos já possuem uma branch com o projeto na raiz, canonical do futuro GitHub Pages, configuração Supabase própria e CI próprio:
+
+- `split/vagacerta`
+- `split/falapro`
+- `split/montapc`
+- `split/gameradar`
+- `split/perto`
+- `split/pratopronto`
+- `split/revisa`
+
+A etapa pendente é somente criar cada repositório físico e importar a branch correspondente.
 
 ## Backup de segurança
 
