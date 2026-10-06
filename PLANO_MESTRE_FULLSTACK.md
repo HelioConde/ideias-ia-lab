@@ -19,9 +19,37 @@ Cada produto deve chegar, no mínimo, ao estado **MVP publicado**, com:
 - SEO e metadados quando o produto for indexável;
 - segurança básica e tratamento de segredos;
 - deploy funcional;
+- preparação de layout/arquitetura para monetização por anúncios;
 - README técnico e backlog de V2.
 
 O `ideias-ia-lab` continua sendo somente o hub. Código de produto fica no repositório próprio.
+
+## Regra global de monetização
+
+Todos os **41 produtos** devem ser projetados para monetização por anúncios.
+
+Regras obrigatórias:
+
+- anúncios fazem parte da arquitetura de monetização de todo produto;
+- prever inventário publicitário desde UX/UI e responsividade, sem sacrificar a ação principal;
+- evitar CLS/layout shift reservando espaço quando houver slot de anúncio;
+- nunca inserir anúncios no meio de ações críticas, confirmação de pagamento, autenticação ou controles que possam gerar clique acidental;
+- produtos com páginas públicas devem considerar SEO, recorrência, tempo de sessão e páginas úteis como parte da estratégia de aquisição e monetização;
+- implementar consentimento/privacidade e políticas da rede de anúncios quando aplicável;
+- receitas adicionais como assinatura, afiliados, créditos ou premium são opcionais e complementares;
+- ativar anúncios reais somente quando o produto estiver pronto e em conformidade; durante desenvolvimento, usar apenas placeholders técnicos claramente identificados quando necessário.
+
+### Gate de monetização por anúncios
+
+Antes de considerar um MVP pronto para crescimento, verificar:
+
+- [ ] locais de anúncio definidos para desktop e mobile;
+- [ ] nenhum slot interrompe o fluxo principal;
+- [ ] layout continua estável com e sem anúncio;
+- [ ] páginas elegíveis possuem conteúdo real e suficiente;
+- [ ] política de privacidade/consentimento prevista quando necessária;
+- [ ] métricas de retenção podem ser acompanhadas sem incentivar comportamento enganoso;
+- [ ] monetização complementar, quando existir, não elimina a base de anúncios.
 
 ## Regra principal de execução
 
@@ -173,6 +201,7 @@ Somente depois de os lotes anteriores terem MVPs ou quando algum puder ser entre
 4. Revisar desktop e mobile.
 5. Criar estados vazios, loading, erro e sucesso.
 6. Revisar acessibilidade básica.
+7. Definir posições de anúncios para desktop/mobile sem atrapalhar o fluxo principal.
 
 ### Fase 3 — frontend
 
@@ -254,6 +283,7 @@ Um projeto só sai da implementação pesada quando:
 - [ ] nenhum bug P0/P1 conhecido;
 - [ ] build/CI sem erro;
 - [ ] deploy funcional;
+- [ ] slots de anúncio previstos e validados sem prejudicar UX, quando aplicável ao estágio do produto;
 - [ ] README atualizado;
 - [ ] backlog V2 registrado.
 
