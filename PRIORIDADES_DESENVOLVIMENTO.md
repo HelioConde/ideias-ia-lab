@@ -51,7 +51,7 @@ A ordem combina quatro fatores:
 | 6 | **TFT Wrapped** | TFT | P0 | Retrospectiva altamente compartilhável por semana/mês/set | `HelioConde/tft-personal-wrapped` — pendente |
 | 7 | **PostPilot** | Criadores | P1 | Já separado, com potencial de anúncios; assinatura/créditos podem complementar a receita | [HelioConde/postpilot](https://github.com/HelioConde/postpilot) |
 | 8 | **MontaPC** | Hardware | P1 | Forte intenção de compra, bom potencial de anúncios e afiliados como receita complementar | `HelioConde/montapc` — pendente |
-| 9 | **LoL Champion Journey** | LoL | P1 | Excelente encaixe com nostalgia, maestria e identidade do jogador | `HelioConde/lol-champion-journey` — pendente |
+| 9 | **LoL Champion Journey** | LoL | P1 | Excelente encaixe com nostalgia, maestria e identidade do jogador | [MVP `split/lol-champion-journey`](https://github.com/HelioConde/ideias-ia-lab/tree/split/lol-champion-journey) — repo físico pendente |
 | 10 | **TFT Board Museum** | TFT | P1 | Galeria visual das melhores boards; simples e compartilhável | `HelioConde/tft-board-museum` — pendente |
 | 11 | **Revisa** | Educação | P1 | Dor recorrente, potencial de anúncios e assinatura/pacotes como complemento | `HelioConde/revisa` — pendente |
 | 12 | **LoL Session Insights** | LoL | P1 | Analisa comportamento ao longo da sessão em vez de partida isolada | `HelioConde/lol-session-insights` — pendente |
