@@ -17,7 +17,7 @@ Esses dois produtos **não ocupam mais vaga de implementação pesada**. Só vol
 
 | Ordem | Projeto | Estado | Próxima ação |
 |---:|---|---|---|
-| 1 | **Riot Legacy** | Próximo foco oficial | criar repositório próprio e iniciar protótipo visual navegável |
+| 1 | **Riot Legacy** | **Em desenvolvimento** | protótipo standalone navegável pronto e com QA verde; materializar repo físico e conectar dados Riot reais via backend |
 | 2 | **VagaCerta** | branch standalone pronta | criar repositório físico e publicar |
 | 3 | **LoL Match Story** | Ideia priorizada | criar MVP visual usando dados reais quando disponíveis |
 | 4 | **TFT Wrapped** | Ideia priorizada | criar retrospectiva mínima compartilhável |
@@ -68,9 +68,9 @@ Para evitar dezenas de produtos incompletos:
 2. DocPronto — MVP técnico concluído; issue pós-MVP aberta
 
 ### Bloco B — provar diferencial gamer — **bloco atual**
-> Os três projetos prioritários abaixo ainda não possuem repositório físico. Outros repositórios gamer já criados podem avançar como protótipos exploratórios sem substituir esta prioridade.
+> Riot Legacy já possui protótipo standalone em `split/riot-legacy`, mas ainda não possui o repositório físico final. Os demais continuam aguardando materialização.
 
-1. Riot Legacy — **próximo desenvolvimento pesado**
+1. Riot Legacy — **desenvolvimento pesado atual; protótipo standalone validado**
 2. LoL Match Story
 3. TFT Wrapped
 
