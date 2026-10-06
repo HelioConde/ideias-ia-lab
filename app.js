@@ -129,6 +129,31 @@
     $("#journey-timeline").innerHTML=items.map((x,i)=>'<div class="timeline-item"><span>'+esc(x[0])+'</span><i></i><div><b>'+esc(x[1])+'</b><p>'+esc(x[2])+'</p></div></div>').join("");
   }
 
+  function downloadCard(){
+    if(!state.profile||!state.champions.length)return;
+    const c=state.champions[state.selected]||state.champions[0], score=connectionScore(c), p=state.profile;
+    const canvas=document.createElement("canvas"); canvas.width=1200; canvas.height=630;
+    const ctx=canvas.getContext("2d");
+    const grd=ctx.createLinearGradient(0,0,1200,630); grd.addColorStop(0,"#090b14"); grd.addColorStop(1,"#171326");
+    ctx.fillStyle=grd; ctx.fillRect(0,0,1200,630);
+    ctx.fillStyle="#d9aa55"; ctx.fillRect(70,72,76,6);
+    ctx.fillStyle="#f0cf89"; ctx.font="700 24px system-ui"; ctx.fillText("CHAMPION JOURNEY",70,125);
+    ctx.fillStyle="#ffffff"; ctx.font="500 92px Georgia"; ctx.fillText(c.name,70,250);
+    ctx.fillStyle="#aab4c7"; ctx.font="400 30px system-ui"; ctx.fillText((p.player?.gameName||"Player")+"#"+(p.player?.tagLine||"—"),70,305);
+    const stats=[[String(c.games||0),t("games")],[Number(c.avgKda||0).toFixed(1),"KDA"],[c.masteryPoints?fmt(c.masteryPoints):"—",t("mastery")]];
+    stats.forEach((s,i)=>{const x=70+i*250;ctx.fillStyle="#ffffff";ctx.font="700 42px system-ui";ctx.fillText(s[0],x,430);ctx.fillStyle="#7f8ba1";ctx.font="500 16px system-ui";ctx.fillText(String(s[1]).toUpperCase(),x,462)});
+    ctx.strokeStyle="rgba(217,170,85,.75)";ctx.lineWidth=3;ctx.beginPath();ctx.arc(1010,300,105,0,Math.PI*2);ctx.stroke();
+    ctx.fillStyle="#f0cf89";ctx.font="700 72px system-ui";ctx.textAlign="center";ctx.fillText(String(score),1010,325);
+    ctx.fillStyle="#8994a8";ctx.font="600 15px system-ui";ctx.fillText(t("connection").toUpperCase(),1010,365);ctx.textAlign="left";
+    ctx.fillStyle="#5f697c";ctx.font="400 16px system-ui";ctx.fillText("lol-champion-journey",70,565);
+    const a=document.createElement("a"); a.download="champion-journey-"+slug(c.name).toLowerCase()+".png"; a.href=canvas.toDataURL("image/png"); a.click();
+  }
+  async function copyLink(){
+    try{await navigator.clipboard.writeText(location.href);const b=$("#copy-link"),old=b.textContent;b.textContent=t("copied");setTimeout(()=>b.textContent=old,1400)}catch{}
+  }
+  $("#download-card").onclick=downloadCard;
+  $("#copy-link").onclick=copyLink;
+
   $("#search-form").addEventListener("submit",e=>{e.preventDefault();const g=$("#game-name").value.trim(),tag=$("#tag-line").value.trim().replace(/^#/,""),server=$("#region").value;if(g&&tag)loadProfile(g,tag,server)});
   $("#new-profile").onclick=()=>{state.profile=null;$("#profile-view").hidden=true;$("#landing-view").hidden=false;history.replaceState(null,"","./");document.title="LoL Champion Journey — sua história com cada campeão";renderRecent();};
   $("#refresh-data").onclick=()=>{const [g,tag]=($("#profile-riot-id").textContent||"Player#BR1").split("#");const server=new URLSearchParams(location.search).get("server")||"br1";loadProfile(g,tag,server,true)};
