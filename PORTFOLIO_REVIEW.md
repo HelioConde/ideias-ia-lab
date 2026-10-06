@@ -1,25 +1,35 @@
 # Portfólio SaaS — avaliação de produto, UX/UI, QA, SEO e negócio
 
-Atualizado em 2026-10-05.
+Atualizado em 2026-10-06.
 
 ## Arquitetura compartilhada
 
-Os 10 produtos usam o projeto Supabase `pizzaria-db` como backend compartilhado, com tabelas prefixadas por produto, autenticação via `auth.users`, RLS por proprietário e leitura anônima apenas para catálogos públicos. A publishable key pode ser usada no frontend; chaves secretas/service role nunca devem ser expostas.
+Os produtos gerais do laboratório usam o projeto Supabase `pizzaria-db` como backend compartilhado, com tabelas prefixadas por produto, autenticação via `auth.users`, RLS por proprietário e leitura anônima apenas para catálogos públicos. A publishable key pode ser usada no frontend; chaves secretas/service role nunca devem ser expostas.
+
+Os projetos de jogos devem permanecer separados da linha SaaS geral e reutilizar a infraestrutura gamer definida para esse ecossistema quando aplicável.
 
 ## Priorização executiva
 
-| # | Produto | Potencial | Complexidade | Monetização | Prioridade |
-|---|---|---:|---:|---|---:|
-| 1 | PostPilot | 9/10 | 8/10 | assinatura/créditos | A |
-| 2 | VagaCerta | 9/10 | 7/10 | freemium + premium | A |
-| 3 | FalaPro | 8/10 | 7/10 | assinatura/pacotes | B |
-| 4 | MontaPC | 9/10 | 8/10 | afiliados/patrocínios | A |
-| 5 | GameRadar | 8/10 | 6/10 | afiliados/anúncios | B |
-| 6 | AgendaLeve | 10/10 | 7/10 | mensalidade B2B | A+ |
-| 7 | Perto | 8/10 | 9/10 | lead/plano profissional | B |
-| 8 | PratoPronto | 7/10 | 6/10 | premium/anúncios | B |
-| 9 | Revisa | 9/10 | 8/10 | assinatura/pacotes | A |
-| 10 | DocPronto | 10/10 | 6/10 | assinatura/freemium | A+ |
+A **fonte oficial da ordem de desenvolvimento** agora é:
+
+➡️ [PRIORIDADES_DESENVOLVIMENTO.md](./PRIORIDADES_DESENVOLVIMENTO.md)
+
+O ranking unifica os produtos SaaS e as novas ideias de LoL, TFT e Overwatch.
+
+### Top 10 atual
+
+| # | Produto | Área | Prioridade | Por quê |
+|---:|---|---|---|---|
+| 1 | AgendaLeve | SaaS | P0 | Produto já separado + receita recorrente B2B |
+| 2 | DocPronto | SaaS | P0 | MVP rápido + monetização clara |
+| 3 | Riot Legacy | LoL + TFT | P0 | Diferencial emocional, visual e compartilhável |
+| 4 | VagaCerta | Carreira | P0 | Dor frequente + freemium viável |
+| 5 | LoL Match Story | LoL | P0 | Conteúdo visual e compartilhável |
+| 6 | TFT Wrapped | TFT | P0 | Retrospectiva recorrente e viralizável |
+| 7 | PostPilot | Criadores | P1 | Produto já separado + assinatura/créditos |
+| 8 | MontaPC | Hardware | P1 | Intenção de compra + afiliados |
+| 9 | LoL Champion Journey | LoL | P1 | Nostalgia, maestria e identidade |
+| 10 | TFT Board Museum | TFT | P1 | Visual, simples e compartilhável |
 
 ## UX/UI
 
@@ -36,6 +46,7 @@ Diretrizes comuns: ação principal visível acima da dobra; onboarding em no m�
 - **PratoPronto:** orçamento semanal e número de pessoas antes do cardápio; lista de compras consolidada.
 - **Revisa:** “continuar estudando” como CTA principal; métricas focadas em evolução, não em excesso de gráficos.
 - **DocPronto:** formulário de orçamento em uma tela; visualização final sempre ao lado/no passo seguinte.
+- **Riot Legacy:** a página precisa parecer uma homenagem à trajetória do jogador, não um dashboard frio; arte, maestria, favoritos, marcos e retrospectivas devem dominar a experiência.
 
 ## QA mínimo obrigatório
 
@@ -54,8 +65,16 @@ Diretrizes comuns: ação principal visível acima da dobra; onboarding em no m�
 
 Cada produto deve ter título/description exclusivos, canonical, Open Graph, sitemap, robots, schema.org apropriado e páginas indexáveis de conteúdo. Dashboards privados devem usar `noindex`. Para produtos locais (Perto) usar LocalBusiness/Service; para GameRadar usar Product/Offer; para conteúdos educacionais usar Course/Quiz quando aplicável.
 
+Projetos de jogos com perfis públicos devem priorizar páginas compartilháveis, metadados Open Graph e URLs estáveis sem expor dados privados.
+
 ## Critério CEO
 
-Lançar primeiro produtos com: dor frequente, valor entendido em menos de 30 segundos, baixo custo operacional e receita recorrente. A ordem recomendada é **AgendaLeve → DocPronto → VagaCerta → MontaPC → PostPilot → Revisa → GameRadar → FalaPro → PratoPronto → Perto**.
+Desenvolver primeiro produtos que combinem:
 
-O Perto fica por último apesar do potencial porque marketplace bilateral exige aquisição simultânea de clientes e profissionais, moderação, reputação e prevenção de fraude.
+- caminho curto até um MVP publicável;
+- valor percebido em poucos segundos;
+- potencial de retorno recorrente ou compartilhamento orgânico;
+- diferenciação suficiente para justificar um produto independente;
+- baixo risco de bloqueio técnico.
+
+A sequência completa não deve ser duplicada neste arquivo para evitar divergência futura. A referência única é [PRIORIDADES_DESENVOLVIMENTO.md](./PRIORIDADES_DESENVOLVIMENTO.md).
