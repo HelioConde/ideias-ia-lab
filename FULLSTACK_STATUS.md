@@ -2,11 +2,21 @@
 
 Atualizado em 2026-10-06.
 
+## Marco atual
+
+A primeira camada fullstack dos **10 produtos** está implementada.
+
+Três produtos possuem repositórios dedicados:
+- `HelioConde/postpilot`
+- `HelioConde/agendaleve`
+- `HelioConde/docpronto`
+
+Os outros sete possuem frontend dedicado dentro de `HelioConde/ideias-ia-lab`, com separação preparada em `SPLIT_REPOS.md`.
+
 ## Backend compartilhado
 
 Projeto Supabase: `pizzaria-db`.
 
-- billing: `product_subscriptions`
 - PostPilot: `postpilot_projects`, `postpilot_outputs`
 - VagaCerta: `vagacerta_applications`, `vagacerta_documents`
 - FalaPro: `falapro_sessions`, `falapro_answers`
@@ -15,71 +25,73 @@ Projeto Supabase: `pizzaria-db`.
 - AgendaLeve: `agendaleve_businesses`, `agendaleve_business_hours`, `agendaleve_services`, `agendaleve_bookings`, `agendaleve_booking_rate_limits`
 - Perto: `perto_professionals`, `perto_requests`
 - PratoPronto: `pratopronto_plans`, `pratopronto_meals`, `pratopronto_shopping_items`
-- Revisa: `revisa_goals`, `revisa_questions`, `revisa_attempts`
+- Revisa: `revisa_goals`, `revisa_study_sessions`, `revisa_questions`, `revisa_attempts`
 - DocPronto: `docpronto_clients`, `docpronto_documents`, `docpronto_items`, `docpronto_proposals`
 
-As tabelas novas usam RLS. Catálogos públicos têm leitura anônima somente onde necessário.
-
-## Repositórios dedicados
+## Produto por produto
 
 ### PostPilot
-- autenticação Supabase;
-- modo local sem conta;
-- sincronização de projetos;
-- importação local → nuvem;
-- histórico e exclusão protegidos por RLS;
-- SEO e CI;
-- GitHub Pages validado.
+Conta opcional, modo local, sincronização, importação local e persistência de projetos/outputs. Gerador atual é local por regras; IA e vídeo ainda não estão conectados.
+
+### VagaCerta
+CRUD completo, funil de candidatura, busca/filtro, score, salário, links, métricas, local/cloud e importação.
+
+### FalaPro
+Sessões de cinco perguntas por profissão, uma pergunta por vez, feedback heurístico transparente, pontuação, histórico e local/cloud.
+
+### MontaPC
+Catálogo inicial de 23 peças de referência, geração por orçamento, ajuste manual, checks explicados de socket/RAM/gabinete/cooler/fonte e builds local/cloud. Preços são estimativas, não ofertas ao vivo.
+
+### GameRadar
+Alertas personalizados, último preço observado manualmente, meta atingida/gap, filtros e cloud. Área de ofertas reais permanece vazia enquanto nenhuma fonte real alimentar `gameradar_offers`.
 
 ### AgendaLeve
-- três modos: local, painel autenticado e reserva pública;
-- serviços/expediente/agenda sincronizados;
-- link `?negocio=slug`;
-- Edge Function `create-booking`;
-- Edge Function `booking-availability`;
-- prevenção de conflito no banco;
-- rate limit para reservas;
-- leitura pública limitada a negócio/horários/serviços;
-- SEO e CI.
+Painel do dono, serviços, expediente, reservas, link público, disponibilidade em tempo real, `create-booking`, `booking-availability`, rate limit e prevenção de conflito.
+
+### Perto
+Busca pública apenas de perfis `active`, cadastro profissional `pending`, bloqueio de autoaprovação, pedidos privados com contato de retorno e restrição de colunas públicas.
+
+### PratoPronto
+Geração de sete refeições, quantidades por pessoa, lista consolidada, estimativas, itens comprados, histórico e local/cloud. Não é ferramenta médica/nutricional.
+
+### Revisa
+Metas, matérias, plano de até 90 dias, sessões diárias, progresso, banco inicial de 14 questões autorais e registro de tentativas.
 
 ### DocPronto
-- autenticação e sincronização;
-- tabela `docpronto_proposals` compatível com o frontend;
-- histórico cloud corrigido;
-- impressão/PDF;
-- SEO e CI.
+Orçamentos com itens, edição, duplicação, impressão/PDF, local/cloud, importação e RLS.
 
-## Sete produtos ainda no laboratório
+## QA e deploy
 
-VagaCerta, FalaPro, MontaPC, GameRadar, Perto, PratoPronto e Revisa agora carregam Supabase Auth, continuam utilizáveis localmente sem conta e persistem dados reais no backend quando autenticados.
+- PostPilot: Static QA + Pages verdes.
+- AgendaLeve: Static QA + Pages verdes.
+- DocPronto: Static QA + Quality Checks + Pages verdes.
+- Ideias+ Lab: CI valida os sete `app.js`, sete `style.css`, SEO e boot do Supabase. Últimos commits funcionais de cada produto passaram.
 
-O Perto já consulta `perto_professionals` para resultados públicos ativos.
+## Hardening realizado
 
-Cada pasta contém `FULLSTACK.md` com arquitetura, monetização, QA e próximos passos.
+- RLS ativo nas tabelas dos módulos.
+- Grants explícitos para a Data API.
+- Catálogos `montapc_components`, `gameradar_games`, `gameradar_offers` e `revisa_questions` são somente leitura para clientes.
+- AgendaLeve separa público, autenticado e proprietário.
+- Perto impede autoaprovação de profissional.
+- Perto não concede SELECT de `phone`/`whatsapp` a `anon` ou `authenticated`.
+- Segredos nunca ficam no frontend.
 
-## QA atual
+## Pendências transversais
 
-- PostPilot: Static QA aprovado.
-- AgendaLeve: Static QA aprovado.
-- DocPronto: Static QA e Quality Checks aprovados nas execuções mais recentes.
-- Ideias+ Lab: Lab QA aprovado e GitHub Pages publicado.
+- criar fisicamente os sete repositórios quando a integração GitHub oferecer criação;
+- testes E2E em navegador real;
+- pagamentos somente onde o modelo exigir;
+- observabilidade/telemetria;
+- conteúdo legal/políticas conforme cada produto;
+- integrações externas reais (preços, IA, notificações) somente com fonte/segredo adequados.
 
-## Segurança
+## Avisos antigos do projeto Supabase
 
-A auditoria pós-implementação não apontou erro novo de segurança nos módulos criados. A tabela interna `agendaleve_booking_rate_limits` fica sem política de cliente por design e é usada pela Edge Function privilegiada.
+A auditoria ainda aponta itens do sistema legado da pizzaria, como `product_sales_summary` com SECURITY DEFINER e funções antigas executáveis. Eles não foram modificados nesta rodada para evitar regressão em um sistema existente.
 
-Permanecem avisos antigos ligados à aplicação da pizzaria, incluindo `product_sales_summary` e funções `SECURITY DEFINER`; eles não foram alterados para evitar regressão no sistema existente.
+A proteção de senha vazada do Supabase Auth também aparece desativada e deve ser tratada como configuração de segurança do projeto.
 
 ## Limitação operacional
 
-A conexão GitHub disponível nesta sessão permite commits, arquivos, branches, PRs e inspeção de Actions, mas não expõe criação de repositórios. Por isso ainda faltam os repositórios físicos:
-
-- `HelioConde/vagacerta`
-- `HelioConde/falapro`
-- `HelioConde/montapc`
-- `HelioConde/gameradar`
-- `HelioConde/perto`
-- `HelioConde/pratopronto`
-- `HelioConde/revisa`
-
-O código e a arquitetura desses sete já estão preparados para separação.
+A conexão GitHub desta sessão continua sem uma operação para criar novos repositórios. O código dos sete produtos, contudo, já está individualizado e pronto para migração sem alteração do banco.
