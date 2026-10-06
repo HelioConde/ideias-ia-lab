@@ -45,9 +45,9 @@ A fila agora é organizada por **prioridade real**, considerando proximidade de 
 
 | # | Projeto | Área | Prioridade | Status |
 |---:|---|---|---|---|
-| 1 | **AgendaLeve** | SaaS | P0 | [Repositório ativo](https://github.com/HelioConde/agendaleve) |
-| 2 | **DocPronto** | SaaS | P0 | [Repositório ativo](https://github.com/HelioConde/docpronto) |
-| 3 | **Riot Legacy** | LoL + TFT | P0 | Repositório pendente |
+| 1 | **AgendaLeve** | SaaS | P0 | [MVP técnico concluído · validação pós-MVP](https://github.com/HelioConde/agendaleve/issues/1) |
+| 2 | **DocPronto** | SaaS | P0 | [MVP técnico concluído · validação pós-MVP](https://github.com/HelioConde/docpronto/issues/1) |
+| 3 | **Riot Legacy** | LoL + TFT | P0 | **Próximo foco oficial** · repositório pendente |
 | 4 | **VagaCerta** | Carreira | P0 | Repositório pendente |
 | 5 | **LoL Match Story** | LoL | P0 | Repositório pendente |
 | 6 | **TFT Wrapped** | TFT | P0 | Repositório pendente |
@@ -66,6 +66,15 @@ A fila agora é organizada por **prioridade real**, considerando proximidade de 
 - **[Revisão executiva](./PORTFOLIO_REVIEW.md)** — visão de produto, UX/UI, QA, SEO e negócio.
 - **[Status fullstack](./FULLSTACK_STATUS.md)** — estado físico dos repositórios e separações.
 
+## Foco atual do portfólio
+
+**AgendaLeve e DocPronto concluíram o gate de saída da implementação pesada.**
+
+- AgendaLeve: MVP técnico publicado; pendências humanas/externas centralizadas na [issue #1](https://github.com/HelioConde/agendaleve/issues/1).
+- DocPronto: MVP técnico publicado; homologação humana centralizada na [issue #1](https://github.com/HelioConde/docpronto/issues/1).
+- **Próximo desenvolvimento pesado: Riot Legacy.**
+- Novas features nos dois SaaS ficam pausadas até aparecer feedback real, bug crítico ou decisão explícita de retomada.
+
 ## Destaque estratégico — Riot Legacy
 
 O **Riot Legacy** será a experiência visual e nostálgica do portfólio gamer.
@@ -80,8 +89,8 @@ Destino planejado: `HelioConde/riot-legacy`.
 
 | Produto | Repositório/status |
 |---|---|
-| AgendaLeve | https://github.com/HelioConde/agendaleve |
-| DocPronto | https://github.com/HelioConde/docpronto |
+| AgendaLeve | [MVP técnico concluído](https://github.com/HelioConde/agendaleve) · [validação pós-MVP](https://github.com/HelioConde/agendaleve/issues/1) |
+| DocPronto | [MVP técnico concluído](https://github.com/HelioConde/docpronto) · [validação pós-MVP](https://github.com/HelioConde/docpronto/issues/1) |
 | PostPilot | https://github.com/HelioConde/postpilot |
 | VagaCerta | [branch standalone pronta](https://github.com/HelioConde/ideias-ia-lab/tree/split/vagacerta) · `HelioConde/vagacerta` ainda será criado |
 | MontaPC | [branch standalone pronta](https://github.com/HelioConde/ideias-ia-lab/tree/split/montapc) · `HelioConde/montapc` ainda será criado |
