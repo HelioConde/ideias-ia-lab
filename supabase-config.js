@@ -1,5 +1,5 @@
 // Configuração pública do Supabase.
-// A publishable key pode ficar no navegador; nunca use service_role no frontend.
+// A publishable key pode ficar no navegador; segredos administrativos nunca devem ficar no frontend.
 (() => {
   const sdk = window.supabase;
   if (!sdk?.createClient) {
