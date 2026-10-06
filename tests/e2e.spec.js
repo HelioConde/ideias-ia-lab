@@ -137,3 +137,17 @@ test('carrega LoL e TFT reais pelo backend gamer e substitui o fallback', async 
   await expect(page.locator('#share-period')).not.toContainText('2018');
   await expect(page).toHaveURL(/server=br1/);
 });
+
+
+test('baixa o card compartilhável como PNG', async ({ page }) => {
+  await page.locator('#game-name').fill('CardPlayer');
+  await page.locator('#tag-line').fill('BR1');
+  await page.getByRole('button', { name: /Ver meu legado/i }).click();
+  await page.getByRole('button', { name: 'Compartilhar' }).click();
+
+  const downloadPromise = page.waitForEvent('download');
+  await page.getByRole('button', { name: 'Baixar card PNG' }).click();
+  const download = await downloadPromise;
+
+  expect(download.suggestedFilename()).toMatch(/^riot-legacy-cardplayer-br1\.png$/);
+});
