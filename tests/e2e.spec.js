@@ -153,3 +153,28 @@ test('baixa o card compartilhável como PNG', async ({ page }) => {
 
   expect(download.suggestedFilename()).toMatch(/^riot-legacy-cardplayer-br1\.png$/);
 });
+
+
+test('explica rate limit e mantém fallback demonstrativo', async ({ page }) => {
+  await page.unroute('**/public-lol-profile');
+  await page.unroute('**/public-tft-profile');
+
+  for (const endpoint of ['public-lol-profile', 'public-tft-profile']) {
+    await page.route('**/' + endpoint, route => route.fulfill({
+      status: 429,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        error: 'rate_limited',
+        message: 'Limite da Riot atingido.'
+      })
+    }));
+  }
+
+  await page.locator('#game-name').fill('RateLimit');
+  await page.locator('#tag-line').fill('BR1');
+  await page.getByRole('button', { name: /Ver meu legado/i }).click();
+
+  await expect(page.locator('#demo-badge')).toHaveText('FALLBACK DEMONSTRATIVO');
+  await expect(page.locator('#data-source-note')).toContainText('limite temporário da Riot');
+  await expect(page.getByRole('button', { name: 'Atualizar dados' })).toBeEnabled();
+});
