@@ -20,6 +20,7 @@ Cada produto deve chegar, no mínimo, ao estado **MVP publicado**, com:
 - segurança básica e tratamento de segredos;
 - deploy funcional;
 - preparação de layout/arquitetura para monetização por anúncios;
+- suporte obrigatório a PT-BR e inglês, com PT-BR como idioma principal;
 - README técnico e backlog de V2.
 
 O `ideias-ia-lab` continua sendo somente o hub. Código de produto fica no repositório próprio.
@@ -50,6 +51,38 @@ Antes de considerar um MVP pronto para crescimento, verificar:
 - [ ] política de privacidade/consentimento prevista quando necessária;
 - [ ] métricas de retenção podem ser acompanhadas sem incentivar comportamento enganoso;
 - [ ] monetização complementar, quando existir, não elimina a base de anúncios.
+
+## Regra global de idiomas / i18n
+
+Todos os **41 produtos** devem funcionar em **PT-BR e inglês (EN)**.
+
+O **PT-BR é obrigatório como idioma principal, padrão e fallback**. O inglês é obrigatório como segundo idioma.
+
+### Requisitos de implementação
+
+- não espalhar textos importantes de interface sem uma camada de tradução/i18n quando o stack permitir;
+- manter chaves de tradução estáveis e separar conteúdo de interface da lógica;
+- incluir seletor de idioma visível e acessível;
+- persistir a preferência do usuário em localStorage, perfil ou mecanismo equivalente;
+- manter paridade dos fluxos essenciais nos dois idiomas;
+- traduzir também erros, loading, empty states, autenticação, confirmações e mensagens transacionais exibidas na interface;
+- formatar datas, números, percentuais e moedas de acordo com o locale;
+- PT-BR deve ser usado quando não houver preferência salva ou tradução disponível;
+- páginas indexáveis devem receber metadados localizados e `hreflang` quando houver URLs por idioma;
+- conteúdo gerado pelo usuário não deve ser traduzido automaticamente sem necessidade; a regra se aplica à interface e ao conteúdo editorial do produto.
+
+### Gate de idiomas
+
+Antes de considerar um MVP pronto para crescimento:
+
+- [ ] PT-BR funciona como idioma padrão;
+- [ ] inglês está disponível no seletor;
+- [ ] preferência de idioma persiste;
+- [ ] fluxo principal foi testado nos dois idiomas;
+- [ ] estados de erro/loading/vazio/sucesso estão traduzidos;
+- [ ] layout suporta expansão de texto em inglês sem quebrar desktop/mobile;
+- [ ] SEO localizado está configurado quando aplicável;
+- [ ] nenhuma funcionalidade pública crítica ficou disponível em somente um idioma.
 
 ## Regra principal de execução
 
@@ -202,6 +235,7 @@ Somente depois de os lotes anteriores terem MVPs ou quando algum puder ser entre
 5. Criar estados vazios, loading, erro e sucesso.
 6. Revisar acessibilidade básica.
 7. Definir posições de anúncios para desktop/mobile sem atrapalhar o fluxo principal.
+8. Revisar os dois idiomas, mantendo PT-BR como padrão e inglês com paridade funcional.
 
 ### Fase 3 — frontend
 
@@ -211,6 +245,7 @@ Somente depois de os lotes anteriores terem MVPs ou quando algum puder ser entre
 4. Formulários e validações.
 5. Tratamento de erros.
 6. Performance básica.
+7. Implementar a camada de i18n PT-BR/EN e persistência da preferência de idioma.
 
 ### Fase 4 — backend e dados
 
@@ -244,7 +279,9 @@ Obrigatório validar:
 - erro de backend;
 - banco vazio;
 - duplicidade de ações;
-- regressão do fluxo principal.
+- regressão do fluxo principal;
+- fluxo principal em PT-BR e inglês;
+- troca/persistência de idioma e quebra de layout por textos traduzidos.
 
 Bug P0/P1 bloqueia publicação.
 
@@ -284,6 +321,7 @@ Um projeto só sai da implementação pesada quando:
 - [ ] build/CI sem erro;
 - [ ] deploy funcional;
 - [ ] slots de anúncio previstos e validados sem prejudicar UX, quando aplicável ao estágio do produto;
+- [ ] PT-BR e inglês disponíveis, com PT-BR padrão e os dois idiomas validados no fluxo principal;
 - [ ] README atualizado;
 - [ ] backlog V2 registrado.
 
