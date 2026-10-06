@@ -1,4 +1,4 @@
-name: Lab QA
+name: Organizer QA
 
 on:
   push:
@@ -11,44 +11,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-      - name: Validate JavaScript syntax
-        run: |
-          node --check data.js
-          node --check assets/app.js
-          node --check supabase-config.js
-          node --check 02-vaga-certa/app.js
-          node --check 03-entrevista-fluente/app.js
-          node --check 04-monta-pc/app.js
-          node --check 05-caça-game/app.js
-          node --check 07-perto-de-mim/app.js
-          node --check 08-prato-pronto/app.js
-          node --check 09-revisa-ai/app.js
-      - name: Validate product pages
+      - name: Validate organizer hub
         run: |
           set -e
-          for page in             02-vaga-certa             03-entrevista-fluente             04-monta-pc             05-caça-game             07-perto-de-mim             08-prato-pronto             09-revisa-ai
+          test -f index.html
+          test -f assets/style.css
+          test -f README.md
+          test -f SPLIT_REPOS.md
+          grep -qi '<title' index.html
+          grep -qi 'Hub de organização' index.html
+          grep -qi 'somente o hub de organização' README.md
+          for forbidden in data.js supabase-config.js assets/app.js 01-studio-social 02-vaga-certa 03-entrevista-fluente 04-monta-pc 05-caça-game 06-hora-marcada 07-perto-de-mim 08-prato-pronto 09-revisa-ai 10-doc-pronto supabase
           do
-            test -f "$page/index.html"
-            grep -qi '<title' "$page/index.html"
-            grep -qi 'meta name="description"' "$page/index.html"
-            grep -qi 'rel="canonical"' "$page/index.html"
-            grep -qi 'supabase-config.js' "$page/index.html"
+            test ! -e "$forbidden"
           done
-          test -f 02-vaga-certa/style.css
-          test -f 03-entrevista-fluente/style.css
-          test -f 04-monta-pc/style.css
-          test -f 05-caça-game/style.css
-          test -f 07-perto-de-mim/style.css
-          test -f 08-prato-pronto/style.css
-          test -f 09-revisa-ai/style.css
-          grep -qi '02-vaga-certa/app.js\|src="app.js"' 02-vaga-certa/index.html
-          grep -qi '03-entrevista-fluente/app.js\|src="app.js"' 03-entrevista-fluente/index.html
-          grep -qi '04-monta-pc/app.js\|src="app.js"' 04-monta-pc/index.html
-          grep -qi '05-caça-game/app.js\|src="app.js"' 05-caça-game/index.html
-          grep -qi '07-perto-de-mim/app.js\|src="app.js"' 07-perto-de-mim/index.html
-          grep -qi '08-prato-pronto/app.js\|src="app.js"' 08-prato-pronto/index.html
-          grep -qi '09-revisa-ai/app.js\|src="app.js"' 09-revisa-ai/index.html
-          exit 0

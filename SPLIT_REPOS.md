@@ -1,37 +1,46 @@
-# Separação dos sete repositórios restantes
+# Separação dos repositórios
 
-A conexão GitHub atual não oferece uma operação de criação de repositório. Quando os repositórios existirem, esta é a divisão oficial.
+## Regra
 
-| Repositório | Fonte atual | Backend principal |
-|---|---|---|
-| `HelioConde/vagacerta` | `02-vaga-certa/` | `vagacerta_applications`, `vagacerta_documents` |
-| `HelioConde/falapro` | `03-entrevista-fluente/` | `falapro_sessions`, `falapro_answers` |
-| `HelioConde/montapc` | `04-monta-pc/` | `montapc_components`, `montapc_builds`, `montapc_build_items` |
-| `HelioConde/gameradar` | `05-caça-game/` | `gameradar_games`, `gameradar_offers`, `gameradar_custom_alerts` |
-| `HelioConde/perto` | `07-perto-de-mim/` | `perto_professionals`, `perto_requests` |
-| `HelioConde/pratopronto` | `08-prato-pronto/` | `pratopronto_plans`, `pratopronto_meals`, `pratopronto_shopping_items` |
-| `HelioConde/revisa` | `09-revisa-ai/` | `revisa_goals`, `revisa_questions`, `revisa_attempts` |
+`HelioConde/ideias-ia-lab` é somente organizador. Nenhum produto novo deve ser desenvolvido diretamente na `main`.
 
-## Arquivos compartilhados que precisam ser individualizados
+## Já separados
 
-Hoje os sete usam:
-- `assets/app.js`
-- `assets/style.css`
-- `data.js`
-- `supabase-config.js`
+- `HelioConde/postpilot`
+- `HelioConde/agendaleve`
+- `HelioConde/docpronto`
 
-Ao separar, cada repositório deve receber somente o código do próprio produto. A camada de Supabase deve manter a mesma URL/publishable key, mas jamais copiar chaves secretas.
+## Repositórios a criar
 
-## Checklist de migração por repositório
+1. `HelioConde/vagacerta`
+2. `HelioConde/falapro`
+3. `HelioConde/montapc`
+4. `HelioConde/gameradar`
+5. `HelioConde/perto`
+6. `HelioConde/pratopronto`
+7. `HelioConde/revisa`
 
-1. mover o HTML da pasta do produto para `index.html`;
-2. extrair apenas o adapter e UI daquele produto do `assets/app.js`;
-3. copiar/limpar apenas o CSS utilizado;
-4. manter `supabase-config.js`;
-5. adicionar `README.md`, `FULLSTACK.md` e `.github/workflows/static-qa.yml`;
-6. ajustar canonical/OG para a nova URL do GitHub Pages;
-7. publicar Pages;
-8. validar login, persistência, RLS, mobile e estados vazios/erro;
-9. só depois remover a versão correspondente do laboratório.
+## Fonte preservada
 
-Nenhum dado precisa ser migrado no Supabase: os novos repositórios continuarão usando as mesmas tabelas já criadas.
+O snapshot completo anterior à limpeza está em:
+
+`archive/pre-split-2026-10-06`
+
+Commit de origem:
+
+`689ed2d0961c13f15ceaf60ccb06403f965a9714`
+
+## Procedimento de migração
+
+Quando cada repositório for criado:
+
+1. copiar apenas a pasta correspondente do snapshot;
+2. mover as migrations específicas daquele produto para o novo repositório;
+3. copiar uma configuração Supabase própria do produto;
+4. ajustar canonical/OG URL para o novo GitHub Pages;
+5. adicionar CI próprio;
+6. habilitar GitHub Pages;
+7. validar frontend + Supabase;
+8. atualizar este hub de “pendente” para “separado”.
+
+A branch de backup só deve ser removida depois que os sete destinos estiverem validados.
