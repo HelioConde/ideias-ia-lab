@@ -551,13 +551,17 @@
       ...currentTftMatches().map(match => Number(match.playedAt || 0))
     ].filter(value => Number.isFinite(value) && value > 0);
     if (timestamps.length) {
+      const oldestAt = new Date(Math.min(...timestamps));
       const latestAt = new Date(Math.max(...timestamps));
+      const dateOptions = { day: '2-digit', month: 'short', year: 'numeric' };
+      const oldestLabel = oldestAt.toLocaleDateString(locale(), dateOptions).replace('.', '');
+      const latestLabel = latestAt.toLocaleDateString(locale(), dateOptions).replace('.', '');
       chapters.push({
-        label: latestAt.toLocaleDateString(locale(), { day: '2-digit', month: 'short' }).replace('.', '').toUpperCase(),
-        title: english ? 'Latest activity in this snapshot' : 'Atividade mais recente desta amostra',
+        label: english ? 'SAMPLE' : 'AMOSTRA',
+        title: english ? 'Available history window' : 'Janela histórica disponível',
         text: english
-          ? 'This chapter comes from the most recent match returned by the Riot-backed sample.'
-          : 'Este capítulo vem da partida mais recente retornada pela amostra baseada nos dados Riot.'
+          ? `Oldest match available in this Riot sample: ${oldestLabel}. Latest activity: ${latestLabel}. This is the available API sample, not necessarily the account's first-ever match.`
+          : `Partida mais antiga disponível nesta amostra Riot: ${oldestLabel}. Atividade mais recente: ${latestLabel}. Esta é a janela disponível pela API, não necessariamente a primeira partida da conta.`
       });
     }
 
