@@ -17,7 +17,7 @@ $Projects = @(
   @{ Rank=3;  Name="Riot Legacy"; Repo="riot-legacy"; Area="LoL + TFT"; Priority="P0"; Mode="idea"; Description="Experiencia visual e nostalgica da trajetoria do jogador em LoL e TFT." },
   @{ Rank=4;  Name="VagaCerta"; Repo="vagacerta"; Area="Carreira"; Priority="P0"; Mode="split"; Branch="split/vagacerta"; Description="Organizador de candidaturas com funil, metricas e sincronizacao." },
   @{ Rank=5;  Name="LoL Match Story"; Repo="lol-match-story"; Area="LoL"; Priority="P0"; Mode="idea"; Description="Transforma partidas de League of Legends em historias visuais compartilhaveis." },
-  @{ Rank=6;  Name="TFT Wrapped"; Repo="tft-personal-wrapped"; Area="TFT"; Priority="P0"; Mode="idea"; Description="Retrospectiva pessoal de TFT por semana, mes ou set." },
+  @{ Rank=6;  Name="TFT Wrapped"; Repo="tft-personal-wrapped"; Area="TFT"; Priority="P0"; Mode="split"; Branch="split/tft-personal-wrapped"; Description="Retrospectiva pessoal de TFT por semana, mes ou set." },
   @{ Rank=7;  Name="PostPilot"; Repo="postpilot"; Area="Criadores"; Priority="P1"; Mode="existing"; Description="Estudio de conteudo para criadores." },
   @{ Rank=8;  Name="MontaPC"; Repo="montapc"; Area="Hardware"; Priority="P1"; Mode="split"; Branch="split/montapc"; Description="Montador de PCs por orcamento com verificacoes de compatibilidade." },
   @{ Rank=9;  Name="LoL Champion Journey"; Repo="lol-champion-journey"; Area="LoL"; Priority="P1"; Mode="idea"; Description="Historia visual da evolucao do jogador com seus campeoes e maestrias." },
