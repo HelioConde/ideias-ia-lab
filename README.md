@@ -31,16 +31,22 @@ O protótipo atual **não consulta a API da Riot**. O Riot ID digitado personali
 
 Isso é intencional: primeiro validamos a experiência visual e a proposta de valor. Dados reais entram no próximo estágio via backend seguro.
 
+## Backend gamer
+
+O Riot Legacy **reutiliza o Supabase do ZeroTwo.gg** (`bieihhaobdztjyoweewa`), onde a Riot key já está protegida server-side. Não será criado outro banco e o projeto não usa `pizzaria-db`.
+
+A função `public-lol-profile` já existente será o primeiro backend real do Riot Legacy para League.
+
 ## Próximo estágio — dados Riot reais
 
-A arquitetura planejada usa:
+A arquitetura usa:
 
 1. Riot ID (`gameName + tagLine`);
 2. ACCOUNT-V1 para obter PUUID;
 3. endpoints suportados de League/TFT por PUUID;
-4. Edge Function/backend como proxy;
+4. Edge Function `public-lol-profile` do ZeroTwo como primeiro proxy;
 5. chave Riot **somente no servidor**, nunca no JavaScript público;
-6. cache controlado para reduzir chamadas e respeitar rate limits.
+6. cache gamer existente para reduzir chamadas e respeitar rate limits.
 
 A Riot recomenda Riot ID como referência player-facing e PUUID quando o endpoint oferece essa opção.
 
