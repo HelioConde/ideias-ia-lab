@@ -14,6 +14,11 @@
   const sourceNote = document.querySelector('#data-source-note');
   const refreshButton = document.querySelector('#refresh-data');
   const backend = window.RIOT_LEGACY_BACKEND || {};
+  const recentSearches = document.querySelector('#recent-searches');
+  const recentSearchesList = document.querySelector('#recent-searches-list');
+  const clearRecentSearches = document.querySelector('#clear-recent-searches');
+  const RECENT_SEARCHES_KEY = 'riot-legacy-recent-searches';
+  const RECENT_SEARCHES_LIMIT = 5;
 
   const demo = {
     mastery: 684210,
@@ -57,6 +62,67 @@
     toast.textContent = t(messageKey);
     toast.classList.add('show');
     window.setTimeout(() => toast.classList.remove('show'), 1800);
+  }
+
+  function readRecentSearches() {
+    try {
+      const value = JSON.parse(localStorage.getItem(RECENT_SEARCHES_KEY) || '[]');
+      return Array.isArray(value)
+        ? value
+          .filter(item => item && typeof item.gameName === 'string' && typeof item.tagLine === 'string')
+          .map(item => ({
+            gameName: item.gameName.slice(0, 16),
+            tagLine: item.tagLine.replace(/^#/, '').slice(0, 5),
+            platform: String(item.platform || 'br1').toLowerCase()
+          }))
+          .slice(0, RECENT_SEARCHES_LIMIT)
+        : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function writeRecentSearches(items) {
+    localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(items.slice(0, RECENT_SEARCHES_LIMIT)));
+  }
+
+  function addRecentSearch(gameName, tagLine, platform) {
+    const entry = {
+      gameName: String(gameName || '').trim().slice(0, 16),
+      tagLine: String(tagLine || '').trim().replace(/^#/, '').slice(0, 5),
+      platform: String(platform || 'br1').toLowerCase()
+    };
+    const key = `${entry.gameName.toLowerCase()}#${entry.tagLine.toLowerCase()}@${entry.platform}`;
+    const next = [
+      entry,
+      ...readRecentSearches().filter(item =>
+        `${item.gameName.toLowerCase()}#${item.tagLine.toLowerCase()}@${item.platform}` !== key
+      )
+    ].slice(0, RECENT_SEARCHES_LIMIT);
+    writeRecentSearches(next);
+    renderRecentSearches();
+  }
+
+  function renderRecentSearches() {
+    if (!recentSearches || !recentSearchesList) return;
+    const items = readRecentSearches();
+    recentSearches.hidden = items.length === 0;
+    recentSearchesList.innerHTML = items.map((item, index) =>
+      `<button class="recent-search" type="button" data-recent-index="${index}"><strong>${escapeHtml(normalizedId(item.gameName, item.tagLine))}</strong><span>${escapeHtml(item.platform.toUpperCase())}</span></button>`
+    ).join('');
+  }
+
+  function openRecentSearch(index) {
+    const item = readRecentSearches()[Number(index)];
+    if (!item) return;
+    gameNameInput.value = item.gameName;
+    tagLineInput.value = item.tagLine;
+    if ([...platformInput.options].some(option => option.value === item.platform)) {
+      platformInput.value = item.platform;
+    }
+    feedback.hidden = true;
+    addRecentSearch(item.gameName, item.tagLine, item.platform);
+    showProfile(item.gameName, item.tagLine, item.platform);
   }
 
   function normalizedId(gameName, tagLine) {
@@ -789,7 +855,19 @@
       return;
     }
     feedback.hidden = true;
+    addRecentSearch(gameName, tagLine, platformInput.value);
     showProfile(gameName, tagLine, platformInput.value);
+  });
+
+  recentSearchesList?.addEventListener('click', event => {
+    const button = event.target.closest('[data-recent-index]');
+    if (!button) return;
+    openRecentSearch(button.dataset.recentIndex);
+  });
+
+  clearRecentSearches?.addEventListener('click', () => {
+    localStorage.removeItem(RECENT_SEARCHES_KEY);
+    renderRecentSearches();
   });
 
   backButton.addEventListener('click', showLanding);
@@ -829,6 +907,8 @@
     }
     if (!feedback.hidden) feedback.textContent = t('invalid_id');
   });
+
+  renderRecentSearches();
 
   const params = new URLSearchParams(location.search);
   const deepId = params.get('riotId');
