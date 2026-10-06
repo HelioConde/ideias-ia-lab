@@ -17,12 +17,14 @@ jobs:
         run: |
           node --check app.js
           node --check i18n.js
+          node --check backend-config.js
       - name: Required product markers
         run: |
           test -f index.html
           test -f style.css
           test -f app.js
           test -f i18n.js
+          test -f backend-config.js
           test -f README.md
           test -f FULLSTACK.md
           test -f MELHORIAS.md
@@ -40,6 +42,11 @@ jobs:
           grep -qi 'riot-legacy-language' i18n.js
           grep -qi 'URLSearchParams' app.js
           grep -qi 'navigator.share' app.js
+          grep -qi 'public-lol-profile' backend-config.js
+          grep -qi 'public-tft-profile' backend-config.js
+          grep -qi 'postPublicFunction' app.js
+          grep -qi 'DADOS RIOT' app.js
+          grep -qi 'server' app.js
       - name: No secrets
         run: |
           ! grep -RniE 'RGAPI-[A-Za-z0-9_-]{20,}|SUPABASE_SERVICE_ROLE_KEY|service_role.*eyJ' . --exclude-dir=.git --include='*.js' --include='*.html' --include='*.json' --exclude='package*.json'
