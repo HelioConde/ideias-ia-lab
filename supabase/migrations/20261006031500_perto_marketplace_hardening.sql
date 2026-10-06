@@ -38,11 +38,6 @@ end $$;
 
 create index if not exists perto_professionals_public_search_idx
   on public.perto_professionals(status, state, city, category);
-create index if not exists perto_requests_user_created_idx
-  on public.perto_requests(user_id, created_at desc);
-create index if not exists perto_requests_professional_created_idx
-  on public.perto_requests(professional_id, created_at desc);
-
 drop policy if exists "perto_professionals_owner_insert" on public.perto_professionals;
 create policy "perto_professionals_owner_insert"
 on public.perto_professionals
