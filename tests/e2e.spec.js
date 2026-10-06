@@ -131,5 +131,9 @@ test('carrega LoL e TFT reais pelo backend gamer e substitui o fallback', async 
   await expect(page.locator('#champion-list')).toContainText('Lux');
   await expect(page.locator('#trait-list')).toContainText('Arcana');
   await expect(page.locator('#data-source-note')).toContainText('12 partidas recentes de LoL');
+  await expect(page.locator('#timeline-title')).toContainText('amostra Riot recente');
+  await expect(page.locator('#legacy-timeline')).toContainText('Seu momento recente');
+  await expect(page.locator('#share-period')).toHaveText('Amostra Riot recente · LoL + TFT');
+  await expect(page.locator('#share-period')).not.toContainText('2018');
   await expect(page).toHaveURL(/server=br1/);
 });
