@@ -3,56 +3,90 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#f7f8f7">
-  <meta name="description" content="Hub de organização e prioridade de desenvolvimento dos produtos digitais de Hélio Conde.">
-  <title>Ideias IA Lab — Prioridades</title>
-  <link rel="stylesheet" href="assets/style.css">
+  <meta name="theme-color" content="#0b1020">
+  <title>TFT Wrapped — sua retrospectiva de TFT</title>
+  <meta name="description" content="Veja sua retrospectiva de TFT por semana, mês ou set: comps, augments, unidades, colocações e recordes.">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<div class="page">
+  <header class="shell topbar">
+    <div class="brand">TFT <span>Wrapped</span></div>
+    <div class="controls">
+      <button class="chip" data-period="week">7 dias</button>
+      <button class="chip" data-period="month">30 dias</button>
+      <button class="chip" data-period="set">Set</button>
+      <button class="ghost" data-lang>EN</button>
+    </div>
+  </header>
+
   <main class="shell">
-    <header class="topbar">
-      <div>
-        <p class="eyebrow">PORTFÓLIO DE PRODUTOS</p>
-        <h1>Ideias IA Lab</h1>
-      </div>
-      <span class="hub-badge">Hub de prioridades</span>
-    </header>
-
     <section class="hero">
-      <h2>Desenvolver na ordem certa.<br><span>Uma ideia de cada vez.</span></h2>
-      <p>A fila considera proximidade de lançamento, monetização, diferencial e risco técnico. Cada produto continua vivendo em um repositório próprio.</p>
+      <article class="panel intro">
+        <div class="eyebrow" data-i18n="eyebrow">Sua história recente no TFT</div>
+        <h1 data-i18n="hero">Seu set, contado como uma história.</h1>
+        <p data-i18n="sub">Menos tabela, mais memória: descubra suas comps favoritas, augments marcantes, melhores resultados e recordes do período.</p>
+        <form class="search" data-search>
+          <input name="riotId" value="HelioConde#BR1" aria-label="Riot ID">
+          <select name="region" aria-label="Servidor"><option value="br1">BR</option><option value="na1">NA</option><option value="euw1">EUW</option></select>
+          <button class="primary" type="submit" data-i18n="search">Ver meu Wrapped</button>
+        </form>
+        <p class="muted" data-mode-label>Modo demonstrativo — integração Riot preparada para backend.</p>
+      </article>
+      <article class="panel feature-card">
+        <div>
+          <div class="eyebrow" data-i18n="identity">Identidade do período</div>
+          <div class="big-number">Flex</div>
+          <p class="muted" data-i18n="identityText">Você alternou comps com frequência e terminou melhor quando preservou opções até o estágio 4.</p>
+        </div>
+        <div><strong class="good">Top 4 em 61%</strong><div class="muted">23 partidas analisadas</div></div>
+      </article>
     </section>
 
-    <section class="grid" aria-label="Top 10 prioridades">
-      <article class="card ready"><div class="num">PRIORIDADE 01 · P0</div><h3>AgendaLeve</h3><p>SaaS de agendamento B2B. Já separado e com caminho curto até receita recorrente.</p><a href="https://github.com/HelioConde/agendaleve">Abrir repositório ↗</a></article>
-      <article class="card ready"><div class="num">PRIORIDADE 02 · P0</div><h3>DocPronto</h3><p>Propostas e orçamentos. Produto simples de explicar, usar e monetizar.</p><a href="https://github.com/HelioConde/docpronto">Abrir repositório ↗</a></article>
-      <article class="card pending"><div class="num">PRIORIDADE 03 · P0</div><h3>Riot Legacy</h3><p>Experiência visual e nostálgica de LoL + TFT baseada no Riot ID, maestria, favoritos e trajetória.</p><span>Destino: HelioConde/riot-legacy</span></article>
-      <article class="card pending"><div class="num">PRIORIDADE 04 · P0</div><h3>VagaCerta</h3><p>Organizador de candidaturas com grande frequência de uso e potencial freemium.</p><a href="https://github.com/HelioConde/ideias-ia-lab/tree/split/vagacerta">Branch standalone pronta ↗</a></article>
-      <article class="card pending"><div class="num">PRIORIDADE 05 · P0</div><h3>LoL Match Story</h3><p>Transforma partidas em histórias visuais, resumos e momentos compartilháveis.</p><span>Destino: HelioConde/lol-match-story</span></article>
-      <article class="card pending"><div class="num">PRIORIDADE 06 · P0</div><h3>TFT Wrapped</h3><p>Retrospectiva de semana, mês ou set com forte potencial de compartilhamento.</p><span>Destino: HelioConde/tft-personal-wrapped</span></article>
-      <article class="card ready"><div class="num">PRIORIDADE 07 · P1</div><h3>PostPilot</h3><p>Estúdio de conteúdo para criadores com assinatura e créditos.</p><a href="https://github.com/HelioConde/postpilot">Abrir repositório ↗</a></article>
-      <article class="card pending"><div class="num">PRIORIDADE 08 · P1</div><h3>MontaPC</h3><p>Compatibilidade de peças, orçamento e monetização por afiliados.</p><a href="https://github.com/HelioConde/ideias-ia-lab/tree/split/montapc">Branch standalone pronta ↗</a></article>
-      <article class="card pending"><div class="num">PRIORIDADE 09 · P1</div><h3>LoL Champion Journey</h3><p>História visual da evolução do jogador com seus campeões e maestrias.</p><span>Destino: HelioConde/lol-champion-journey</span></article>
-      <article class="card pending"><div class="num">PRIORIDADE 10 · P1</div><h3>TFT Board Museum</h3><p>Galeria visual das melhores boards e composições já construídas.</p><span>Destino: HelioConde/tft-board-museum</span></article>
-    </section>
+    <section class="grid" data-dashboard>
+      <article class="panel card span-3"><div class="muted">Partidas</div><div class="metric" data-metric="games">23</div></article>
+      <article class="panel card span-3"><div class="muted">Média</div><div class="metric" data-metric="avg">4,1</div></article>
+      <article class="panel card span-3"><div class="muted">Top 4</div><div class="metric" data-metric="top4">61%</div></article>
+      <article class="panel card span-3"><div class="muted">Vitórias</div><div class="metric" data-metric="wins">4</div></article>
 
-    <section class="note">
-      <strong>Fila completa: 41 projetos</strong>
-      <p>LoL, TFT, Overwatch e os produtos SaaS gerais foram reunidos em uma única ordem oficial. Consulte <a href="https://github.com/HelioConde/ideias-ia-lab/blob/main/PRIORIDADES_DESENVOLVIMENTO.md">PRIORIDADES_DESENVOLVIMENTO.md</a> para ver a justificativa e o destino planejado de cada projeto.</p>
-    </section>
+      <article class="panel card span-8">
+        <div class="section-title"><h2 data-i18n="comps">Comps que definiram seu período</h2><span class="muted">por frequência</span></div>
+        <div class="list" data-comps></div>
+      </article>
+      <article class="panel card span-4">
+        <div class="section-title"><h2 data-i18n="placements">Colocações</h2></div>
+        <div class="place-grid" data-placements></div>
+      </article>
 
-    <section class="note">
-      <strong>Separação técnica preparada</strong>
-      <p>Sete MVPs antigos já estão empacotados como branches standalone: <a href="https://github.com/HelioConde/ideias-ia-lab/tree/split/vagacerta">VagaCerta</a>, <a href="https://github.com/HelioConde/ideias-ia-lab/tree/split/falapro">FalaPro</a>, <a href="https://github.com/HelioConde/ideias-ia-lab/tree/split/montapc">MontaPC</a>, <a href="https://github.com/HelioConde/ideias-ia-lab/tree/split/gameradar">GameRadar</a>, <a href="https://github.com/HelioConde/ideias-ia-lab/tree/split/perto">Perto</a>, <a href="https://github.com/HelioConde/ideias-ia-lab/tree/split/pratopronto">PratoPronto</a> e <a href="https://github.com/HelioConde/ideias-ia-lab/tree/split/revisa">Revisa</a>. Falta apenas criar os repositórios físicos e importar cada branch.</p>
-    </section>
+      <article class="panel card span-6">
+        <div class="section-title"><h2 data-i18n="units">Unidades mais presentes</h2><span class="muted">top 5</span></div>
+        <div class="list" data-units></div>
+      </article>
+      <article class="panel card span-6">
+        <div class="section-title"><h2 data-i18n="augments">Augments marcantes</h2><span class="muted">uso + desempenho</span></div>
+        <div class="list" data-augments></div>
+      </article>
 
-    <section class="note">
-      <strong>Regra do hub</strong>
-      <p>Este repositório guarda ranking, status e decisões. Frontend, backend e migrations de cada produto devem permanecer em repositórios separados.</p>
-    </section>
+      <article class="panel card span-8">
+        <div class="section-title"><h2 data-i18n="records">Seus recordes</h2></div>
+        <div class="list" data-records></div>
+      </article>
+      <article class="panel card span-4">
+        <div class="share-card">
+          <div class="eyebrow" data-i18n="share">Compartilhar</div>
+          <h2 data-i18n="shareTitle">Seu TFT Wrapped em um card.</h2>
+          <p class="muted" data-i18n="shareText">O MVP reserva este bloco para gerar PNG compartilhável sem poluir a análise principal.</p>
+          <button class="primary" type="button" data-share data-i18n="generate">Gerar card</button>
+        </div>
+      </article>
 
-    <footer>Ideias IA Lab · prioridade, arquitetura e status do portfólio.</footer>
+      <div class="span-12 ad-slot">Espaço reservado para anúncio — sem bloquear conteúdo ou interação</div>
+    </section>
   </main>
-  <script src="live-update.js" defer></script>
+
+  <footer class="shell footer">TFT Wrapped · protótipo standalone · PT-BR/EN · dados demonstrativos explícitos</footer>
+</div>
+<script src="app.js"></script>
+<script src="live-update.js"></script>
 </body>
 </html>
