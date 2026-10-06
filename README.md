@@ -24,6 +24,8 @@ O Riot Legacy não quer ser outro tracker cheio de tabelas. A proposta é transf
 - slots de anúncios reservados, sem anúncios reais;
 - SEO/Open Graph/manifest/robots/sitemap;
 - integração com `public-lol-profile` e `public-tft-profile` do backend gamer;
+- atualização manual dos dados sem recarregar a página;
+- mensagens distintas para Riot ID inexistente, rate limit, timeout e indisponibilidade server-side;
 - Static QA e Browser E2E verdes, incluindo hidratação LoL + TFT mockada;
 - estados explícitos: consultando Riot, dados Riot, parcial e fallback demonstrativo.
 
