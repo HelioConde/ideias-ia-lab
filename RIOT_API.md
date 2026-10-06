@@ -67,3 +67,33 @@ O foco é histórico, identidade, retrospectiva e compartilhamento pós-jogo.
 ## Registro
 
 Antes do uso público de dados reais, registrar o produto no Riot Developer Portal e manter descrição/features atualizadas conforme as políticas vigentes.
+
+
+## Consumo atual no Riot Legacy
+
+O frontend já consome:
+
+- `public-lol-profile`;
+- `public-tft-profile`.
+
+A seleção passou a ser por servidor/plataforma (`br1`, `na1`, `euw1`, etc.) e o frontend deriva o routing regional necessário ao LoL.
+
+Dados utilizados no MVP atual:
+
+### LoL
+- perfil básico;
+- ranked;
+- maior maestria retornada;
+- campeões mais frequentes na amostra;
+- funções;
+- win rate recente;
+- partidas recentes.
+
+### TFT
+- colocação média;
+- Top 4 rate;
+- distribuição de colocações;
+- units da partida mais recente;
+- traits ativos da partida mais recente.
+
+A interface não chama esses recortes de “histórico completo”. Eles são apresentados como amostra recente até existirem snapshots históricos suficientes.
