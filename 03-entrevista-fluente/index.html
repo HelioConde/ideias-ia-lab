@@ -3,21 +3,151 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#f8f8f7">
-  <meta name="description" content="Pratique respostas em inglês para entrevistas de emprego e acompanhe seus treinos.">
+  <meta name="theme-color" content="#f7f7f6">
+  <meta name="description" content="Pratique entrevistas de emprego em inglês com sessões por cargo, perguntas guiadas e feedback objetivo.">
   <meta property="og:title" content="FalaPro — Inglês para entrevistas de emprego">
-  <meta property="og:description" content="Pratique respostas em inglês para entrevistas de emprego e acompanhe seus treinos.">
+  <meta property="og:description" content="Treine respostas em inglês, receba feedback por regras e acompanhe sua evolução.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://helioconde.github.io/ideias-ia-lab/03-entrevista-fluente/">
   <link rel="canonical" href="https://helioconde.github.io/ideias-ia-lab/03-entrevista-fluente/">
   <title>FalaPro — Inglês para entrevistas de emprego</title>
-  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
-<body data-site="03-entrevista-fluente">
-  <div id="app"></div>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="../">FalaPro<span>.</span></a>
+      <div class="top-actions">
+        <span id="sync-status" class="sync-status" role="status">Modo local</span>
+        <button id="account-open" class="button ghost" type="button">Entrar / sincronizar</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div>
+          <p class="eyebrow">INGLÊS PARA ENTREVISTAS</p>
+          <h1>Pratique uma resposta.<br><span>Melhore a próxima.</span></h1>
+          <p class="hero-copy">Treine perguntas comuns e técnicas sem precisar montar a sessão sozinho. O feedback atual usa regras transparentes de estrutura, exemplos e resultados.</p>
+        </div>
+        <aside class="hero-card">
+          <span>Média recente</span>
+          <strong id="hero-score">—</strong>
+          <small>pontuação das respostas</small>
+        </aside>
+      </section>
+
+      <section id="setup-section" class="setup-grid">
+        <section class="panel">
+          <p class="eyebrow">NOVA SESSÃO</p>
+          <h2>Prepare a entrevista</h2>
+          <p class="sub">Escolha o cargo e o nível. O FalaPro monta cinco perguntas para você responder em inglês.</p>
+          <form id="session-form">
+            <label class="field"><span>Cargo alvo</span><input name="role" maxlength="120" placeholder="Ex.: Front-End Developer Jr" required></label>
+            <label class="field"><span>Nível de inglês</span>
+              <select name="level">
+                <option value="beginner">Iniciante</option>
+                <option value="intermediate" selected>Intermediário</option>
+                <option value="advanced">Avançado</option>
+              </select>
+            </label>
+            <button class="button primary full" type="submit">Começar treino</button>
+          </form>
+        </section>
+
+        <aside class="panel how-panel">
+          <p class="eyebrow">COMO FUNCIONA</p>
+          <h2>Uma pergunta por vez</h2>
+          <ol>
+            <li><span>1</span><div><strong>Responda em inglês</strong><small>Use uma situação real sempre que puder.</small></div></li>
+            <li><span>2</span><div><strong>Veja o feedback</strong><small>Estrutura, ação, resultado e clareza.</small></div></li>
+            <li><span>3</span><div><strong>Avance</strong><small>A média da sessão fica no histórico.</small></div></li>
+          </ol>
+          <p class="rule-note">O avaliador atual é heurístico. Ele não substitui professor nem revisão gramatical especializada.</p>
+        </aside>
+      </section>
+
+      <section id="training-section" class="training-grid" hidden>
+        <section class="panel question-panel">
+          <div class="training-head">
+            <div>
+              <p class="eyebrow">SESSÃO ATUAL</p>
+              <h2 id="session-role">Entrevista</h2>
+              <span id="session-level" class="level-badge"></span>
+            </div>
+            <button id="end-session" class="button text" type="button">Encerrar sessão</button>
+          </div>
+
+          <div class="progress-track"><span id="progress-bar"></span></div>
+          <div class="question-count" id="question-count">Pergunta 1 de 5</div>
+
+          <article class="question-card">
+            <span class="question-label">INTERVIEWER</span>
+            <h3 id="question-text"></h3>
+            <p id="question-hint" class="question-hint"></p>
+          </article>
+
+          <form id="answer-form">
+            <label class="field">
+              <span>Sua resposta em inglês</span>
+              <textarea name="answer" maxlength="2200" placeholder="Write your answer here..." required></textarea>
+            </label>
+            <div class="answer-meta"><span id="word-count">0 palavras</span><span>Tente responder em 30–120 palavras.</span></div>
+            <button class="button primary full" type="submit">Analisar resposta</button>
+          </form>
+
+          <div id="feedback" class="feedback" hidden></div>
+        </section>
+
+        <aside class="panel session-side">
+          <p class="eyebrow">DESEMPENHO</p>
+          <h2>Esta sessão</h2>
+          <div class="session-score"><strong id="live-score">—</strong><span>média até agora</span></div>
+          <div id="answered-list" class="answered-list"></div>
+        </aside>
+      </section>
+
+      <section class="history-section">
+        <div class="section-heading">
+          <div><p class="eyebrow">HISTÓRICO</p><h2>Suas sessões</h2></div>
+          <p>Entre na conta para continuar o histórico em outro dispositivo.</p>
+        </div>
+        <div id="session-history" class="session-history"></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <strong>FalaPro</strong>
+      <span>Feedback atual por regras explícitas; IA, áudio e transcrição ainda não estão conectados.</span>
+    </footer>
+  </div>
+
+  <dialog id="account-dialog" class="dialog" aria-labelledby="account-title">
+    <div class="dialog-head">
+      <div><p class="eyebrow">SUA CONTA</p><h2 id="account-title">Sincronize seus treinos</h2></div>
+      <button id="account-close" class="icon-button" type="button" aria-label="Fechar">×</button>
+    </div>
+    <p class="dialog-copy">Sem conta, sessões e respostas ficam neste dispositivo.</p>
+    <form id="auth-form">
+      <label class="field"><span>E-mail</span><input name="email" type="email" autocomplete="email" required></label>
+      <label class="field"><span>Senha</span><input name="password" type="password" minlength="8" autocomplete="current-password" required></label>
+      <button class="button primary full" type="submit">Entrar</button>
+      <div class="account-actions">
+        <button id="sign-up" class="button ghost" type="button">Criar conta</button>
+        <button id="reset-password" class="button text" type="button">Esqueci a senha</button>
+      </div>
+    </form>
+    <div id="account-profile" hidden>
+      <p>Conectado como <strong id="account-email"></strong></p>
+      <button id="import-local" class="button ghost full" type="button" hidden>Importar treinos deste dispositivo</button>
+      <button id="sign-out" class="button ghost full" type="button">Sair da conta</button>
+    </div>
+    <p id="account-message" class="form-message" role="status" aria-live="polite"></p>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
   <script src="../supabase-config.js"></script>
-  <script src="../data.js"></script>
-  <script src="../assets/app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
