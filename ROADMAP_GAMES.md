@@ -17,13 +17,17 @@ Primeiro objetivo do Riot Legacy:
 5. [x] cards compartilháveis;
 6. [x] espaços de anúncios planejados sem interromper a experiência;
 7. [x] fallback demonstrativo claramente identificado;
-8. [ ] backend seguro para dados Riot reais;
-9. [ ] publicar GitHub Pages no repositório final.
+8. [x] backend seguro reutilizando Supabase gamer ZeroTwo.gg;
+9. [x] hidratação LoL + TFT por Edge Functions públicas;
+10. [x] card exportável como PNG;
+11. [ ] validar Riot IDs reais de LoL/TFT;
+12. [ ] criar snapshots históricos reais;
+13. [ ] repositório físico e GitHub Pages final.
 
 ## Produto transversal
 
 ### Riot Legacy — prioridade gamer #1
-**Status atual:** desenvolvimento pesado ativo; protótipo standalone navegável com Static QA e Browser E2E verdes.  
+**Status atual:** desenvolvimento pesado ativo; LoL + TFT reais conectados pelo backend gamer, fallback resiliente, card PNG e Static QA + Browser E2E verdes.  
 **Jogos:** League of Legends + TFT  
 **Objetivo:** transformar o Riot ID em uma experiência visual, emocional e nostálgica.
 
