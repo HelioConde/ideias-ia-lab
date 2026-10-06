@@ -141,7 +141,7 @@
       share_action: 'Share this card',
       copied: 'Link copied.',
       share_ready: 'Summary ready to share.',
-      invalid_id: 'Use a 3–16 character Game Name and a 3–5 letter/number Tag Line.'
+      invalid_id: 'Use a 3–16 character Game Name and a 3–5 letter/number Tag Line.',
       legal: 'Riot Legacy is an independent community project and is not endorsed by Riot Games. Riot Games and related properties are trademarks of Riot Games, Inc.',
       footer_demo: 'Validation prototype · demonstrative data'
     }
