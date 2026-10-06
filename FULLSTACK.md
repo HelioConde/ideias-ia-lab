@@ -149,3 +149,25 @@ Destino planejado:
 `https://helioconde.github.io/riot-legacy/`
 
 A branch atual é standalone e será promovida para a `main` do repositório físico.
+
+
+## Integração real já ativa no frontend
+
+O frontend usa chamadas públicas HTTPS para:
+
+- `public-lol-profile` — Riot ID → PUUID → Summoner/Ranked/Mastery/Match-V5;
+- `public-tft-profile` — Riot ID → PUUID → TFT Summoner/League/Match.
+
+Ambas estão ativas no Supabase gamer com `verify_jwt=false` e mantêm a `RIOT_API_KEY` exclusivamente no servidor.
+
+O carregamento é paralelo e resiliente:
+
+- LoL + TFT disponíveis → perfil marca **Dados Riot · LoL + TFT**;
+- apenas uma fonte disponível → estado **Dados Riot parciais**;
+- nenhuma fonte disponível → fallback demonstrativo claramente identificado;
+- timeout por consulta → 14 segundos;
+- respostas atrasadas de uma busca anterior são descartadas;
+- deep links antigos por `region` continuam compatíveis;
+- novos links usam `server` para preservar a plataforma Riot escolhida.
+
+O Browser E2E mocka as duas Edge Functions e valida a hidratação do perfil, sem depender da disponibilidade externa da Riot no CI.
