@@ -47,6 +47,10 @@ jobs:
           grep -qi 'postPublicFunction' app.js
           grep -qi 'DADOS RIOT' app.js
           grep -qi 'server' app.js
+          grep -qi 'download-card' index.html
+          grep -qi 'drawShareCard' app.js
+          grep -qi 'canvas.toBlob' app.js
+          grep -qi 'image/png' app.js
       - name: No secrets
         run: |
           ! grep -RniE 'RGAPI-[A-Za-z0-9_-]{20,}|SUPABASE_SERVICE_ROLE_KEY|service_role.*eyJ' . --exclude-dir=.git --include='*.js' --include='*.html' --include='*.json' --exclude='package*.json'
