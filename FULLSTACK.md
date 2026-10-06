@@ -1,6 +1,6 @@
 # VagaCerta — arquitetura fullstack
 
-Repositório individual planejado: `HelioConde/vagacerta`.
+Repositório: `HelioConde/vagacerta`.
 
 ## Produto
 

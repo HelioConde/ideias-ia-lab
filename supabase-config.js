@@ -1,4 +1,5 @@
-// Configuração pública compartilhada dos protótipos do laboratório.
+// Configuração pública do Supabase.
+// A publishable key pode ficar no navegador; nunca use service_role no frontend.
 (() => {
   const sdk = window.supabase;
   if (!sdk?.createClient) {
