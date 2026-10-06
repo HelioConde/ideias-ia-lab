@@ -44,7 +44,7 @@ Atualizado em 06/10/2026.
 
 
 - [x] Determinar campeão assinatura com regra explicável — maior frequência na amostra recente; KDA médio como desempate.
-- [ ] Mostrar primeira/mais antiga partida disponível quando os dados permitirem.
+- [x] Mostrar primeira/mais antiga partida disponível quando os dados permitirem — a timeline exibe a janela da amostra Riot e deixa claro que ela pode não ser a primeira partida da conta.
 - [ ] Linha do tempo por temporadas/anos.
 - [ ] Top campeões com evolução de maestria.
 - [ ] Identidade por função.
