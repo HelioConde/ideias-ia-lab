@@ -16,8 +16,6 @@
       privacy: 'Nunca pedimos sua senha da Riot.',
       recent_searches: 'Buscas recentes',
       clear_recent: 'Limpar',
-      recent_searches: 'Recent searches',
-      clear_recent: 'Clear',
       demo_note: 'A busca tenta carregar dados públicos reais da Riot. Quando indisponíveis, o fallback demonstrativo é identificado.',
       visual_since: 'Uma história desde',
       visual_signature: 'Campeão assinatura',
@@ -82,6 +80,8 @@
       footer_demo: 'Protótipo de validação · dados demonstrativos'
     },
     en: {
+      recent_searches: 'Recent searches',
+      clear_recent: 'Clear',
       skip: 'Skip to main content',
       nav_about: 'The concept',
       hero_eyebrow: 'LOL + TFT · YOUR PERSONAL MUSEUM',
