@@ -53,6 +53,8 @@ jobs:
           grep -qi 'image/png' app.js
           grep -qi 'refresh-data' index.html
           grep -qi "refreshButton?.addEventListener('click'" app.js
+          grep -qi 'liveFailureMessage' app.js
+          grep -qi 'rate_limited' app.js
       - name: No secrets
         run: |
           ! grep -RniE 'RGAPI-[A-Za-z0-9_-]{20,}|SUPABASE_SERVICE_ROLE_KEY|service_role.*eyJ' . --exclude-dir=.git --include='*.js' --include='*.html' --include='*.json' --exclude='package*.json'
