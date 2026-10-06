@@ -9,7 +9,7 @@ Este arquivo transforma a fila de prioridades em uma sequência prática de exec
 | Ordem | Projeto | Estado | Próxima ação |
 |---:|---|---|---|
 | 1 | **AgendaLeve** | MVP em validação avançada | contato, filtros, status e cancelamento seguro concluídos; faltam antiabuso externo e QA real |
-| 2 | **DocPronto** | MVP em validação | pipeline comercial, status, WhatsApp e QA concluídos; próximo passo é aceite público |
+| 2 | **DocPronto** | MVP em validação avançada | pipeline, WhatsApp e aceite/recusa pública por token concluídos; faltam branding, clientes reutilizáveis e validação real |
 | 3 | **Riot Legacy** | Ideia priorizada | criar repositório próprio e protótipo visual |
 | 4 | **VagaCerta** | branch standalone pronta | criar repositório físico e publicar |
 | 5 | **LoL Match Story** | Ideia priorizada | criar MVP visual usando dados reais quando disponíveis |
@@ -64,7 +64,7 @@ Para evitar dezenas de produtos incompletos:
 
 ### Bloco C — monetização/uso recorrente
 6. VagaCerta
-7. PostPilot
+7. PostPilot — multiplataforma, exportação e fluxo de publicação concluídos
 8. MontaPC
 
 ### Bloco D — expansão gamer
