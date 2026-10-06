@@ -1,0 +1,32 @@
+name: Lab QA
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate JavaScript syntax
+        run: |
+          node --check data.js
+          node --check assets/app.js
+          node --check supabase-config.js
+      - name: Validate product pages
+        run: |
+          set -e
+          for page in             02-vaga-certa             03-entrevista-fluente             04-monta-pc             05-caça-game             07-perto-de-mim             08-prato-pronto             09-revisa-ai
+          do
+            test -f "$page/index.html"
+            grep -qi '<title' "$page/index.html"
+            grep -qi 'meta name="description"' "$page/index.html"
+            grep -qi 'rel="canonical"' "$page/index.html"
+            grep -qi 'supabase-config.js' "$page/index.html"
+          done
