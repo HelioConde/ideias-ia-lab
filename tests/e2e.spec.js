@@ -95,6 +95,7 @@ test('carrega LoL e TFT reais pelo backend gamer e substitui o fallback', async 
     contentType: 'application/json',
     body: JSON.stringify({
       player: { gameName: 'RealPlayer', tagLine: 'BR1', platform: 'BR1' },
+      ranked: [{ queueType: 'RANKED_TFT', tier: 'PLATINUM', rank: 'IV', leaguePoints: 33, wins: 8, losses: 6 }],
       summary: { matches: 4, averagePlacement: 2.5, top4Rate: 75, winRate: 25, firsts: 1, eighths: 0 },
       matches: [
         {
@@ -130,6 +131,9 @@ test('carrega LoL e TFT reais pelo backend gamer e substitui o fallback', async 
   await expect(page.locator('#tft-average')).toContainText('2,5');
   await expect(page.locator('#champion-list')).toContainText('Lux');
   await expect(page.locator('#trait-list')).toContainText('Arcana');
+  await expect(page.locator('#live-profile-facts')).toContainText('BR1');
+  await expect(page.locator('#live-profile-facts')).toContainText('GOLD II · 42 LP');
+  await expect(page.locator('#live-profile-facts')).toContainText('PLATINUM IV · 33 LP');
   await expect(page.locator('#data-source-note')).toContainText('12 partidas recentes de LoL');
   await expect(page.locator('#timeline-title')).toContainText('amostra Riot recente');
   await expect(page.locator('#legacy-timeline')).toContainText('Seu momento recente');
