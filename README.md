@@ -12,30 +12,38 @@ O Riot Legacy não quer ser outro tracker cheio de tabelas. A proposta é transf
 - entrada por Riot ID (`GameName#TagLine`);
 - PT-BR como idioma principal e English como segundo idioma;
 - preferência de idioma persistida;
-- experiência demonstrativa de perfil LoL + TFT;
+- perfil híbrido com dados Riot reais de LoL + TFT e fallback demonstrativo quando uma fonte estiver indisponível;
 - abas Legado, League, TFT e Compartilhar;
 - campeão assinatura;
 - timeline de trajetória;
 - resumo de funções e maestria;
-- board/traits/colocações demonstrativas de TFT;
+- TFT real com colocações, traits e unidades das partidas recentes;
 - card compartilhável e Web Share/clipboard;
 - URL compartilhável por query string;
 - slots de anúncios reservados, sem anúncios reais;
 - SEO/Open Graph/manifest/robots/sitemap;
-- Static QA e Browser E2E preparados;
-- aviso de dados demonstrativos explícito.
+- integração com `public-lol-profile` e `public-tft-profile` do backend gamer;
+- Static QA e Browser E2E verdes, incluindo hidratação LoL + TFT mockada;
+- estados explícitos: consultando Riot, dados Riot, parcial e fallback demonstrativo.
 
-## Importante: dados demonstrativos
+## Dados Riot + fallback demonstrativo
 
-O protótipo atual **não consulta a API da Riot**. O Riot ID digitado personaliza a apresentação, mas os números, campeão assinatura e dados de TFT são demonstrativos.
+A busca já consulta o backend gamer real:
 
-Isso é intencional: primeiro validamos a experiência visual e a proposta de valor. Dados reais entram no próximo estágio via backend seguro.
+- LoL: `public-lol-profile`;
+- TFT: `public-tft-profile`.
+
+As duas funções usam a Riot key somente no servidor. Quando respondem, o perfil troca automaticamente para dados Riot reais da amostra recente.
+
+Quando uma fonte não responde ou o jogador não possui dados naquele jogo, somente aquela parte mantém o fallback demonstrativo e a interface informa o estado claramente.
+
+A timeline de longo prazo ainda não deve ser interpretada como histórico completo da conta; snapshots históricos entram numa etapa posterior.
 
 ## Backend gamer
 
 O Riot Legacy **reutiliza o Supabase do ZeroTwo.gg** (`bieihhaobdztjyoweewa`), onde a Riot key já está protegida server-side. Não será criado outro banco e o projeto não usa `pizzaria-db`.
 
-A função `public-lol-profile` já existente será o primeiro backend real do Riot Legacy para League.
+As funções `public-lol-profile` e `public-tft-profile` já são consumidas pelo frontend do Riot Legacy.
 
 ## Próximo estágio — dados Riot reais
 
@@ -44,7 +52,7 @@ A arquitetura usa:
 1. Riot ID (`gameName + tagLine`);
 2. ACCOUNT-V1 para obter PUUID;
 3. endpoints suportados de League/TFT por PUUID;
-4. Edge Function `public-lol-profile` do ZeroTwo como primeiro proxy;
+4. Edge Functions `public-lol-profile` e `public-tft-profile` do backend gamer;
 5. chave Riot **somente no servidor**, nunca no JavaScript público;
 6. cache gamer existente para reduzir chamadas e respeitar rate limits.
 
@@ -91,7 +99,8 @@ npm run check
 - `index.html` — interface principal;
 - `style.css` — direção visual cinematográfica;
 - `i18n.js` — PT-BR/EN;
-- `app.js` — fluxo Riot ID, perfil demo, tabs e compartilhamento;
+- `backend-config.js` — endpoints públicos do Supabase gamer;
+- `app.js` — Riot ID, hidratação LoL/TFT real, fallback demo, tabs e compartilhamento;
 - `tests/` — Browser E2E;
 - `FULLSTACK.md` — arquitetura e plano de backend;
 - `MELHORIAS.md` — backlog priorizado;
