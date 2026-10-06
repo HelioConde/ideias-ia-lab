@@ -2,6 +2,18 @@
 
 Revisado em 06/10/2026 com base no Riot Developer Portal.
 
+## Infraestrutura gamer já disponível
+
+O Riot Legacy reutiliza o Supabase gamer do ZeroTwo.gg:
+
+- ref `bieihhaobdztjyoweewa`;
+- `RIOT_API_KEY` já configurada como secret de Edge Function;
+- `public-lol-profile` já implementa Riot ID → PUUID → Summoner/Ranked/Mastery/Match-V5;
+- `riot_player_cache` e `lol_match_cache` já reduzem chamadas repetidas;
+- o frontend usa apenas credenciais públicas do Supabase.
+
+**Não criar banco gamer paralelo e não usar o `pizzaria-db`.**
+
 ## Identidade
 
 A interface deve pedir **Riot ID**:
