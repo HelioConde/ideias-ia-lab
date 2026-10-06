@@ -4,9 +4,24 @@ Atualizado em 2026-10-06.
 
 Este documento organiza apenas os projetos gamer do portfólio. A ordem global continua em [PRIORIDADES_DESENVOLVIMENTO.md](./PRIORIDADES_DESENVOLVIMENTO.md).
 
+## Transição atual
+
+AgendaLeve e DocPronto concluíram a fase de implementação pesada. O WIP liberado passa para **Riot Legacy**, que deixa de ser apenas exploratório e entra como próximo projeto gamer a ser materializado e desenvolvido.
+
+Primeiro objetivo do Riot Legacy:
+
+1. repositório próprio;
+2. landing/perfil navegável em PT-BR e EN;
+3. entrada por Riot ID;
+4. primeira experiência visual de trajetória LoL + TFT;
+5. cards compartilháveis;
+6. espaços de anúncios planejados sem interromper a experiência;
+7. dados reais quando a infraestrutura/API disponível permitir, com fallback demonstrativo claramente identificado.
+
 ## Produto transversal
 
 ### Riot Legacy — prioridade gamer #1
+**Status atual:** próximo desenvolvimento pesado oficial do portfólio.  
 **Jogos:** League of Legends + TFT  
 **Objetivo:** transformar o Riot ID em uma experiência visual, emocional e nostálgica.
 
