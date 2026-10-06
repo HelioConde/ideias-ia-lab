@@ -8,7 +8,7 @@ Este arquivo transforma a fila de prioridades em uma sequência prática de exec
 
 | Ordem | Projeto | Estado | Próxima ação |
 |---:|---|---|---|
-| 1 | **AgendaLeve** | MVP em validação avançada | contato, filtros, status e cancelamento seguro concluídos; faltam antiabuso externo e QA real |
+| 1 | **AgendaLeve** | MVP publicado / validação avançada | contato, filtros, status, cancelamento e reagendamento seguro concluídos; faltam antiabuso externo e QA real |
 | 2 | **DocPronto** | MVP em validação avançada | pipeline, WhatsApp, aceite público e clientes reutilizáveis concluídos; faltam branding, planos e validação real |
 | 3 | **Riot Legacy** | Ideia priorizada | criar repositório próprio e protótipo visual |
 | 4 | **VagaCerta** | branch standalone pronta | criar repositório físico e publicar |
@@ -54,11 +54,11 @@ Para evitar dezenas de produtos incompletos:
 ## Próximos blocos
 
 ### Bloco A — lançar
-1. AgendaLeve — MVP funcional em validação avançada
+1. AgendaLeve — MVP publicado em validação avançada
 2. DocPronto — MVP funcional em validação avançada
 
 ### Bloco B — provar diferencial gamer
-> Bloqueio operacional atual: os repositórios gamer abaixo ainda não existem e a integração GitHub conectada não oferece criação de repositório. Não desenvolver código deles dentro do hub.
+> Os três projetos prioritários abaixo ainda não possuem repositório físico. Outros repositórios gamer já criados podem avançar como protótipos exploratórios sem substituir esta prioridade.
 
 3. Riot Legacy
 4. LoL Match Story
@@ -70,11 +70,13 @@ Para evitar dezenas de produtos incompletos:
 8. MontaPC
 
 ### Bloco D — expansão gamer
-9. LoL Champion Journey
-10. TFT Board Museum
-11. LoL Session Insights
-12. TFT Augment Memory
-13. OW VOD Timeline
+9. **TFT Comp Evolution — MVP funcional; comparação, tabuleiro 4x7, import JSON e Static QA concluídos**
+10. **OW Hero Pool Builder — MVP funcional; recomendação complementar, pools locais e Static QA concluídos**
+11. LoL Champion Journey
+12. TFT Board Museum
+13. LoL Session Insights
+14. TFT Augment Memory
+15. OW VOD Timeline
 
 ## Regra de revisão
 
