@@ -94,7 +94,7 @@ A ordem combina quatro fatores:
 **MVP técnico concluído.** Desenvolvimento principal pausado; homologação humana segue na issue #1 do repositório.
 
 ### 3. Riot Legacy
-**Desenvolvimento pesado atual e prioridade estratégica do ecossistema de jogos.** O protótipo standalone já possui landing, perfil LoL/TFT demonstrativo, PT-BR/EN, compartilhamento, anúncios preparados, Static QA e Browser E2E.
+**Desenvolvimento pesado atual e prioridade estratégica do ecossistema de jogos.** O protótipo standalone já possui landing, LoL + TFT reais via backend gamer, fallback demonstrativo explícito, PT-BR/EN, timeline recente, refresh, compartilhamento/PNG, anúncios preparados, Static QA e Browser E2E.
 
 A proposta é uma experiência visual, emocional e compartilhável:
 
