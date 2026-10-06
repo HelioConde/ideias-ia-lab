@@ -26,6 +26,7 @@ A fila agora é organizada por **prioridade real**, considerando proximidade de 
 ### Documentos de execução
 
 - **[Painel de execução](./PAINEL_EXECUCAO.md)** — foco atual, próximos blocos e critérios para avançar.
+- **[Plano mestre fullstack](./PLANO_MESTRE_FULLSTACK.md)** — pipeline, lotes, Definition of Done e regra de WIP para os 41 produtos.
 - **[Roadmap gamer](./ROADMAP_GAMES.md)** — ordem específica de LoL, TFT e Overwatch.
 - **[Revisão executiva](./PORTFOLIO_REVIEW.md)** — visão de produto, UX/UI, QA, SEO e negócio.
 - **[Status fullstack](./FULLSTACK_STATUS.md)** — estado físico dos repositórios e separações.
