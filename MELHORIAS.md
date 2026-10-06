@@ -55,6 +55,9 @@ Atualizado em 06/10/2026.
 
 ## P2 — retenção
 
+- [x] Buscas recentes locais com Riot ID + servidor, deduplicação e reabertura rápida.
+
+
 - [ ] Comparar snapshots mensais.
 - [ ] “Este mês vs mês passado”.
 - [ ] Wrapped mensal/anual.
