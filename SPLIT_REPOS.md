@@ -2,7 +2,7 @@
 
 ## Regra
 
-`HelioConde/ideias-ia-lab` é somente organizador. Nenhum produto novo deve ser desenvolvido diretamente na `main`.
+`HelioConde/ideias-ia-lab` é somente organizador. Nenhum produto deve voltar a ser desenvolvido diretamente na `main`.
 
 ## Já separados
 
@@ -10,7 +10,7 @@
 - `HelioConde/agendaleve`
 - `HelioConde/docpronto`
 
-## Repositórios a criar
+## Sete repositórios físicos ainda a criar
 
 1. `HelioConde/vagacerta`
 2. `HelioConde/falapro`
@@ -20,9 +20,29 @@
 6. `HelioConde/pratopronto`
 7. `HelioConde/revisa`
 
+## Branches standalone prontas
+
+Cada branch abaixo já possui o produto na raiz, sem depender das antigas pastas numeradas:
+
+- [`split/vagacerta`](https://github.com/HelioConde/ideias-ia-lab/tree/split/vagacerta)
+- [`split/falapro`](https://github.com/HelioConde/ideias-ia-lab/tree/split/falapro)
+- [`split/montapc`](https://github.com/HelioConde/ideias-ia-lab/tree/split/montapc)
+- [`split/gameradar`](https://github.com/HelioConde/ideias-ia-lab/tree/split/gameradar)
+- [`split/perto`](https://github.com/HelioConde/ideias-ia-lab/tree/split/perto)
+- [`split/pratopronto`](https://github.com/HelioConde/ideias-ia-lab/tree/split/pratopronto)
+- [`split/revisa`](https://github.com/HelioConde/ideias-ia-lab/tree/split/revisa)
+
+As branches já incluem:
+- `index.html`, `style.css` e `app.js` na raiz;
+- `supabase-config.js` próprio;
+- canonical/OG URL apontando para o futuro repositório;
+- `README.md` e `FULLSTACK.md`;
+- CI próprio em `.github/workflows/static-qa.yml`;
+- migrations específicas quando já estavam versionadas no Lab.
+
 ## Fonte preservada
 
-O snapshot completo anterior à limpeza está em:
+Snapshot completo anterior à limpeza:
 
 `archive/pre-split-2026-10-06`
 
@@ -30,17 +50,15 @@ Commit de origem:
 
 `689ed2d0961c13f15ceaf60ccb06403f965a9714`
 
-## Procedimento de migração
+## Migração final
 
-Quando cada repositório for criado:
+Para cada produto falta somente:
 
-1. copiar apenas a pasta correspondente do snapshot;
-2. mover as migrations específicas daquele produto para o novo repositório;
-3. copiar uma configuração Supabase própria do produto;
-4. ajustar canonical/OG URL para o novo GitHub Pages;
-5. adicionar CI próprio;
-6. habilitar GitHub Pages;
-7. validar frontend + Supabase;
-8. atualizar este hub de “pendente” para “separado”.
+1. criar o repositório `HelioConde/<nome>`;
+2. importar a árvore da branch `split/<nome>` como `main`;
+3. habilitar GitHub Pages;
+4. confirmar Static QA;
+5. testar login/Supabase e fluxo principal;
+6. trocar o status no hub para “repositório ativo”.
 
-A branch de backup só deve ser removida depois que os sete destinos estiverem validados.
+A branch de backup deve permanecer até os sete destinos físicos estarem validados.
