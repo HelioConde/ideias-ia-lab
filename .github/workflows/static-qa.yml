@@ -140,12 +140,24 @@ jobs:
           @(
             "version.json",
             "live-update.js",
-            "12_000",
-            "visibilitychange",
+            "templates/live-update.js",
             "templates/live-version.yml",
+            "templates/live-update-qa.yml",
             "Get-ChildItem"
           ) | ForEach-Object {
             if (-not $script.Contains($_)) {
               throw "Missing live-update rollout requirement: $_"
+            }
+          }
+
+          $runtime = Get-Content "templates/live-update.js" -Raw
+          @(
+            "12_000",
+            "visibilitychange",
+            "no-store",
+            "__v"
+          ) | ForEach-Object {
+            if (-not $runtime.Contains($_)) {
+              throw "Missing live-update runtime requirement: $_"
             }
           }
