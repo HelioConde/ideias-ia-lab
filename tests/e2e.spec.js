@@ -21,7 +21,7 @@ test('abre em PT-BR e cria uma experiência demonstrativa por Riot ID', async ({
 });
 
 test('troca para inglês, persiste e mantém o perfil navegável', async ({ page }) => {
-  await page.locator('[data-language="en"]').click();
+  await page.locator('#landing-view [data-language="en"]').click();
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
   await expect(page.getByRole('heading', { name: /Your account has a story/i })).toBeVisible();
 
