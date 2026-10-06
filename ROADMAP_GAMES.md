@@ -10,18 +10,20 @@ AgendaLeve e DocPronto concluíram a fase de implementação pesada. O WIP liber
 
 Primeiro objetivo do Riot Legacy:
 
-1. repositório próprio;
-2. landing/perfil navegável em PT-BR e EN;
-3. entrada por Riot ID;
-4. primeira experiência visual de trajetória LoL + TFT;
-5. cards compartilháveis;
-6. espaços de anúncios planejados sem interromper a experiência;
-7. dados reais quando a infraestrutura/API disponível permitir, com fallback demonstrativo claramente identificado.
+1. [ ] repositório físico próprio;
+2. [x] landing/perfil navegável em PT-BR e EN;
+3. [x] entrada por Riot ID;
+4. [x] primeira experiência visual de trajetória LoL + TFT;
+5. [x] cards compartilháveis;
+6. [x] espaços de anúncios planejados sem interromper a experiência;
+7. [x] fallback demonstrativo claramente identificado;
+8. [ ] backend seguro para dados Riot reais;
+9. [ ] publicar GitHub Pages no repositório final.
 
 ## Produto transversal
 
 ### Riot Legacy — prioridade gamer #1
-**Status atual:** próximo desenvolvimento pesado oficial do portfólio.  
+**Status atual:** desenvolvimento pesado ativo; protótipo standalone navegável com Static QA e Browser E2E verdes.  
 **Jogos:** League of Legends + TFT  
 **Objetivo:** transformar o Riot ID em uma experiência visual, emocional e nostálgica.
 
