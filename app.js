@@ -161,8 +161,41 @@
       .trim() || 'TFT';
   }
 
+  function currentSignatureEvidence() {
+    const summaries = Array.isArray(live.lol?.championSummaries)
+      ? live.lol.championSummaries.filter(item => item?.name)
+      : [];
+
+    if (!summaries.length) {
+      return {
+        name: demo.champions[0].name,
+        games: Number(demo.champions[0].games || 0),
+        avgKda: null,
+        sampleMatches: 0,
+        source: 'demo'
+      };
+    }
+
+    const ranked = [...summaries].sort((a, b) => {
+      const gamesDiff = Number(b.games || 0) - Number(a.games || 0);
+      if (gamesDiff !== 0) return gamesDiff;
+      const kdaDiff = Number(b.avgKda || 0) - Number(a.avgKda || 0);
+      if (kdaDiff !== 0) return kdaDiff;
+      return String(a.name).localeCompare(String(b.name));
+    });
+
+    const champion = ranked[0];
+    return {
+      name: String(champion.name),
+      games: Number(champion.games || 0),
+      avgKda: champion.avgKda == null ? null : Number(champion.avgKda),
+      sampleMatches: Number(live.lol?.summary?.matches || currentLolMatches().length || 0),
+      source: 'recent-sample'
+    };
+  }
+
   function currentSignatureChampion() {
-    return live.lol?.championSummaries?.[0]?.name || demo.champions[0].name;
+    return currentSignatureEvidence().name;
   }
 
   function currentMasteryPoints() {
@@ -419,8 +452,9 @@
   }
 
   function renderSignature() {
-    const champion = currentSignatureChampion();
-    const games = Number(live.lol?.championSummaries?.[0]?.games || 0);
+    const signature = currentSignatureEvidence();
+    const champion = signature.name;
+    const games = signature.games;
     const position = live.lol?.summary?.primaryPosition || live.lol?.summary?.mainContext || 'MID';
     const rank = live.lol?.ranked?.[0];
     const rankLabel = rank?.tier ? `${rank.tier} ${rank.rank || ''}`.trim() : position;
@@ -433,8 +467,8 @@
         ? `${champion} is your recent signature`
         : `${champion} é sua assinatura recente`;
       text.textContent = locale() === 'en'
-        ? `Across the ${live.lol.summary?.matches || currentLolMatches().length} recent matches analyzed by Riot Legacy, ${champion} is the champion that appears most often. This is a recent-data signal, not a claim about your entire account history.`
-        : `Nas ${live.lol.summary?.matches || currentLolMatches().length} partidas recentes analisadas pelo Riot Legacy, ${champion} é o campeão que mais aparece. Este é um sinal da amostra recente, não uma afirmação sobre todo o histórico da conta.`;
+        ? `Across the ${signature.sampleMatches} recent matches analyzed by Riot Legacy, ${champion} is your signature because it has the highest match frequency in the sample; average KDA breaks ties. This is a recent-data signal, not a claim about your entire account history.`
+        : `Nas ${signature.sampleMatches} partidas recentes analisadas pelo Riot Legacy, ${champion} é sua assinatura porque tem a maior frequência de partidas na amostra; o KDA médio desempata. Este é um sinal da amostra recente, não uma afirmação sobre todo o histórico da conta.`;
       chip.textContent = `${rankLabel.toUpperCase()} · ${games} ${locale() === 'en' ? 'GAMES' : 'JOGOS'} · ${champion.toUpperCase()}`;
     } else {
       title.textContent = t('signature_title');
