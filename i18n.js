@@ -11,9 +11,10 @@
       game_name: 'Game Name',
       tag_line: 'Tag Line',
       region: 'Roteamento',
+      server: 'Servidor',
       submit: 'Ver meu legado',
       privacy: 'Nunca pedimos sua senha da Riot.',
-      demo_note: 'Protótipo atual: os dados exibidos após a busca são demonstrativos.',
+      demo_note: 'A busca tenta carregar dados públicos reais da Riot. Quando indisponíveis, o fallback demonstrativo é identificado.',
       visual_since: 'Uma história desde',
       visual_signature: 'Campeão assinatura',
       visual_tft: 'Memória TFT',
@@ -68,7 +69,7 @@
       share_action: 'Compartilhar este card',
       copied: 'Link copiado.',
       share_ready: 'Resumo pronto para compartilhar.',
-      invalid_id: 'Preencha Game Name e Tag Line.',
+      invalid_id: 'Use Game Name com 3–16 caracteres e Tag Line com 3–5 letras ou números.',
       legal: 'Riot Legacy é um projeto independente e não é endossado pela Riot Games. Marcas e propriedades relacionadas pertencem à Riot Games, Inc.',
       footer_demo: 'Protótipo de validação · dados demonstrativos'
     },
@@ -82,9 +83,10 @@
       game_name: 'Game Name',
       tag_line: 'Tag Line',
       region: 'Routing',
+      server: 'Server',
       submit: 'View my legacy',
       privacy: 'We never ask for your Riot password.',
-      demo_note: 'Current prototype: data shown after search is demonstrative.',
+      demo_note: 'Search tries to load real public Riot data. When unavailable, the demonstrative fallback is clearly identified.',
       visual_since: 'A story since',
       visual_signature: 'Signature champion',
       visual_tft: 'TFT memory',
@@ -139,7 +141,7 @@
       share_action: 'Share this card',
       copied: 'Link copied.',
       share_ready: 'Summary ready to share.',
-      invalid_id: 'Enter Game Name and Tag Line.',
+      invalid_id: 'Use a 3–16 character Game Name and a 3–5 letter/number Tag Line.'
       legal: 'Riot Legacy is an independent community project and is not endorsed by Riot Games. Riot Games and related properties are trademarks of Riot Games, Inc.',
       footer_demo: 'Validation prototype · demonstrative data'
     }
