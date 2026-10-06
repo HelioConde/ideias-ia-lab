@@ -32,6 +32,7 @@ Atualizado em 06/10/2026.
 - [x] Conectar também `public-tft-profile` e substituir os blocos recentes de LoL/TFT por payload real, mantendo fallback explícito.
 - [x] Garantir que a timeline ao vivo usa capítulos da amostra recente, sem misturar datas demonstrativas com o selo de dados Riot.
 - [x] Tratar conta inexistente, API indisponível, timeout e dados parciais com fallback identificado.
+- [x] Mensagens distintas para Riot ID inexistente, rate limit, credencial server-side indisponível e timeout.
 - [ ] Validar um Riot ID real de LoL.
 - [ ] Validar um Riot ID real de TFT.
 - [ ] Criar snapshot/cache para não consultar toda a história a cada visita.
