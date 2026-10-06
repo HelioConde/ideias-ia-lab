@@ -182,10 +182,10 @@ async function saveProfile(){
     updated_at:new Date().toISOString()
   };
   if(currentProfile){
-    const {data,error}=await supabaseClient.from('perto_professionals').update(payload).eq('id',currentProfile.id).select('*').single();
+    const {data,error}=await supabaseClient.from('perto_professionals').update(payload).eq('id',currentProfile.id).select('id,user_id,display_name,city,state,category,description,price_from_cents,rating,status,created_at,updated_at').single();
     if(error)throw error;currentProfile=data;
   }else{
-    const {data,error}=await supabaseClient.from('perto_professionals').insert({...payload,status:'pending'}).select('*').single();
+    const {data,error}=await supabaseClient.from('perto_professionals').insert({...payload,status:'pending'}).select('id,user_id,display_name,city,state,category,description,price_from_cents,rating,status,created_at,updated_at').single();
     if(error)throw error;currentProfile=data;
   }
 }
@@ -195,7 +195,7 @@ async function loadUserData(){
   loadingAccount=true;updateAccountUi();
   const owner=currentUser.id;
   const [profileResult,requestsResult]=await Promise.all([
-    supabaseClient.from('perto_professionals').select('*').eq('user_id',currentUser.id).maybeSingle(),
+    supabaseClient.from('perto_professionals').select('id,user_id,display_name,city,state,category,description,price_from_cents,rating,status,created_at,updated_at').eq('user_id',currentUser.id).maybeSingle(),
     supabaseClient.from('perto_requests').select('*').order('created_at',{ascending:false}).limit(100)
   ]);
   loadingAccount=false;if(currentUser?.id!==owner)return;
