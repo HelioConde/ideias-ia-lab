@@ -19,6 +19,7 @@ O Riot Legacy não quer ser outro tracker cheio de tabelas. A proposta é transf
 - resumo de funções e maestria;
 - TFT real com colocações, traits e unidades das partidas recentes;
 - card compartilhável e Web Share/clipboard;
+- exportação do card como PNG gerada localmente no navegador;
 - URL compartilhável por query string;
 - slots de anúncios reservados, sem anúncios reais;
 - SEO/Open Graph/manifest/robots/sitemap;
