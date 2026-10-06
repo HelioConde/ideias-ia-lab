@@ -39,6 +39,10 @@ Atualizado em 06/10/2026.
 
 ## P1 — experiência
 
+- [x] Faixa compacta de identidade real com servidor, nível e ranks LoL/TFT oficiais.
+- [x] Expor no seletor todos os shards já suportados pelo backend gamer.
+
+
 - [ ] Determinar campeão assinatura com regra explicável.
 - [ ] Mostrar primeira/mais antiga partida disponível quando os dados permitirem.
 - [ ] Linha do tempo por temporadas/anos.
