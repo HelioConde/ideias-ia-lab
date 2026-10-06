@@ -196,3 +196,25 @@ Essa branch deve permanecer intacta até os sete repositórios antigos pendentes
 Toda nova ideia deve receber um nome de repositório assim que entrar na fila oficial. O Lab mantém apenas ranking, links, decisões e automações de criação.
 
 Quando uma ideia for promovida para desenvolvimento, ela deve ganhar um repositório próprio e permanecer aqui apenas como item de roadmap.
+
+
+## Regra obrigatória de atualização automática
+
+Toda página web do portfólio deve implementar o padrão descrito em `GLOBAL_PROJECT_RULES.md`:
+
+- `version.json` com SHA do deploy;
+- `live-update.js` em todo HTML;
+- verificação a cada 12 segundos;
+- nova verificação ao focar/reabrir a aba;
+- aviso de nova versão;
+- recarga automática com cache-busting;
+- desativado em localhost;
+- falha de verificação nunca derruba a página.
+
+Para aplicar/reaplicar a regra em todos os repositórios existentes:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\apply-live-update-all.ps1
+```
+
+O script percorre os 41 repositórios, ignora os que ainda não existem ou não têm HTML e injeta o mecanismo em todas as páginas encontradas.
