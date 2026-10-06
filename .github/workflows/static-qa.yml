@@ -20,6 +20,7 @@ jobs:
           node --check assets/app.js
           node --check supabase-config.js
           node --check 02-vaga-certa/app.js
+          node --check 03-entrevista-fluente/app.js
           node --check 04-monta-pc/app.js
           node --check 05-caça-game/app.js
           node --check 09-revisa-ai/app.js
@@ -35,10 +36,12 @@ jobs:
             grep -qi 'supabase-config.js' "$page/index.html"
           done
           test -f 02-vaga-certa/style.css
+          test -f 03-entrevista-fluente/style.css
           test -f 04-monta-pc/style.css
           test -f 05-caça-game/style.css
           test -f 09-revisa-ai/style.css
           grep -qi '02-vaga-certa/app.js\|src="app.js"' 02-vaga-certa/index.html
+          grep -qi '03-entrevista-fluente/app.js\|src="app.js"' 03-entrevista-fluente/index.html
           grep -qi '04-monta-pc/app.js\|src="app.js"' 04-monta-pc/index.html
           grep -qi '05-caça-game/app.js\|src="app.js"' 05-caça-game/index.html
           grep -qi '09-revisa-ai/app.js\|src="app.js"' 09-revisa-ai/index.html
