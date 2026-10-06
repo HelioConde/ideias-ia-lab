@@ -125,14 +125,22 @@ try {
       (New-Object Text.UTF8Encoding($false))
     )
 
+    $RuntimeFile = Join-Path $RepoDir "live-update.js"
+    $RuntimeUri = New-Object System.Uri($RuntimeFile)
+
     foreach ($Html in $HtmlFiles) {
       $Content = Get-Content $Html.FullName -Raw
       if ($Content -notmatch 'live-update\.js') {
+        $HtmlDir = $Html.DirectoryName.TrimEnd([IO.Path]::DirectorySeparatorChar) + [IO.Path]::DirectorySeparatorChar
+        $HtmlDirUri = New-Object System.Uri($HtmlDir)
+        $RelativeRuntime = $HtmlDirUri.MakeRelativeUri($RuntimeUri).ToString()
+        $RuntimeTag = '<script src="' + $RelativeRuntime + '" defer></script>'
+
         if ($Content -match '</body>') {
-          $Content = $Content -replace '</body>', '  <script src="live-update.js" defer></script>' + [Environment]::NewLine + '</body>'
+          $Content = $Content -replace '</body>', ('  ' + $RuntimeTag + [Environment]::NewLine + '</body>')
         }
         else {
-          $Content += [Environment]::NewLine + '<script src="live-update.js" defer></script>' + [Environment]::NewLine
+          $Content += [Environment]::NewLine + $RuntimeTag + [Environment]::NewLine
         }
 
         [IO.File]::WriteAllText(
