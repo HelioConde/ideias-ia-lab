@@ -10,7 +10,7 @@ Regra: **cada ideia possui um repositório próprio**. O `ideias-ia-lab` guarda 
 | 2 | DocPronto | `HelioConde/docpronto` | Ativo |
 | 3 | Riot Legacy | `HelioConde/riot-legacy` | Automação preparada |
 | 4 | VagaCerta | `HelioConde/vagacerta` | Branch standalone pronta |
-| 5 | LoL Match Story | `HelioConde/lol-match-story` | Automação preparada |
+| 5 | LoL Match Story | `HelioConde/lol-match-story` | Ativo |
 | 6 | TFT Wrapped | `HelioConde/tft-personal-wrapped` | Ativo · MVP migrado |
 | 7 | PostPilot | `HelioConde/postpilot` | Ativo |
 | 8 | MontaPC | `HelioConde/montapc` | Branch standalone pronta |
