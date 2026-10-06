@@ -97,3 +97,12 @@ Dados utilizados no MVP atual:
 - traits ativos da partida mais recente.
 
 A interface não chama esses recortes de “histórico completo”. Eles são apresentados como amostra recente até existirem snapshots históricos suficientes.
+
+
+## Resiliência do frontend
+
+As duas consultas públicas rodam em paralelo e possuem timeout de 14 segundos. A interface descarta respostas atrasadas de uma busca anterior.
+
+Quando apenas LoL ou TFT responde, a outra seção permanece em fallback demonstrativo identificado.
+
+O usuário pode repetir a consulta com **Atualizar dados** sem recarregar a página, o que também cobre rate limit temporário e falhas transitórias.
