@@ -1,4 +1,3 @@
 User-agent: *
 Allow: /
-
-Sitemap: https://helioconde.github.io/riot-legacy/sitemap.xml
+Sitemap: https://helioconde.github.io/lol-match-story/sitemap.xml
