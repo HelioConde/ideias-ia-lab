@@ -208,3 +208,16 @@ test('buscas recentes persistem servidor e reabrem o perfil', async ({ page }) =
   await page.getByRole('button', { name: 'Limpar', exact: true }).click();
   await expect(page.locator('#recent-searches')).toBeHidden();
 });
+
+
+test('servidores SEA suportados mantêm o routing correto no deep link', async ({ page }) => {
+  await page.locator('#game-name').fill('SeaPlayer');
+  await page.locator('#tag-line').fill('SG2');
+  await page.locator('#region').selectOption('sg2');
+  await page.getByRole('button', { name: /Ver meu legado/i }).click();
+
+  await expect(page).toHaveURL(/server=sg2/);
+  await page.getByRole('button', { name: /Novo perfil/i }).click();
+  await page.locator('#recent-searches-list .recent-search').click();
+  await expect(page).toHaveURL(/server=sg2/);
+});
