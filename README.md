@@ -47,7 +47,7 @@ A fila agora é organizada por **prioridade real**, considerando proximidade de 
 |---:|---|---|---|---|
 | 1 | **AgendaLeve** | SaaS | P0 | [MVP técnico concluído · validação pós-MVP](https://github.com/HelioConde/agendaleve/issues/1) |
 | 2 | **DocPronto** | SaaS | P0 | [MVP técnico concluído · validação pós-MVP](https://github.com/HelioConde/docpronto/issues/1) |
-| 3 | **Riot Legacy** | LoL + TFT | P0 | **Próximo foco oficial** · repositório pendente |
+| 3 | **Riot Legacy** | LoL + TFT | P0 | [Protótipo standalone em desenvolvimento](https://github.com/HelioConde/ideias-ia-lab/tree/split/riot-legacy) · repo físico pendente |
 | 4 | **VagaCerta** | Carreira | P0 | Repositório pendente |
 | 5 | **LoL Match Story** | LoL | P0 | Repositório pendente |
 | 6 | **TFT Wrapped** | TFT | P0 | Repositório pendente |
@@ -72,7 +72,7 @@ A fila agora é organizada por **prioridade real**, considerando proximidade de 
 
 - AgendaLeve: MVP técnico publicado; pendências humanas/externas centralizadas na [issue #1](https://github.com/HelioConde/agendaleve/issues/1).
 - DocPronto: MVP técnico publicado; homologação humana centralizada na [issue #1](https://github.com/HelioConde/docpronto/issues/1).
-- **Próximo desenvolvimento pesado: Riot Legacy.**
+- **Desenvolvimento pesado atual: Riot Legacy.** Protótipo standalone navegável já iniciado e validado por Static QA + Browser E2E.
 - Novas features nos dois SaaS ficam pausadas até aparecer feedback real, bug crítico ou decisão explícita de retomada.
 
 ## Destaque estratégico — Riot Legacy
@@ -83,7 +83,7 @@ O usuário informa o Riot ID e recebe uma página bonita sobre sua trajetória e
 
 A meta não é criar apenas outro tracker: é criar uma página em que o jogador queira permanecer para **rever sua história e o esforço acumulado ao longo dos anos**.
 
-Destino planejado: `HelioConde/riot-legacy`.
+Protótipo atual: [`split/riot-legacy`](https://github.com/HelioConde/ideias-ia-lab/tree/split/riot-legacy). Destino planejado: `HelioConde/riot-legacy`.
 
 ## Repositórios do portfólio geral
 
@@ -101,6 +101,18 @@ Destino planejado: `HelioConde/riot-legacy`.
 | Perto | [branch standalone pronta](https://github.com/HelioConde/ideias-ia-lab/tree/split/perto) · `HelioConde/perto` ainda será criado |
 
 As novas ideias de LoL, TFT e Overwatch estão organizadas na fila oficial e devem receber repositórios independentes quando entrarem em desenvolvimento.
+
+## Protótipo gamer standalone em desenvolvimento
+
+- **Riot Legacy** — [`split/riot-legacy`](https://github.com/HelioConde/ideias-ia-lab/tree/split/riot-legacy)
+  - landing + perfil demonstrativo LoL/TFT;
+  - Riot ID e deep link;
+  - PT-BR/EN;
+  - card compartilhável;
+  - anúncios preparados;
+  - Static QA ✅;
+  - Browser E2E ✅;
+  - repositório físico e GitHub Pages ainda pendentes.
 
 ## Branches standalone preparadas
 
