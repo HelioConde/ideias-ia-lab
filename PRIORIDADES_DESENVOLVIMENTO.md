@@ -43,9 +43,9 @@ A ordem combina quatro fatores:
 
 | # | Projeto | Área | Prioridade | Motivo principal | Repositório/status |
 |---:|---|---|---|---|---|
-| 1 | **AgendaLeve** | SaaS | P0 | Já separado, B2B recorrente e caminho curto até lançamento | [HelioConde/agendaleve](https://github.com/HelioConde/agendaleve) |
-| 2 | **DocPronto** | SaaS | P0 | Já separado, simples de explicar e monetizar | [HelioConde/docpronto](https://github.com/HelioConde/docpronto) |
-| 3 | **Riot Legacy** | LoL + TFT | P0 | Experiência visual/nostálgica, alto compartilhamento e forte diferencial | `HelioConde/riot-legacy` — pendente |
+| 1 | **AgendaLeve** | SaaS | P0 | MVP técnico concluído; agora validar uso real | [MVP concluído · issue pós-MVP](https://github.com/HelioConde/agendaleve/issues/1) |
+| 2 | **DocPronto** | SaaS | P0 | MVP técnico concluído; agora homologação humana | [MVP concluído · issue pós-MVP](https://github.com/HelioConde/docpronto/issues/1) |
+| 3 | **Riot Legacy** | LoL + TFT | P0 | **Próximo foco oficial**; experiência visual/nostálgica, alto compartilhamento e forte diferencial | `HelioConde/riot-legacy` — próximo a iniciar |
 | 4 | **VagaCerta** | Carreira | P0 | Dor frequente, valor claro e bom potencial freemium | `HelioConde/vagacerta` — pendente |
 | 5 | **LoL Match Story** | LoL | P0 | Transforma partidas em histórias visuais compartilháveis | `HelioConde/lol-match-story` — pendente |
 | 6 | **TFT Wrapped** | TFT | P0 | Retrospectiva altamente compartilhável por semana/mês/set | `HelioConde/tft-personal-wrapped` — pendente |
@@ -85,16 +85,16 @@ A ordem combina quatro fatores:
 | 40 | **PratoPronto** | Consumo | P3 | Mercado amplo, porém diferenciação e monetização mais fracas | `HelioConde/pratopronto` — pendente |
 | 41 | **Perto** | Marketplace | P3 | Potencial alto, mas exige oferta + demanda, reputação e moderação | `HelioConde/perto` — pendente |
 
-## P0 — desenvolver agora
+## P0 — estado atual
 
 ### 1. AgendaLeve
-Objetivo: finalizar o produto mais próximo de receita recorrente e validar uso real.
+**MVP técnico concluído.** Desenvolvimento principal pausado; validação humana/externa segue na issue #1 do repositório.
 
 ### 2. DocPronto
-Objetivo: chegar rapidamente a um MVP publicável de propostas/orçamentos.
+**MVP técnico concluído.** Desenvolvimento principal pausado; homologação humana segue na issue #1 do repositório.
 
 ### 3. Riot Legacy
-**Nova prioridade estratégica do ecossistema de jogos.**
+**Próximo desenvolvimento pesado oficial e prioridade estratégica do ecossistema de jogos.**
 
 A proposta é uma experiência visual, emocional e compartilhável:
 
@@ -131,6 +131,8 @@ Antes de mover para o próximo item da fila, o projeto atual deve cumprir pelo m
 - layout preparado para anúncios sem prejudicar o fluxo principal;
 - PT-BR e inglês disponíveis, com PT-BR como idioma principal;
 - backlog explícito para V2.
+
+**AgendaLeve e DocPronto já cumpriram este gate em 06/10/2026 e liberaram o WIP para o próximo projeto.**
 
 Não é necessário transformar cada projeto em produto completo antes de testar o próximo. A meta é **validar o menor produto realmente utilizável**.
 
