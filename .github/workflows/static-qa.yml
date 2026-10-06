@@ -35,7 +35,8 @@ jobs:
           grep -qi 'data-ad-slot="legacy-top"' index.html
           grep -qi 'dados demonstrativos' index.html
           grep -qi 'Riot Legacy' index.html
-          grep -qi 'not endorsed' index.html
+          grep -qi 'não é endossado' index.html
+          grep -qi 'not endorsed' i18n.js
           grep -qi 'riot-legacy-language' i18n.js
           grep -qi 'URLSearchParams' app.js
           grep -qi 'navigator.share' app.js
