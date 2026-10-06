@@ -45,7 +45,7 @@ A ordem combina quatro fatores:
 |---:|---|---|---|---|---|
 | 1 | **AgendaLeve** | SaaS | P0 | MVP técnico concluído; agora validar uso real | [MVP concluído · issue pós-MVP](https://github.com/HelioConde/agendaleve/issues/1) |
 | 2 | **DocPronto** | SaaS | P0 | MVP técnico concluído; agora homologação humana | [MVP concluído · issue pós-MVP](https://github.com/HelioConde/docpronto/issues/1) |
-| 3 | **Riot Legacy** | LoL + TFT | P0 | **Próximo foco oficial**; experiência visual/nostálgica, alto compartilhamento e forte diferencial | `HelioConde/riot-legacy` — próximo a iniciar |
+| 3 | **Riot Legacy** | LoL + TFT | P0 | **Em desenvolvimento**; experiência visual/nostálgica, alto compartilhamento e forte diferencial | [protótipo `split/riot-legacy`](https://github.com/HelioConde/ideias-ia-lab/tree/split/riot-legacy) — repo físico pendente |
 | 4 | **VagaCerta** | Carreira | P0 | Dor frequente, valor claro e bom potencial freemium | `HelioConde/vagacerta` — pendente |
 | 5 | **LoL Match Story** | LoL | P0 | Transforma partidas em histórias visuais compartilháveis | `HelioConde/lol-match-story` — pendente |
 | 6 | **TFT Wrapped** | TFT | P0 | Retrospectiva altamente compartilhável por semana/mês/set | `HelioConde/tft-personal-wrapped` — pendente |
@@ -94,7 +94,7 @@ A ordem combina quatro fatores:
 **MVP técnico concluído.** Desenvolvimento principal pausado; homologação humana segue na issue #1 do repositório.
 
 ### 3. Riot Legacy
-**Próximo desenvolvimento pesado oficial e prioridade estratégica do ecossistema de jogos.**
+**Desenvolvimento pesado atual e prioridade estratégica do ecossistema de jogos.** O protótipo standalone já possui landing, perfil LoL/TFT demonstrativo, PT-BR/EN, compartilhamento, anúncios preparados, Static QA e Browser E2E.
 
 A proposta é uma experiência visual, emocional e compartilhável:
 
