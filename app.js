@@ -128,8 +128,8 @@
     if (state === 'live') {
       sourceBadge.textContent = english ? 'RIOT DATA · LOL + TFT' : 'DADOS RIOT · LOL + TFT';
       sourceNote.textContent = english
-        ? detail || 'League and TFT use Riot-backed data. The long-term timeline remains demonstrative until historical snapshots exist.'
-        : detail || 'League e TFT usam dados vindos da Riot. A timeline de longo prazo continua demonstrativa até existirem snapshots históricos.';
+        ? detail || 'League and TFT use recent Riot-backed data. Historical snapshots will expand the legacy over time.'
+        : detail || 'League e TFT usam dados recentes vindos da Riot. Snapshots históricos ampliarão o legado ao longo do tempo.';
       return;
     }
 
@@ -300,6 +300,91 @@
     bg.style.backgroundImage = `linear-gradient(90deg,rgba(5,10,16,.98) 5%,rgba(5,10,16,.78) 45%,rgba(5,10,16,.22)),linear-gradient(0deg,#050a10 0%,transparent 45%),url("https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${safeChampion}_0.jpg")`;
   }
 
+  function renderTimeline() {
+    const title = document.querySelector('#timeline-title');
+    const timeline = document.querySelector('#legacy-timeline');
+    const subtitle = document.querySelector('#profile-subtitle');
+    const sharePeriod = document.querySelector('#share-period');
+    const hasLive = Boolean(live.lol || live.tft);
+
+    if (!hasLive) {
+      title.textContent = t('timeline_title');
+      subtitle.textContent = t('legacy_since');
+      sharePeriod.textContent = '2018 → 2026 · LoL + TFT';
+      timeline.innerHTML = `
+        <div class="timeline-item"><b>2018</b><h3>${t('timeline_2018')}</h3><p>${t('timeline_2018_text')}</p></div>
+        <div class="timeline-item"><b>2021</b><h3>${t('timeline_2021')}</h3><p>${t('timeline_2021_text')}</p></div>
+        <div class="timeline-item"><b>2024</b><h3>${t('timeline_2024')}</h3><p>${t('timeline_2024_text')}</p></div>
+        <div class="timeline-item"><b>2026</b><h3>${t('timeline_2026')}</h3><p>${t('timeline_2026_text')}</p></div>`;
+      return;
+    }
+
+    const english = locale() === 'en';
+    const platform = String(currentLookup?.platform || live.lol?.player?.platform || live.tft?.player?.platform || '').toUpperCase();
+    title.textContent = english ? 'Your recent Riot sample in chapters' : 'Sua amostra Riot recente em capítulos';
+    subtitle.textContent = english
+      ? `Recent Riot snapshot${platform ? ' · ' + platform : ''}`
+      : `Retrato Riot recente${platform ? ' · ' + platform : ''}`;
+    sharePeriod.textContent = english ? 'Recent Riot sample · LoL + TFT' : 'Amostra Riot recente · LoL + TFT';
+
+    const chapters = [];
+    if (live.lol) {
+      const matches = Number(live.lol.summary?.matches || currentLolMatches().length);
+      const context = live.lol.summary?.mainContext || 'LoL';
+      const winRate = live.lol.summary?.winRate;
+      chapters.push({
+        label: 'LOL',
+        title: english ? 'Your recent moment' : 'Seu momento recente',
+        text: english
+          ? `${matches} analyzed matches · ${context}${winRate != null ? ' · ' + winRate + '% win rate' : ''}.`
+          : `${matches} partidas analisadas · ${context}${winRate != null ? ' · ' + winRate + '% de win rate' : ''}.`
+      });
+
+      const top = live.lol.championSummaries?.[0];
+      if (top?.name) {
+        chapters.push({
+          label: String(top.name).toUpperCase(),
+          title: english ? 'Recent signature' : 'Assinatura recente',
+          text: english
+            ? `${top.name} appears in ${top.games || 0} matches from the analyzed sample.`
+            : `${top.name} aparece em ${top.games || 0} partidas da amostra analisada.`
+        });
+      }
+    }
+
+    if (live.tft) {
+      const summary = live.tft.summary || {};
+      const latest = currentTftMatches()[0] || {};
+      const setLabel = latest.setName || (latest.setNumber ? 'Set ' + latest.setNumber : 'TFT');
+      chapters.push({
+        label: 'TFT',
+        title: english ? 'Your recent set' : 'Seu set recente',
+        text: english
+          ? `${setLabel} · average placement ${summary.averagePlacement ?? '—'} · Top 4 ${summary.top4Rate ?? '—'}%.`
+          : `${setLabel} · colocação média ${summary.averagePlacement ?? '—'} · Top 4 ${summary.top4Rate ?? '—'}%.`
+      });
+    }
+
+    const timestamps = [
+      ...currentLolMatches().map(match => Number(match.playedAt || 0)),
+      ...currentTftMatches().map(match => Number(match.playedAt || 0))
+    ].filter(value => Number.isFinite(value) && value > 0);
+    if (timestamps.length) {
+      const latestAt = new Date(Math.max(...timestamps));
+      chapters.push({
+        label: latestAt.toLocaleDateString(locale(), { day: '2-digit', month: 'short' }).replace('.', '').toUpperCase(),
+        title: english ? 'Latest activity in this snapshot' : 'Atividade mais recente desta amostra',
+        text: english
+          ? 'This chapter comes from the most recent match returned by the Riot-backed sample.'
+          : 'Este capítulo vem da partida mais recente retornada pela amostra baseada nos dados Riot.'
+      });
+    }
+
+    timeline.innerHTML = chapters.slice(0, 4).map(chapter =>
+      `<div class="timeline-item"><b>${escapeHtml(chapter.label)}</b><h3>${escapeHtml(chapter.title)}</h3><p>${escapeHtml(chapter.text)}</p></div>`
+    ).join('');
+  }
+
   function renderDynamicCopy() {
     const mastery = currentMasteryPoints();
     const lolMatches = live.lol?.summary?.matches;
@@ -341,6 +426,7 @@
     renderBoard();
     renderTraits();
     renderPlacementBars();
+    renderTimeline();
   }
 
   function setProfileIdentity(riotId) {
@@ -405,8 +491,8 @@
     const tftCount = Number(tft?.summary?.matches || 0);
     if (lol && tft) {
       const detail = locale() === 'en'
-        ? `Riot data loaded: ${lolCount} recent LoL matches and ${tftCount} TFT matches. The long-term timeline is still demonstrative.`
-        : `Dados Riot carregados: ${lolCount} partidas recentes de LoL e ${tftCount} partidas de TFT. A timeline de longo prazo ainda é demonstrativa.`;
+        ? `Riot data loaded: ${lolCount} recent LoL matches and ${tftCount} TFT matches. The legacy chapters below use this recent sample.`
+        : `Dados Riot carregados: ${lolCount} partidas recentes de LoL e ${tftCount} partidas de TFT. Os capítulos abaixo usam esta amostra recente.`;
       setSourceState('live', detail);
       return;
     }
@@ -537,8 +623,8 @@
         const lolCount = Number(live.lol?.summary?.matches || 0);
         const tftCount = Number(live.tft?.summary?.matches || 0);
         setSourceState('live', locale() === 'en'
-          ? `Riot data loaded: ${lolCount} recent LoL matches and ${tftCount} TFT matches. The long-term timeline is still demonstrative.`
-          : `Dados Riot carregados: ${lolCount} partidas recentes de LoL e ${tftCount} partidas de TFT. A timeline de longo prazo ainda é demonstrativa.`);
+          ? `Riot data loaded: ${lolCount} recent LoL matches and ${tftCount} TFT matches. The legacy chapters below use this recent sample.`
+          : `Dados Riot carregados: ${lolCount} partidas recentes de LoL e ${tftCount} partidas de TFT. Os capítulos abaixo usam esta amostra recente.`);
       } else if (state === 'partial') {
         const available = live.lol ? 'LoL' : 'TFT';
         const missing = live.lol ? 'TFT' : 'LoL';
