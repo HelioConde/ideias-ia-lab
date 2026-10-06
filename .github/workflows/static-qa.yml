@@ -19,6 +19,7 @@ jobs:
           node --check data.js
           node --check assets/app.js
           node --check supabase-config.js
+          node --check 02-vaga-certa/app.js
       - name: Validate product pages
         run: |
           set -e
@@ -30,3 +31,6 @@ jobs:
             grep -qi 'rel="canonical"' "$page/index.html"
             grep -qi 'supabase-config.js' "$page/index.html"
           done
+          test -f 02-vaga-certa/style.css
+          grep -qi '02-vaga-certa/app.js\|src="app.js"' 02-vaga-certa/index.html
+          exit 0
