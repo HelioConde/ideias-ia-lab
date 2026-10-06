@@ -14,6 +14,7 @@ Este arquivo transforma a fila de prioridades em uma sequência prática de exec
 | 4 | **VagaCerta** | branch standalone pronta | criar repositório físico e publicar |
 | 5 | **LoL Match Story** | Ideia priorizada | criar MVP visual usando dados reais quando disponíveis |
 | 6 | **TFT Wrapped** | Ideia priorizada | criar retrospectiva mínima compartilhável |
+| 7 | **PostPilot** | MVP em evolução ativa | primeiro projeto executável após os P0 sem repositório: PT/EN, planejamento editorial, anúncios preparados, dashboard de produção e Browser E2E concluídos |
 
 ## Definição de estados
 
@@ -66,7 +67,7 @@ Para evitar dezenas de produtos incompletos:
 
 ### Bloco C — monetização/uso recorrente
 6. VagaCerta
-7. PostPilot — multiplataforma, exportação e fluxo de publicação concluídos
+7. PostPilot — desenvolvimento retomado; PT/EN, planejamento editorial, anúncios preparados, dashboard de produção e Browser E2E concluídos
 8. MontaPC
 
 ### Bloco D — expansão gamer
