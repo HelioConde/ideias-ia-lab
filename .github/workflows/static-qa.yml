@@ -25,3 +25,32 @@ jobs:
           do
             test ! -e "$forbidden"
           done
+
+      - name: Validate migration script
+        shell: pwsh
+        run: |
+          $errors = $null
+          [System.Management.Automation.Language.Parser]::ParseFile(
+            (Resolve-Path "scripts/create-split-repos.ps1"),
+            [ref]$null,
+            [ref]$errors
+          ) | Out-Null
+          if ($errors.Count -gt 0) {
+            $errors | ForEach-Object { Write-Error $_.Message }
+            exit 1
+          }
+
+          $script = Get-Content "scripts/create-split-repos.ps1" -Raw
+          @(
+            "split/vagacerta",
+            "split/falapro",
+            "split/montapc",
+            "split/gameradar",
+            "split/perto",
+            "split/pratopronto",
+            "split/revisa"
+          ) | ForEach-Object {
+            if (-not $script.Contains($_)) {
+              throw "Branch de migração ausente do script: $_"
+            }
+          }
