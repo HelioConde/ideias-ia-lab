@@ -152,6 +152,41 @@
       : 'O backend Riot não retornou dados utilizáveis para esta busca. O protótipo visual continua disponível com dados demonstrativos.');
   }
 
+  function liveFailureMessage(results) {
+    const failures = results
+      .filter(result => result?.status === 'rejected')
+      .map(result => ({
+        code: String(result.reason?.code || ''),
+        status: Number(result.reason?.status || 0),
+        name: String(result.reason?.name || '')
+      }));
+
+    const english = locale() === 'en';
+    if (failures.some(item => item.code === 'player' || item.code === 'player_not_found' || item.status === 404)) {
+      return english
+        ? 'Riot ID was not found by the live backend. Check Game Name, Tag Line and server, then refresh.'
+        : 'O Riot ID não foi encontrado pelo backend ao vivo. Confira Game Name, Tag Line e servidor e tente atualizar.';
+    }
+    if (failures.some(item => item.code === 'rate_limited' || item.status === 429)) {
+      return english
+        ? 'Riot rate limit is temporarily active. The demo fallback remains available; try Refresh data again in a moment.'
+        : 'O limite temporário da Riot foi atingido. O fallback demo continua disponível; tente Atualizar dados novamente em instantes.';
+    }
+    if (failures.some(item => item.code === 'riot_api_key_rejected' || item.status === 401 || item.status === 403)) {
+      return english
+        ? 'The server-side Riot integration is temporarily unavailable. No key is exposed in this browser; try again later.'
+        : 'A integração server-side com a Riot está temporariamente indisponível. Nenhuma chave fica exposta neste navegador; tente novamente mais tarde.';
+    }
+    if (failures.some(item => item.name === 'AbortError')) {
+      return english
+        ? 'The Riot lookup took too long. The demo fallback was kept; use Refresh data to try again.'
+        : 'A consulta à Riot demorou demais. O fallback demo foi mantido; use Atualizar dados para tentar novamente.';
+    }
+    return english
+      ? 'Live Riot data is unavailable right now. The demonstrative fallback remains active and can be refreshed later.'
+      : 'Os dados Riot ao vivo estão indisponíveis agora. O fallback demonstrativo permanece ativo e pode ser atualizado depois.';
+  }
+
   async function postPublicFunction(url, body) {
     if (!url) throw new Error('backend_not_configured');
     const controller = new AbortController();
@@ -505,23 +540,18 @@
     if (lol || tft) {
       const available = lol ? 'LoL' : 'TFT';
       const missing = lol ? 'TFT' : 'LoL';
+      const missingResult = lol ? tftResult : lolResult;
+      const reason = missingResult.status === 'rejected'
+        ? liveFailureMessage([missingResult])
+        : '';
       const detail = locale() === 'en'
-        ? `Live ${available} data loaded. ${missing} is using the demonstrative fallback for this lookup.`
-        : `Dados reais de ${available} carregados. ${missing} usa o fallback demonstrativo nesta busca.`;
+        ? `Live ${available} data loaded. ${missing} is using the demonstrative fallback.${reason ? ' ' + reason : ''}`
+        : `Dados reais de ${available} carregados. ${missing} usa o fallback demonstrativo.${reason ? ' ' + reason : ''}`;
       setSourceState('partial', detail);
       return;
     }
 
-    const errors = [lolResult, tftResult]
-      .filter(result => result.status === 'rejected')
-      .map(result => result.reason?.code)
-      .filter(Boolean);
-    const notFound = errors.includes('player') || errors.includes('player_not_found');
-    setSourceState('demo', notFound
-      ? (locale() === 'en'
-          ? 'Riot ID was not found by the live backend. The visual demo remains available.'
-          : 'O Riot ID não foi encontrado pelo backend ao vivo. O protótipo visual continua disponível.')
-      : '');
+    setSourceState('demo', liveFailureMessage([lolResult, tftResult]));
   }
 
   function showLanding() {
