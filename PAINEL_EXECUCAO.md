@@ -17,7 +17,7 @@ Esses dois produtos **não ocupam mais vaga de implementação pesada**. Só vol
 
 | Ordem | Projeto | Estado | Próxima ação |
 |---:|---|---|---|
-| 1 | **Riot Legacy** | **Em desenvolvimento** | protótipo standalone navegável pronto e com QA verde; materializar repo físico e conectar dados Riot reais via backend |
+| 1 | **Riot Legacy** | **Em desenvolvimento** | dados LoL/TFT reais já conectados e QA verde; validar Riot IDs reais, criar snapshots históricos e materializar repo físico |
 | 2 | **VagaCerta** | branch standalone pronta | criar repositório físico e publicar |
 | 3 | **LoL Match Story** | Ideia priorizada | criar MVP visual usando dados reais quando disponíveis |
 | 4 | **TFT Wrapped** | Ideia priorizada | criar retrospectiva mínima compartilhável |
