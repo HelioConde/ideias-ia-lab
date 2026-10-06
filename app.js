@@ -560,6 +560,159 @@
       : `${riotId} · Riot Legacy — Ahri como campeã assinatura, ${formatNumber(demo.mastery)} de maestria e uma história demonstrativa entre League + TFT.`;
   }
 
+  function drawShareCard() {
+    const canvas = document.createElement('canvas');
+    canvas.width = 1200;
+    canvas.height = 630;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) throw new Error('canvas_unavailable');
+
+    const riotId = profileRiotId.textContent || 'Riot ID';
+    const champion = currentSignatureChampion();
+    const mastery = currentMasteryPoints();
+    const lolMatches = Number(live.lol?.summary?.matches || 0);
+    const winRate = live.lol?.summary?.winRate;
+    const tftTop4 = live.tft?.summary?.top4Rate;
+    const tftAverage = live.tft?.summary?.averagePlacement;
+    const sourceState = sourceBadge.dataset.sourceState || 'demo';
+    const english = locale() === 'en';
+
+    const bg = ctx.createLinearGradient(0, 0, 1200, 630);
+    bg.addColorStop(0, '#08111b');
+    bg.addColorStop(.55, '#101b2a');
+    bg.addColorStop(1, '#241f45');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, 1200, 630);
+
+    const glow = ctx.createRadialGradient(1000, 80, 20, 1000, 80, 360);
+    glow.addColorStop(0, 'rgba(216,179,95,.28)');
+    glow.addColorStop(1, 'rgba(216,179,95,0)');
+    ctx.fillStyle = glow;
+    ctx.fillRect(640, 0, 560, 450);
+
+    ctx.fillStyle = 'rgba(255,255,255,.055)';
+    ctx.beginPath();
+    ctx.arc(1030, 500, 210, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = '#d8b35f';
+    ctx.font = '800 24px system-ui, sans-serif';
+    ctx.fillText('RIOT LEGACY', 72, 74);
+
+    const badge = sourceState === 'live'
+      ? (english ? 'RIOT DATA · LOL + TFT' : 'DADOS RIOT · LOL + TFT')
+      : sourceState === 'partial'
+        ? (english ? 'PARTIAL RIOT DATA' : 'DADOS RIOT PARCIAIS')
+        : (english ? 'DEMONSTRATIVE FALLBACK' : 'FALLBACK DEMONSTRATIVO');
+    ctx.font = '700 17px system-ui, sans-serif';
+    ctx.fillStyle = sourceState === 'live' ? '#9ce9df' : '#f2d996';
+    ctx.fillText(badge, 72, 112);
+
+    ctx.fillStyle = '#f6f8fa';
+    ctx.font = '800 58px system-ui, sans-serif';
+    ctx.fillText(riotId.slice(0, 28), 72, 205);
+
+    ctx.fillStyle = '#91a0b2';
+    ctx.font = '500 23px system-ui, sans-serif';
+    ctx.fillText(
+      live.lol
+        ? (english ? champion + ' · recent LoL signature' : champion + ' · assinatura recente no LoL')
+        : (english ? 'Visual legacy preview' : 'Prévia visual do legado'),
+      72,
+      247
+    );
+
+    const cards = [
+      {
+        label: english ? 'MASTERY' : 'MAESTRIA',
+        value: formatNumber(mastery)
+      },
+      {
+        label: english ? 'LOL SAMPLE' : 'AMOSTRA LOL',
+        value: live.lol ? String(lolMatches) : '—'
+      },
+      {
+        label: english ? 'WIN RATE' : 'WIN RATE',
+        value: live.lol && winRate != null ? winRate + '%' : '—'
+      },
+      {
+        label: english ? 'TFT TOP 4' : 'TOP 4 TFT',
+        value: live.tft && tftTop4 != null ? tftTop4 + '%' : '—'
+      }
+    ];
+
+    cards.forEach((card, index) => {
+      const x = 72 + index * 258;
+      const y = 324;
+      ctx.fillStyle = 'rgba(255,255,255,.055)';
+      ctx.fillRect(x, y, 232, 126);
+      ctx.fillStyle = '#91a0b2';
+      ctx.font = '700 15px system-ui, sans-serif';
+      ctx.fillText(card.label, x + 18, y + 31);
+      ctx.fillStyle = '#f5efe1';
+      ctx.font = '800 31px system-ui, sans-serif';
+      ctx.fillText(card.value, x + 18, y + 79);
+    });
+
+    ctx.fillStyle = '#c9d2dc';
+    ctx.font = '600 20px system-ui, sans-serif';
+    const tftLine = live.tft && tftAverage != null
+      ? (english
+          ? 'TFT average placement: ' + Number(tftAverage).toLocaleString(locale(), { maximumFractionDigits: 2 })
+          : 'Colocação média TFT: ' + Number(tftAverage).toLocaleString(locale(), { maximumFractionDigits: 2 }))
+      : (english ? 'League + TFT visual legacy' : 'Legado visual de League + TFT');
+    ctx.fillText(tftLine, 72, 502);
+
+    ctx.fillStyle = '#718095';
+    ctx.font = '500 16px system-ui, sans-serif';
+    ctx.fillText(
+      english
+        ? 'Independent project · Riot Games and related properties belong to Riot Games, Inc.'
+        : 'Projeto independente · Riot Games e propriedades relacionadas pertencem à Riot Games, Inc.',
+      72,
+      570
+    );
+
+    ctx.textAlign = 'right';
+    ctx.fillStyle = 'rgba(242,217,150,.22)';
+    ctx.font = '900 118px system-ui, sans-serif';
+    ctx.fillText('RL', 1120, 585);
+    ctx.textAlign = 'left';
+
+    return canvas;
+  }
+
+  function downloadShareCard() {
+    let canvas;
+    try {
+      canvas = drawShareCard();
+    } catch {
+      showToast('share_ready');
+      return;
+    }
+
+    canvas.toBlob(blob => {
+      if (!blob) {
+        showToast('share_ready');
+        return;
+      }
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      const slug = String(profileRiotId.textContent || 'riot-legacy')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-|-$/g, '')
+        .slice(0, 48) || 'riot-legacy';
+      link.href = url;
+      link.download = `riot-legacy-${slug}.png`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.setTimeout(() => URL.revokeObjectURL(url), 0);
+      showToast('downloaded_card');
+    }, 'image/png');
+  }
+
   async function copyLink() {
     try {
       await navigator.clipboard.writeText(currentShareUrl());
@@ -613,6 +766,7 @@
   document.querySelector('#copy-link').addEventListener('click', copyLink);
   document.querySelector('#share-legacy').addEventListener('click', shareLegacy);
   document.querySelector('#share-card-action').addEventListener('click', shareLegacy);
+  document.querySelector('#download-card').addEventListener('click', downloadShareCard);
 
   window.addEventListener('riot-legacy-language', () => {
     renderDynamicCopy();
