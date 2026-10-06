@@ -144,7 +144,7 @@
   function platformRegion(platform) {
     if (['br1', 'na1', 'la1', 'la2'].includes(platform)) return 'americas';
     if (['kr', 'jp1'].includes(platform)) return 'asia';
-    if (['oc1'].includes(platform)) return 'sea';
+    if (['ph2', 'sg2', 'th2', 'tw2', 'vn2', 'oc1'].includes(platform)) return 'sea';
     return 'europe';
   }
 
