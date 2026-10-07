@@ -1,6 +1,6 @@
 # Plano mestre de execução fullstack
 
-Atualizado em 2026-10-06.
+Atualizado em 2026-10-07.
 
 Este documento organiza o trabalho para levar **todos os 41 produtos do Ideias IA Lab** até um MVP fullstack utilizável sem transformar o portfólio em dezenas de projetos pela metade.
 
@@ -151,17 +151,18 @@ Implementação pesada concluída:
 
 O gate de saída foi cumprido pelos dois produtos em 06/10/2026.
 
-### Lote 2 — provar diferenciais — **ATUAL**
+### Lote 2 — provar diferenciais — **FECHAMENTO TÉCNICO QUASE CONCLUÍDO**
 
-- **Riot Legacy passa para implementação pesada como próximo foco oficial**;
-- VagaCerta entra como segundo projeto quando o repositório físico estiver materializado;
-- LoL Match Story fica como protótipo exploratório.
+- Riot Legacy — MVP técnico concluído; validação/compliance na issue #1.
+- LoL Match Story — MVP 1.0 concluído; validação na issue #1.
+- TFT Wrapped — núcleo real implementado; falta confirmar QA/Pages e Riot IDs reais.
+- LoL Champion Journey — correções de GitHub para snapshots concluídas; falta aplicar/republicar no Supabase gamer.
 
 ### Lote 3 — produtos compartilháveis / aquisição orgânica
 
-- LoL Match Story
-- TFT Wrapped
-- PostPilot
+- LoL Match Story — saiu da implementação pesada.
+- TFT Wrapped — fechar gate final e congelar.
+- PostPilot — não criar novas telas; concluir provedores reais e homologação.
 
 ### Lote 4 — monetização e intenção de compra
 
@@ -171,8 +172,8 @@ O gate de saída foi cumprido pelos dois produtos em 06/10/2026.
 
 ### Lote 5 — expansão gamer P1
 
-- LoL Champion Journey
-- TFT Board Museum
+- LoL Champion Journey — somente gate final de snapshots/validação
+- TFT Board Museum — MVP técnico concluído; somente validação
 - LoL Session Insights
 - TFT Augment Memory
 - OW VOD Timeline
@@ -378,8 +379,13 @@ Portanto, documentos antigos que ainda marcam esses projetos como “pendentes�
 
 ## Próxima ação
 
-1. manter AgendaLeve e DocPronto apenas em validação pós-MVP, sem ampliar escopo;
-2. iniciar **Riot Legacy** como próximo desenvolvimento pesado oficial;
-3. materializar VagaCerta como segundo projeto quando o repositório físico estiver disponível;
-4. manter LoL Match Story como protótipo exploratório;
-5. continuar respeitando o gate de saída antes de puxar o item seguinte da fila.
+A ordem operacional atual está em `PAINEL_EXECUCAO.md`.
+
+Em 07/10/2026:
+
+1. LoL Match Story, TFT Board Museum, AgendaLeve, DocPronto e Riot Legacy já saíram da implementação pesada;
+2. PostPilot permanece apenas no gate de provedores/homologação;
+3. LoL Champion Journey permanece apenas no gate de deploy/validação dos snapshots;
+4. TFT Wrapped recebeu backend real, agregações, PNG, E2E e Pages e deve ser fechado após CI/validação real;
+5. **VagaCerta é o próximo desenvolvimento pesado**, limitado aos quatro diferenciais definidos em sua issue #1;
+6. nenhum projeto tecnicamente fechado deve receber novas features sem feedback real, bug P0/P1, segurança/compliance ou decisão explícita de V2.
