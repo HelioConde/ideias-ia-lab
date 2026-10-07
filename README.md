@@ -82,7 +82,7 @@ Gates curtos ainda abertos:
 
 - PostPilot — provedores reais + homologação;
 - LoL Champion Journey — deploy/ativação dos snapshots no Supabase gamer;
-- TFT Wrapped — confirmar QA/Pages e Riot IDs reais.
+- TFT Wrapped — confirmar Pages/Actions e validação real; smoke test de produção com Riot ID já foi adicionado.
 
 **Próximo desenvolvimento pesado:** VagaCerta, com escopo fechado em compatibilidade explicada, currículo personalizado, follow-up e preparação de entrevista.
 
@@ -109,7 +109,7 @@ Repositório oficial: [HelioConde/riot-legacy](https://github.com/HelioConde/rio
 | VagaCerta | [repositório ativo · próximo foco pesado](https://github.com/HelioConde/vagacerta/issues/1) |
 | MontaPC | [repositório ativo](https://github.com/HelioConde/montapc) |
 | Revisa | [repositório ativo · ainda em estágio inicial](https://github.com/HelioConde/revisa) |
-| GameRadar | [branch standalone pronta](https://github.com/HelioConde/ideias-ia-lab/tree/split/gameradar) · `HelioConde/gameradar` ainda será criado |
+| GameRadar | [repositório ativo · MVP funcional em validação](https://github.com/HelioConde/gameradar) |
 | FalaPro | [branch standalone pronta](https://github.com/HelioConde/ideias-ia-lab/tree/split/falapro) · `HelioConde/falapro` ainda será criado |
 | PratoPronto | [branch standalone pronta](https://github.com/HelioConde/ideias-ia-lab/tree/split/pratopronto) · `HelioConde/pratopronto` ainda será criado |
 | Perto | [branch standalone pronta](https://github.com/HelioConde/ideias-ia-lab/tree/split/perto) · `HelioConde/perto` ainda será criado |
