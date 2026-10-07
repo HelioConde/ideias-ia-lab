@@ -112,9 +112,25 @@ Falta:
 
 Acompanhamento: `HelioConde/vagacerta#1`.
 
-## Próximo desenvolvimento pesado — MontaPC
+## MontaPC — gate de validação
 
-Com os gates externos rodando em paralelo, o próximo produto que pode receber implementação pesada é o **MontaPC**, começando por estabilização de produção, catálogo e compatibilidade P1 — sem abrir preços reais/monetização antes do QA.
+Em 07/10/2026 foram fechados no GitHub:
+
+- catálogo real de 65 componentes + snapshot offline;
+- Browser E2E desktop/mobile;
+- QA GitHub Actions;
+- compatibilidade avançada;
+- explicação por peça;
+- alternativas equivalentes;
+- ação de economia preservando desempenho;
+- comparação, desempenho, PWA/SEO/analytics;
+- patch de hardening RLS/grants versionado.
+
+Falta apenas aplicar/validar o hardening no `pizzaria-db`, Auth/RLS com duas contas e confirmar Actions/Pages verdes.
+
+## Próximo desenvolvimento pesado — TFT Item Lab
+
+Os projetos #9–#16 estão em validação. O próximo repositório com desenvolvimento real a receber é `HelioConde/tft-item-lab`, começando por um MVP pequeno baseado no histórico do próprio jogador: itens recorrentes, resultados observados e contexto por campeão/comp, sem virar tier list global.
 
 ## Regra de WIP
 
