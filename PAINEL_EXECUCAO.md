@@ -146,9 +146,15 @@ MVP funcional implementado em 07/10/2026: treino local-first, seis cargos, STAR,
 
 Falta validar login/RLS com contas reais, voz em navegadores reais e uso humano. IA avançada fica congelada.
 
-## Próximo desenvolvimento pesado — TFT Placement DNA
+## TFT Placement DNA — gate de validação
 
-Próximo projeto da fila oficial. O MVP deve reconstruir um perfil pessoal de resultados por faixa de colocação usando histórico Riot real, mostrando padrões próprios de Top 1/Top 4/Bottom 4 sem transformar amostra pessoal em tier list global.
+MVP funcional implementado em 07/10/2026: distribuição 1º–8º, Top 4 vs Bottom 4, comps/unidades/augments por grupo, diferenças em pontos percentuais, confiança da amostra, PT-BR/EN, Browser E2E e Live Riot Smoke.
+
+Falta validar dados reais/Pages e casos de histórico incompleto. Features V2 ficam congeladas.
+
+## Próximo desenvolvimento pesado — LoL Loss Explorer
+
+Próximo projeto da fila oficial. O MVP deve agrupar derrotas recentes por padrões observáveis — duração, função, campeão, KDA, visão/CS quando disponíveis e recorrência — sem inventar “causa da derrota” quando a telemetria não sustenta isso.
 
 ## Regra de WIP
 
