@@ -53,7 +53,7 @@ A ordem combina quatro fatores:
 | 8 | **MontaPC** | Hardware | P1 | Forte intenção de compra; repositório ativo e roadmap amplo | [HelioConde/montapc](https://github.com/HelioConde/montapc) |
 | 9 | **LoL Champion Journey** | LoL | P1 | Quase fechado; falta ativar/validar snapshots server-side | [gate final](https://github.com/HelioConde/lol-champion-journey/issues/4) |
 | 10 | **TFT Board Museum** | TFT | P1 | MVP técnico concluído; agora validação | [MVP concluído · validação](https://github.com/HelioConde/tft-board-museum/issues/1) |
-| 11 | **Revisa** | Educação | P1 | Dor recorrente, potencial de anúncios e assinatura/pacotes como complemento | `HelioConde/revisa` — pendente |
+| 11 | **Revisa** | Educação | P1 | MVP local funcional criado; validar uso real antes de V2 | [MVP funcional · issue de validação](https://github.com/HelioConde/revisa/issues/1) |
 | 12 | **LoL Session Insights** | LoL | P1 | Analisa comportamento ao longo da sessão em vez de partida isolada | `HelioConde/lol-session-insights` — pendente |
 | 13 | **TFT Augment Memory** | TFT | P1 | Histórico pessoal de augments e combinações | `HelioConde/tft-augment-memory` — pendente |
 | 14 | **OW VOD Timeline** | Overwatch | P1 | Útil mesmo sem API oficial forte; revisão visual por vídeo | `HelioConde/ow-vod-timeline` — pendente |
