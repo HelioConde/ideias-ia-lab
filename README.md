@@ -86,7 +86,7 @@ Gates curtos ainda abertos:
 - TFT Wrapped — confirmar Pages/Actions e validação real; smoke test de produção com Riot ID já foi adicionado.
 - VagaCerta — aplicar migration no `pizzaria-db`, validar RLS entre duas contas e confirmar QA/Pages.
 
-**TFT Item Lab, OW Map Master e FalaPro:** MVPs funcionais implementados e em validação. **Próximo desenvolvimento pesado:** TFT Placement DNA. VagaCerta e MontaPC seguem congelados nos gates externos.
+**TFT Item Lab, OW Map Master, FalaPro e TFT Placement DNA:** MVPs funcionais implementados e em validação. **Próximo desenvolvimento pesado:** LoL Loss Explorer.
 
 A regra agora é simples: projeto que cumpre o gate técnico entra em validação/manutenção. Não continuar adicionando melhorias visuais sem evidência real.
 
