@@ -60,8 +60,8 @@ A ordem combina quatro fatores:
 | 15 | **GameRadar** | Games | P1 | MVP funcional com ofertas e preço-alvo local; falta validação/Pages | [MVP funcional · issue de validação](https://github.com/HelioConde/gameradar/issues/1) |
 | 16 | **LoL Champion Pool** | LoL | P1 | MVP funcional com histórico Riot real e pool salvo; falta validação/Pages | [MVP funcional · issue de validação](https://github.com/HelioConde/lol-champion-pool/issues/1) |
 | 17 | **TFT Item Lab** | TFT | P1 | MVP funcional; validar dados reais/Pages | [MVP funcional · issue de validação](https://github.com/HelioConde/tft-item-lab/issues/1) |
-| 18 | **OW Map Master** | Overwatch | P1 | Próximo foco pesado; conteúdo evergreen/SEO | [HelioConde/ow-map-master](https://github.com/HelioConde/ow-map-master) |
-| 19 | **FalaPro** | Carreira | P2 | Bom produto, mas exige experiência de voz/feedback mais refinada | `HelioConde/falapro` — pendente |
+| 18 | **OW Map Master** | Overwatch | P1 | MVP funcional; validar Pages/uso real | [MVP funcional · issue de validação](https://github.com/HelioConde/ow-map-master/issues/1) |
+| 19 | **FalaPro** | Carreira | P2 | Próximo foco pesado; treino de entrevista | [HelioConde/falapro](https://github.com/HelioConde/falapro) |
 | 20 | **TFT Placement DNA** | TFT | P2 | Perfil de jogo por faixa de colocação | `HelioConde/tft-placement-dna` — pendente |
 | 21 | **LoL Loss Explorer** | LoL | P2 | Agrupa derrotas e padrões recorrentes | `HelioConde/lol-loss-explorer` — pendente |
 | 22 | **TFT Comp Evolution** | TFT | P2 | Mostra evolução pessoal de comps entre partidas e patches | `HelioConde/tft-comp-evolution` — pendente |
