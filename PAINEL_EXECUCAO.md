@@ -128,9 +128,15 @@ Em 07/10/2026 foram fechados no GitHub:
 
 Falta apenas aplicar/validar o hardening no `pizzaria-db`, Auth/RLS com duas contas e confirmar Actions/Pages verdes.
 
-## Próximo desenvolvimento pesado — TFT Item Lab
+## TFT Item Lab — gate de validação
 
-Os projetos #9–#16 estão em validação. O próximo repositório com desenvolvimento real a receber é `HelioConde/tft-item-lab`, começando por um MVP pequeno baseado no histórico do próprio jogador: itens recorrentes, resultados observados e contexto por campeão/comp, sem virar tier list global.
+MVP funcional implementado em 07/10/2026: histórico pessoal de itens, unidades, média/Top 4, 7D/30D/Set, PT-BR/EN, Browser E2E desktop/mobile, Pages e Live Riot Smoke.
+
+Falta confirmar Actions/Pages e payload real com múltiplos Riot IDs. Features V2 ficam congeladas.
+
+## Próximo desenvolvimento pesado — OW Map Master
+
+Próximo P1 da fila oficial. O MVP deve ser conteúdo visual/evergreen por mapa e modo, com filtros, objetivos, pontos de atenção e guia bilíngue; sem depender de API externa para funcionar.
 
 ## Regra de WIP
 
