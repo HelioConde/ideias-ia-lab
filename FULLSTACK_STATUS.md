@@ -14,7 +14,7 @@ O `ideias-ia-lab` é somente o hub de organização. Frontend, backend, migratio
 | DocPronto | `HelioConde/docpronto` | MVP publicado · homologação pós-MVP |
 | PostPilot | `HelioConde/postpilot` | gate final de provedores/homologação |
 | Riot Legacy | `HelioConde/riot-legacy` | MVP técnico concluído · validação/compliance |
-| VagaCerta | `HelioConde/vagacerta` | ativo · próximo foco pesado |
+| VagaCerta | `HelioConde/vagacerta` | 4 diferenciais implementados · migration/RLS/QA em validação |
 | LoL Match Story | `HelioConde/lol-match-story` | MVP 1.0 concluído · validação |
 | TFT Wrapped | `HelioConde/tft-personal-wrapped` | backend real/PNG/E2E implementados · gate final |
 | MontaPC | `HelioConde/montapc` | ativo · roadmap amplo |
@@ -81,18 +81,13 @@ Em 07/10/2026 foi adicionado Browser E2E automatizado a:
 
 O restante desses projetos é majoritariamente validação publicada/real: GitHub Pages, APIs externas quando aplicável, múltiplos Riot IDs, arquivos de vídeo reais ou fluxos de compra/links reais. **Não abrir V2 antes de fechar esses gates.**
 
+## VagaCerta — gate atual
+
+Os quatro diferenciais estão implementados, junto com Browser E2E, workflows QA/Pages e migration versionada. Falta aplicar a migration no `pizzaria-db`, validar RLS A ≠ B, sincronização entre dispositivos e confirmar CI/Pages verdes.
+
 ## Próximo foco pesado
 
-**VagaCerta**.
-
-Issue #1 define quatro entregas obrigatórias:
-
-1. compatibilidade explicada;
-2. currículo personalizado;
-3. follow-up;
-4. preparação de entrevista.
-
-Importação por URL, IA generativa e automações extras ficam depois desse gate.
+**MontaPC** — começar pela estabilização P0/P1 já registrada nas issues. VagaCerta fica congelado até concluir o gate de validação.
 
 ## Branches `split/*`
 
