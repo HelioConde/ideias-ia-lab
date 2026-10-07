@@ -140,9 +140,15 @@ MVP funcional implementado em 07/10/2026: 30 mapas principais, filtros, busca, d
 
 A versão publicada ainda precisa ser confirmada; features V2 ficam congeladas.
 
-## Próximo desenvolvimento pesado — FalaPro
+## FalaPro — gate de validação
 
-Próximo projeto da fila que ainda exige desenvolvimento real. O MVP deve priorizar treino de entrevista com perguntas estruturadas, resposta gravada/textual, autoavaliação e feedback útil — evitando dependência obrigatória de voz/IA para o primeiro fluxo funcionar.
+MVP funcional implementado em 07/10/2026: treino local-first, seis cargos, STAR, feedback explicável, voz opcional, histórico, PT-BR/EN, Supabase Auth/sync, hardening de grants, Browser E2E e Pages.
+
+Falta validar login/RLS com contas reais, voz em navegadores reais e uso humano. IA avançada fica congelada.
+
+## Próximo desenvolvimento pesado — TFT Placement DNA
+
+Próximo projeto da fila oficial. O MVP deve reconstruir um perfil pessoal de resultados por faixa de colocação usando histórico Riot real, mostrando padrões próprios de Top 1/Top 4/Bottom 4 sem transformar amostra pessoal em tier list global.
 
 ## Regra de WIP
 
