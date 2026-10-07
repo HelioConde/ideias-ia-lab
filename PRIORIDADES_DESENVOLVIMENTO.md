@@ -50,7 +50,7 @@ A ordem combina quatro fatores:
 | 5 | **LoL Match Story** | LoL | P0 | MVP 1.0 concluído; agora validar uso real | [MVP concluído · validação](https://github.com/HelioConde/lol-match-story/issues/1) |
 | 6 | **TFT Wrapped** | TFT | P0 | Backend real/PNG/E2E implementados; falta fechar QA/Pages real | [gate final](https://github.com/HelioConde/tft-personal-wrapped/issues/1) |
 | 7 | **PostPilot** | Criadores | P1 | MVP avançado; falta provedor real e homologação | [gate final](https://github.com/HelioConde/postpilot/issues/8) |
-| 8 | **MontaPC** | Hardware | P1 | Forte intenção de compra; repositório ativo e roadmap amplo | [HelioConde/montapc](https://github.com/HelioConde/montapc) |
+| 8 | **MontaPC** | Hardware | P1 | Núcleo técnico implementado; falta RLS/CI/QA real | [gate de validação](https://github.com/HelioConde/montapc/issues/1) |
 | 9 | **LoL Champion Journey** | LoL | P1 | Quase fechado; falta ativar/validar snapshots server-side | [gate final](https://github.com/HelioConde/lol-champion-journey/issues/4) |
 | 10 | **TFT Board Museum** | TFT | P1 | MVP técnico concluído; agora validação | [MVP concluído · validação](https://github.com/HelioConde/tft-board-museum/issues/1) |
 | 11 | **Revisa** | Educação | P1 | MVP local funcional criado; validar uso real antes de V2 | [MVP funcional · issue de validação](https://github.com/HelioConde/revisa/issues/1) |
@@ -59,7 +59,7 @@ A ordem combina quatro fatores:
 | 14 | **OW VOD Timeline** | Overwatch | P1 | MVP local funcional para revisão por timestamps; falta validação/Pages | [MVP funcional · issue de validação](https://github.com/HelioConde/ow-vod-timeline/issues/1) |
 | 15 | **GameRadar** | Games | P1 | MVP funcional com ofertas e preço-alvo local; falta validação/Pages | [MVP funcional · issue de validação](https://github.com/HelioConde/gameradar/issues/1) |
 | 16 | **LoL Champion Pool** | LoL | P1 | MVP funcional com histórico Riot real e pool salvo; falta validação/Pages | [MVP funcional · issue de validação](https://github.com/HelioConde/lol-champion-pool/issues/1) |
-| 17 | **TFT Item Lab** | TFT | P1 | Exploração de itemização baseada no histórico do jogador | `HelioConde/tft-item-lab` — pendente |
+| 17 | **TFT Item Lab** | TFT | P1 | Próximo foco pesado; repositório já existe | [HelioConde/tft-item-lab](https://github.com/HelioConde/tft-item-lab) |
 | 18 | **OW Map Master** | Overwatch | P1 | Conteúdo visual evergreen, útil para aprendizado e SEO | `HelioConde/ow-map-master` — pendente |
 | 19 | **FalaPro** | Carreira | P2 | Bom produto, mas exige experiência de voz/feedback mais refinada | `HelioConde/falapro` — pendente |
 | 20 | **TFT Placement DNA** | TFT | P2 | Perfil de jogo por faixa de colocação | `HelioConde/tft-placement-dna` — pendente |
@@ -87,7 +87,7 @@ A ordem combina quatro fatores:
 
 ## Atualização operacional — 07/10/2026
 
-O **VagaCerta saiu da implementação pesada de features**: compatibilidade explicada, currículos versionados, follow-up e preparação de entrevista já estão no GitHub. O restante do gate é aplicar migration/RLS e confirmar QA/Pages. Enquanto isso, o próximo foco pesado pode avançar para **MontaPC**.
+O **VagaCerta saiu da implementação pesada de features**: compatibilidade explicada, currículos versionados, follow-up e preparação de entrevista já estão no GitHub. O restante do gate é aplicar migration/RLS e confirmar QA/Pages. Enquanto isso, o MontaPC também fechou seu núcleo técnico e entrou em validação. O próximo foco pesado avança para **TFT Item Lab**.
 
 ## P0 — estado atual
 
@@ -113,7 +113,7 @@ A proposta é uma experiência visual, emocional e compartilhável:
 O objetivo não é ser apenas mais um tracker. O usuário deve entrar para **rever sua história** e querer permanecer na página.
 
 ### 4. VagaCerta
-**Próximo foco pesado.** O núcleo CRUD/funil já existe; a próxima fase fica limitada a compatibilidade explicada, currículo personalizado, follow-up e preparação de entrevista.
+**Quatro diferenciais implementados.** O projeto está em validação de migration/RLS/QA e não recebe novas features até fechar esse gate.
 
 ### 5. LoL Match Story
 **MVP 1.0 tecnicamente concluído em 07/10/2026.** Features congeladas; seguir apenas com validação real, AdSense externo e correções P0/P1.
