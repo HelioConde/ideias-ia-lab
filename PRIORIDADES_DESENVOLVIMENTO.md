@@ -46,7 +46,7 @@ A ordem combina quatro fatores:
 | 1 | **AgendaLeve** | SaaS | P0 | MVP técnico concluído; agora validar uso real | [MVP concluído · issue pós-MVP](https://github.com/HelioConde/agendaleve/issues/1) |
 | 2 | **DocPronto** | SaaS | P0 | MVP técnico concluído; agora homologação humana | [MVP concluído · issue pós-MVP](https://github.com/HelioConde/docpronto/issues/1) |
 | 3 | **Riot Legacy** | LoL + TFT | P0 | MVP técnico fechado; diferencial visual/nostálgico validado tecnicamente | [MVP concluído · validação/compliance](https://github.com/HelioConde/riot-legacy/issues/1) |
-| 4 | **VagaCerta** | Carreira | P0 | Dor frequente, valor claro e próximo foco pesado | [repositório ativo · issue de execução](https://github.com/HelioConde/vagacerta/issues/1) |
+| 4 | **VagaCerta** | Carreira | P0 | Quatro diferenciais implementados; falta migration/RLS/QA publicado | [gate de validação](https://github.com/HelioConde/vagacerta/issues/1) |
 | 5 | **LoL Match Story** | LoL | P0 | MVP 1.0 concluído; agora validar uso real | [MVP concluído · validação](https://github.com/HelioConde/lol-match-story/issues/1) |
 | 6 | **TFT Wrapped** | TFT | P0 | Backend real/PNG/E2E implementados; falta fechar QA/Pages real | [gate final](https://github.com/HelioConde/tft-personal-wrapped/issues/1) |
 | 7 | **PostPilot** | Criadores | P1 | MVP avançado; falta provedor real e homologação | [gate final](https://github.com/HelioConde/postpilot/issues/8) |
@@ -84,6 +84,10 @@ A ordem combina quatro fatores:
 | 39 | **OW Crosshair Lab** | Overwatch | P3 | Fácil de lançar, mas pouco defensável como produto sozinho | `HelioConde/ow-crosshair-lab` — pendente |
 | 40 | **PratoPronto** | Consumo | P3 | Mercado amplo, porém diferenciação e monetização mais fracas | `HelioConde/pratopronto` — pendente |
 | 41 | **Perto** | Marketplace | P3 | Potencial alto, mas exige oferta + demanda, reputação e moderação | `HelioConde/perto` — pendente |
+
+## Atualização operacional — 07/10/2026
+
+O **VagaCerta saiu da implementação pesada de features**: compatibilidade explicada, currículos versionados, follow-up e preparação de entrevista já estão no GitHub. O restante do gate é aplicar migration/RLS e confirmar QA/Pages. Enquanto isso, o próximo foco pesado pode avançar para **MontaPC**.
 
 ## P0 — estado atual
 
