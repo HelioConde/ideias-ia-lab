@@ -20,7 +20,12 @@ O `ideias-ia-lab` é somente o hub de organização. Frontend, backend, migratio
 | MontaPC | `HelioConde/montapc` | ativo · roadmap amplo |
 | LoL Champion Journey | `HelioConde/lol-champion-journey` | gate final de snapshots |
 | TFT Board Museum | `HelioConde/tft-board-museum` | MVP técnico concluído · validação |
-| Revisa | `HelioConde/revisa` | ativo · estágio inicial |
+| Revisa | `HelioConde/revisa` | MVP funcional · validação/Pages |
+| LoL Session Insights | `HelioConde/lol-session-insights` | MVP funcional · Browser E2E adicionado · validação/Pages |
+| TFT Augment Memory | `HelioConde/tft-augment-memory` | MVP funcional · Browser E2E adicionado · validação/Pages |
+| OW VOD Timeline | `HelioConde/ow-vod-timeline` | MVP funcional · Browser E2E adicionado · validação/Pages |
+| GameRadar | `HelioConde/gameradar` | MVP funcional · Browser E2E adicionado · validação/Pages |
+| LoL Champion Pool | `HelioConde/lol-champion-pool` | MVP funcional · Browser E2E adicionado · validação/Pages |
 
 ## Produtos tecnicamente fechados
 
@@ -58,9 +63,23 @@ Issue #1:
 - períodos e agregações implementados;
 - PNG implementado;
 - Browser E2E e workflow QA implementados;
-- QA automatizado já passou após a mudança;
+- Live Riot Smoke separado do E2E comum foi adicionado para testar a versão publicada com Riot ID real;
+- o resultado do workflow novo ainda precisa ser confirmado no GitHub Actions;
 - GitHub Pages precisa estar habilitado/configurado para concluir o deploy;
 - falta rodada com Riot IDs reais.
+
+
+## MVPs leves próximos do fechamento
+
+Em 07/10/2026 foi adicionado Browser E2E automatizado a:
+
+- `lol-session-insights`;
+- `tft-augment-memory`;
+- `ow-vod-timeline`;
+- `gameradar`;
+- `lol-champion-pool`.
+
+O restante desses projetos é majoritariamente validação publicada/real: GitHub Pages, APIs externas quando aplicável, múltiplos Riot IDs, arquivos de vídeo reais ou fluxos de compra/links reais. **Não abrir V2 antes de fechar esses gates.**
 
 ## Próximo foco pesado
 
