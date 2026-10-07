@@ -77,11 +77,26 @@ Em 07/10/2026 foram adicionados:
 - card PNG;
 - Browser E2E;
 - workflow QA;
-- workflow GitHub Pages.
+- workflow GitHub Pages;
+- smoke test de produção com Riot ID real separado do E2E comum (`Live Riot Smoke`), com screenshot/trace em falha.
 
-Só sai da fila depois de CI/Pages verdes e teste real com Riot IDs.
+Só sai da fila depois de CI/Pages verdes e validação real com múltiplos Riot IDs.
 
 Acompanhamento: `HelioConde/tft-personal-wrapped#1`.
+
+
+## MVPs leves em validação rápida
+
+Estes produtos recentes já têm o núcleo do MVP e **não devem receber expansão de escopo agora**. Em 07/10/2026 foi adicionado Browser E2E automatizado nos cinco repositórios abaixo; o que resta é publicar/validar casos reais:
+
+- **LoL Session Insights** — Browser E2E implementado; falta Pages confirmado, 3+ Riot IDs/regiões e validar sessões longas/1 partida + ARAM/Arena/Ranked.
+- **TFT Augment Memory** — Browser E2E implementado; falta Pages confirmado, 3+ Riot IDs, poucos jogos, nomes reais de augments e 404/429/timeout.
+- **OW VOD Timeline** — Browser E2E implementado; falta Pages confirmado, MP4/WebM real, VOD longo, import/export e revisão publicada.
+- **GameRadar** — Browser E2E implementado; falta Pages confirmado, CORS/retorno CheapShark em produção, buscas/links reais e preços-alvo.
+- **LoL Champion Pool** — Browser E2E implementado; falta Pages confirmado, 3+ Riot IDs/regiões, pouco histórico, funções separadas e 404/429/timeout.
+- **Revisa** — núcleo local e QA estático concluídos; falta Pages confirmado, validação visual publicada e teste com usuários reais.
+
+Esses itens podem andar em paralelo como **validação**, sem consumir uma vaga de implementação pesada da regra de WIP.
 
 ## Próximo desenvolvimento pesado — VagaCerta
 
