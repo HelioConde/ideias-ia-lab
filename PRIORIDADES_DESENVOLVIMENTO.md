@@ -1,6 +1,6 @@
 # Prioridade de desenvolvimento — Ideias IA Lab
 
-Atualizado em 2026-10-06.
+Atualizado em 2026-10-07.
 
 Este arquivo define a **ordem oficial de desenvolvimento do portfólio**. O `ideias-ia-lab` continua sendo apenas o hub de organização: cada produto deve ter seu próprio repositório.
 
@@ -45,14 +45,14 @@ A ordem combina quatro fatores:
 |---:|---|---|---|---|---|
 | 1 | **AgendaLeve** | SaaS | P0 | MVP técnico concluído; agora validar uso real | [MVP concluído · issue pós-MVP](https://github.com/HelioConde/agendaleve/issues/1) |
 | 2 | **DocPronto** | SaaS | P0 | MVP técnico concluído; agora homologação humana | [MVP concluído · issue pós-MVP](https://github.com/HelioConde/docpronto/issues/1) |
-| 3 | **Riot Legacy** | LoL + TFT | P0 | **Em desenvolvimento**; experiência visual/nostálgica, alto compartilhamento e forte diferencial | [protótipo `split/riot-legacy`](https://github.com/HelioConde/ideias-ia-lab/tree/split/riot-legacy) — repo físico pendente |
-| 4 | **VagaCerta** | Carreira | P0 | Dor frequente, valor claro e bom potencial freemium | `HelioConde/vagacerta` — pendente |
-| 5 | **LoL Match Story** | LoL | P0 | Transforma partidas em histórias visuais compartilháveis | `HelioConde/lol-match-story` — pendente |
-| 6 | **TFT Wrapped** | TFT | P0 | Retrospectiva altamente compartilhável por semana/mês/set | `HelioConde/tft-personal-wrapped` — pendente |
-| 7 | **PostPilot** | Criadores | P1 | Já separado, com potencial de anúncios; assinatura/créditos podem complementar a receita | [HelioConde/postpilot](https://github.com/HelioConde/postpilot) |
-| 8 | **MontaPC** | Hardware | P1 | Forte intenção de compra, bom potencial de anúncios e afiliados como receita complementar | `HelioConde/montapc` — pendente |
-| 9 | **LoL Champion Journey** | LoL | P1 | Excelente encaixe com nostalgia, maestria e identidade do jogador | [HelioConde/lol-champion-journey](https://github.com/HelioConde/lol-champion-journey) — MVP migrado |
-| 10 | **TFT Board Museum** | TFT | P1 | Galeria visual das melhores boards; simples e compartilhável | `HelioConde/tft-board-museum` — pendente |
+| 3 | **Riot Legacy** | LoL + TFT | P0 | MVP técnico fechado; diferencial visual/nostálgico validado tecnicamente | [MVP concluído · validação/compliance](https://github.com/HelioConde/riot-legacy/issues/1) |
+| 4 | **VagaCerta** | Carreira | P0 | Dor frequente, valor claro e próximo foco pesado | [repositório ativo · issue de execução](https://github.com/HelioConde/vagacerta/issues/1) |
+| 5 | **LoL Match Story** | LoL | P0 | MVP 1.0 concluído; agora validar uso real | [MVP concluído · validação](https://github.com/HelioConde/lol-match-story/issues/1) |
+| 6 | **TFT Wrapped** | TFT | P0 | Backend real/PNG/E2E implementados; falta fechar QA/Pages real | [gate final](https://github.com/HelioConde/tft-personal-wrapped/issues/1) |
+| 7 | **PostPilot** | Criadores | P1 | MVP avançado; falta provedor real e homologação | [gate final](https://github.com/HelioConde/postpilot/issues/8) |
+| 8 | **MontaPC** | Hardware | P1 | Forte intenção de compra; repositório ativo e roadmap amplo | [HelioConde/montapc](https://github.com/HelioConde/montapc) |
+| 9 | **LoL Champion Journey** | LoL | P1 | Quase fechado; falta ativar/validar snapshots server-side | [gate final](https://github.com/HelioConde/lol-champion-journey/issues/4) |
+| 10 | **TFT Board Museum** | TFT | P1 | MVP técnico concluído; agora validação | [MVP concluído · validação](https://github.com/HelioConde/tft-board-museum/issues/1) |
 | 11 | **Revisa** | Educação | P1 | Dor recorrente, potencial de anúncios e assinatura/pacotes como complemento | `HelioConde/revisa` — pendente |
 | 12 | **LoL Session Insights** | LoL | P1 | Analisa comportamento ao longo da sessão em vez de partida isolada | `HelioConde/lol-session-insights` — pendente |
 | 13 | **TFT Augment Memory** | TFT | P1 | Histórico pessoal de augments e combinações | `HelioConde/tft-augment-memory` — pendente |
@@ -94,7 +94,7 @@ A ordem combina quatro fatores:
 **MVP técnico concluído.** Desenvolvimento principal pausado; homologação humana segue na issue #1 do repositório.
 
 ### 3. Riot Legacy
-**Desenvolvimento pesado atual e prioridade estratégica do ecossistema de jogos.** O protótipo standalone já possui landing, LoL + TFT reais via backend gamer, fallback demonstrativo explícito, PT-BR/EN, timeline recente, refresh, compartilhamento/PNG, anúncios preparados, Static QA e Browser E2E.
+**MVP técnico concluído em 07/10/2026; saiu da implementação pesada e entrou em validação/compliance.** O protótipo standalone já possui landing, LoL + TFT reais via backend gamer, fallback demonstrativo explícito, PT-BR/EN, timeline recente, refresh, compartilhamento/PNG, anúncios preparados, Static QA e Browser E2E.
 
 A proposta é uma experiência visual, emocional e compartilhável:
 
@@ -109,13 +109,13 @@ A proposta é uma experiência visual, emocional e compartilhável:
 O objetivo não é ser apenas mais um tracker. O usuário deve entrar para **rever sua história** e querer permanecer na página.
 
 ### 4. VagaCerta
-Objetivo: MVP simples de acompanhamento de candidaturas + personalização.
+**Próximo foco pesado.** O núcleo CRUD/funil já existe; a próxima fase fica limitada a compatibilidade explicada, currículo personalizado, follow-up e preparação de entrevista.
 
 ### 5. LoL Match Story
-Objetivo: validar o formato de narrativa visual de uma partida antes de criar ferramentas analíticas mais profundas.
+**MVP 1.0 tecnicamente concluído em 07/10/2026.** Features congeladas; seguir apenas com validação real, AdSense externo e correções P0/P1.
 
 ### 6. TFT Wrapped
-Objetivo: validar conteúdo recorrente e compartilhável com alto potencial orgânico.
+Backend TFT real, períodos, agregações, PNG, E2E e workflows foram implementados em 07/10/2026. Falta confirmar CI/Pages e Riot IDs reais antes de marcar o MVP 1.0 como concluído.
 
 ## Regra para iniciar um novo projeto
 
