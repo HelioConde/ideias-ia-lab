@@ -134,9 +134,15 @@ MVP funcional implementado em 07/10/2026: histórico pessoal de itens, unidades,
 
 Falta confirmar Actions/Pages e payload real com múltiplos Riot IDs. Features V2 ficam congeladas.
 
-## Próximo desenvolvimento pesado — OW Map Master
+## OW Map Master — gate de validação
 
-Próximo P1 da fila oficial. O MVP deve ser conteúdo visual/evergreen por mapa e modo, com filtros, objetivos, pontos de atenção e guia bilíngue; sem depender de API externa para funcionar.
+MVP funcional implementado em 07/10/2026: 30 mapas principais, filtros, busca, detalhe, objetivos por modo, fila de estudo, PT-BR/EN, Browser E2E desktop/mobile, Pages e fontes documentadas.
+
+A versão publicada ainda precisa ser confirmada; features V2 ficam congeladas.
+
+## Próximo desenvolvimento pesado — FalaPro
+
+Próximo projeto da fila que ainda exige desenvolvimento real. O MVP deve priorizar treino de entrevista com perguntas estruturadas, resposta gravada/textual, autoavaliação e feedback útil — evitando dependência obrigatória de voz/IA para o primeiro fluxo funcionar.
 
 ## Regra de WIP
 
