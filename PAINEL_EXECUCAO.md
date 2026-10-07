@@ -17,7 +17,7 @@ Este arquivo define a **ordem operacional atual**. A classificação estratégic
 | 7 | **Riot Legacy** | ✅ MVP técnico concluído | validação multi-conta + Riot Developer Portal na issue #1; histórico maior fica para V2 |
 | 8 | **Ofertamática** | ✅ núcleo do MVP concluído | QA real de impressão/ERP/AdSense na issue #1; IA oficialmente na V2 |
 | 9 | **TFT Wrapped** | 🟡 núcleo real implementado | confirmar QA/Pages e Riot IDs reais na issue #1; depois congelar |
-| 10 | **VagaCerta** | 🔵 próximo foco pesado | implementar os quatro diferenciais definidos na issue #1 |
+| 10 | **VagaCerta** | 🟡 diferenciais implementados | aplicar migration no `pizzaria-db`, validar RLS/QA/Pages e congelar features |
 
 > **Ofertamática não faz parte das 41 ideias do Lab**, mas aparece nesta fila porque está na rodada atual de fechamento do portfólio.
 
@@ -29,6 +29,7 @@ Este arquivo define a **ordem operacional atual**. A classificação estratégic
 - **DocPronto** — homologação pós-MVP.
 - **Riot Legacy** — validação/compliance antes de qualquer V2.
 - **Ofertamática** — núcleo fechado; IA e expansões ficam para V2.
+- **VagaCerta** — quatro diferenciais implementados; aguardando migration/RLS/QA/Pages antes do encerramento.
 
 Esses projetos só voltam para implementação por:
 
@@ -98,18 +99,22 @@ Estes produtos recentes já têm o núcleo do MVP e **não devem receber expans�
 
 Esses itens podem andar em paralelo como **validação**, sem consumir uma vaga de implementação pesada da regra de WIP.
 
-## Próximo desenvolvimento pesado — VagaCerta
+## VagaCerta — gate de validação
 
-A fundação fullstack já existe. O próximo ciclo fica **travado nestes quatro diferenciais**, nesta ordem:
+Os quatro diferenciais foram implementados em 07/10/2026, junto com migration versionada, Browser E2E, QA e workflow de Pages. O projeto não recebe novas features agora.
 
-1. compatibilidade explicada por requisito;
-2. currículo personalizado por candidatura;
-3. follow-up com fila de pendências;
-4. preparação de entrevista vinculada à candidatura.
+Falta:
 
-Importação automática de URL, novas automações e IA generativa vêm **depois** desse gate.
+1. aplicar a migration no `pizzaria-db`;
+2. validar sincronização em duas contas/dispositivos;
+3. validar RLS A ≠ B;
+4. confirmar Browser E2E/mobile/teclado e Pages verdes.
 
 Acompanhamento: `HelioConde/vagacerta#1`.
+
+## Próximo desenvolvimento pesado — MontaPC
+
+Com os gates externos rodando em paralelo, o próximo produto que pode receber implementação pesada é o **MontaPC**, começando por estabilização de produção, catálogo e compatibilidade P1 — sem abrir preços reais/monetização antes do QA.
 
 ## Regra de WIP
 
