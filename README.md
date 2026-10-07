@@ -52,7 +52,7 @@ A fila agora é organizada por **prioridade real**, considerando proximidade de 
 | 5 | **LoL Match Story** | LoL | P0 | [MVP 1.0 concluído · validação](https://github.com/HelioConde/lol-match-story/issues/1) |
 | 6 | **TFT Wrapped** | TFT | P0 | [Núcleo real implementado · gate final de QA/Pages](https://github.com/HelioConde/tft-personal-wrapped/issues/1) |
 | 7 | **PostPilot** | Criadores | P1 | [Gate final de provedores/homologação](https://github.com/HelioConde/postpilot/issues/8) |
-| 8 | **MontaPC** | Hardware | P1 | [Repositório ativo](https://github.com/HelioConde/montapc) |
+| 8 | **MontaPC** | Hardware | P1 | [Núcleo técnico implementado · validação/RLS/CI](https://github.com/HelioConde/montapc/issues/1) |
 | 9 | **LoL Champion Journey** | LoL | P1 | [Gate final de snapshots server-side](https://github.com/HelioConde/lol-champion-journey/issues/4) |
 | 10 | **TFT Board Museum** | TFT | P1 | [MVP concluído · validação pós-MVP](https://github.com/HelioConde/tft-board-museum/issues/1) |
 
@@ -86,7 +86,7 @@ Gates curtos ainda abertos:
 - TFT Wrapped — confirmar Pages/Actions e validação real; smoke test de produção com Riot ID já foi adicionado.
 - VagaCerta — aplicar migration no `pizzaria-db`, validar RLS entre duas contas e confirmar QA/Pages.
 
-**Próximo desenvolvimento pesado após esses gates externos:** MontaPC. VagaCerta não recebe novas features até validar migration, RLS, QA e Pages.
+**Próximo desenvolvimento pesado após esses gates externos:** TFT Item Lab. VagaCerta e MontaPC ficam congelados até concluir seus gates de migration/RLS/QA/Pages.
 
 A regra agora é simples: projeto que cumpre o gate técnico entra em validação/manutenção. Não continuar adicionando melhorias visuais sem evidência real.
 
@@ -109,7 +109,7 @@ Repositório oficial: [HelioConde/riot-legacy](https://github.com/HelioConde/rio
 | PostPilot | [gate final de provedores/homologação](https://github.com/HelioConde/postpilot/issues/8) |
 | TFT Wrapped | [núcleo real implementado · gate final](https://github.com/HelioConde/tft-personal-wrapped/issues/1) |
 | VagaCerta | [4 diferenciais implementados · validação de infraestrutura/QA](https://github.com/HelioConde/vagacerta/issues/1) |
-| MontaPC | [repositório ativo](https://github.com/HelioConde/montapc) |
+| MontaPC | [núcleo técnico implementado · validação](https://github.com/HelioConde/montapc/issues/1) |
 | Revisa | [MVP funcional · Browser E2E/live-update · validação/Pages](https://github.com/HelioConde/revisa) |
 | GameRadar | [repositório ativo · MVP funcional em validação](https://github.com/HelioConde/gameradar) |
 | FalaPro | [branch standalone pronta](https://github.com/HelioConde/ideias-ia-lab/tree/split/falapro) · `HelioConde/falapro` ainda será criado |
