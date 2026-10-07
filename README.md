@@ -48,7 +48,7 @@ A fila agora é organizada por **prioridade real**, considerando proximidade de 
 | 1 | **AgendaLeve** | SaaS | P0 | [MVP técnico concluído · validação pós-MVP](https://github.com/HelioConde/agendaleve/issues/1) |
 | 2 | **DocPronto** | SaaS | P0 | [MVP técnico concluído · validação pós-MVP](https://github.com/HelioConde/docpronto/issues/1) |
 | 3 | **Riot Legacy** | LoL + TFT | P0 | [MVP técnico concluído · validação/compliance](https://github.com/HelioConde/riot-legacy/issues/1) |
-| 4 | **VagaCerta** | Carreira | P0 | [Repositório ativo · próximo foco pesado](https://github.com/HelioConde/vagacerta/issues/1) |
+| 4 | **VagaCerta** | Carreira | P0 | [4 diferenciais implementados · validação de infraestrutura/QA](https://github.com/HelioConde/vagacerta/issues/1) |
 | 5 | **LoL Match Story** | LoL | P0 | [MVP 1.0 concluído · validação](https://github.com/HelioConde/lol-match-story/issues/1) |
 | 6 | **TFT Wrapped** | TFT | P0 | [Núcleo real implementado · gate final de QA/Pages](https://github.com/HelioConde/tft-personal-wrapped/issues/1) |
 | 7 | **PostPilot** | Criadores | P1 | [Gate final de provedores/homologação](https://github.com/HelioConde/postpilot/issues/8) |
@@ -76,15 +76,17 @@ Já saíram da implementação pesada:
 - DocPronto;
 - LoL Match Story;
 - TFT Board Museum;
-- Riot Legacy.
+- Riot Legacy;
+- VagaCerta — quatro diferenciais implementados; saiu da expansão de escopo e entrou em validação.
 
 Gates curtos ainda abertos:
 
 - PostPilot — provedores reais + homologação;
 - LoL Champion Journey — deploy/ativação dos snapshots no Supabase gamer;
 - TFT Wrapped — confirmar Pages/Actions e validação real; smoke test de produção com Riot ID já foi adicionado.
+- VagaCerta — aplicar migration no `pizzaria-db`, validar RLS entre duas contas e confirmar QA/Pages.
 
-**Próximo desenvolvimento pesado:** VagaCerta, com escopo fechado em compatibilidade explicada, currículo personalizado, follow-up e preparação de entrevista.
+**Próximo desenvolvimento pesado após esses gates externos:** MontaPC. VagaCerta não recebe novas features até validar migration, RLS, QA e Pages.
 
 A regra agora é simples: projeto que cumpre o gate técnico entra em validação/manutenção. Não continuar adicionando melhorias visuais sem evidência real.
 
@@ -106,9 +108,9 @@ Repositório oficial: [HelioConde/riot-legacy](https://github.com/HelioConde/rio
 | DocPronto | [MVP técnico concluído](https://github.com/HelioConde/docpronto) · [validação pós-MVP](https://github.com/HelioConde/docpronto/issues/1) |
 | PostPilot | [gate final de provedores/homologação](https://github.com/HelioConde/postpilot/issues/8) |
 | TFT Wrapped | [núcleo real implementado · gate final](https://github.com/HelioConde/tft-personal-wrapped/issues/1) |
-| VagaCerta | [repositório ativo · próximo foco pesado](https://github.com/HelioConde/vagacerta/issues/1) |
+| VagaCerta | [4 diferenciais implementados · validação de infraestrutura/QA](https://github.com/HelioConde/vagacerta/issues/1) |
 | MontaPC | [repositório ativo](https://github.com/HelioConde/montapc) |
-| Revisa | [repositório ativo · ainda em estágio inicial](https://github.com/HelioConde/revisa) |
+| Revisa | [MVP funcional · Browser E2E/live-update · validação/Pages](https://github.com/HelioConde/revisa) |
 | GameRadar | [repositório ativo · MVP funcional em validação](https://github.com/HelioConde/gameradar) |
 | FalaPro | [branch standalone pronta](https://github.com/HelioConde/ideias-ia-lab/tree/split/falapro) · `HelioConde/falapro` ainda será criado |
 | PratoPronto | [branch standalone pronta](https://github.com/HelioConde/ideias-ia-lab/tree/split/pratopronto) · `HelioConde/pratopronto` ainda será criado |
