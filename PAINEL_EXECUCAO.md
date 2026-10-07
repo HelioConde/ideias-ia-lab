@@ -1,99 +1,123 @@
 # Painel de execução — Ideias IA Lab
 
-Atualizado em 2026-10-06.
+Atualizado em 2026-10-07.
 
-Este arquivo transforma a fila de prioridades em uma sequência prática de execução.
+Este arquivo define a **ordem operacional atual**. A classificação estratégica dos 41 produtos continua em `PRIORIDADES_DESENVOLVIMENTO.md`, mas a execução deve primeiro fechar os produtos que já estão próximos do gate de saída.
 
-## Validação pós-MVP
+## Fila de fechamento atual — ordem obrigatória
 
-| Projeto | Estado | Acompanhamento |
-|---|---|---|
-| **AgendaLeve** | MVP técnico concluído / publicado | [Issue #1 — validação humana e configuração externa](https://github.com/HelioConde/agendaleve/issues/1) |
-| **DocPronto** | MVP técnico concluído / publicado | [Issue #1 — homologação humana e validação real](https://github.com/HelioConde/docpronto/issues/1) |
-
-Esses dois produtos **não ocupam mais vaga de implementação pesada**. Só voltam ao foco por bug crítico, segurança, feedback real ou decisão explícita.
-
-## Em desenvolvimento / foco imediato
-
-| Ordem | Projeto | Estado | Próxima ação |
+| Ordem | Projeto | Estado em 07/10/2026 | Próxima ação |
 |---:|---|---|---|
-| 1 | **Riot Legacy** | **Em desenvolvimento** | dados LoL/TFT reais já conectados e QA verde; validar Riot IDs reais, criar snapshots históricos e materializar repo físico |
-| 2 | **VagaCerta** | branch standalone pronta | criar repositório físico e publicar |
-| 3 | **LoL Match Story** | Ideia priorizada | criar MVP visual usando dados reais quando disponíveis |
-| 4 | **TFT Wrapped** | Ideia priorizada | criar retrospectiva mínima compartilhável |
-| 5 | **PostPilot** | MVP técnico avançado / evolução leve | P1 concluído, RLS homologado, PWA/offline, feedback, calendário, edição, templates e checklist verdes; falta rodada humana de autenticação e validação com usuários |
+| 1 | **LoL Match Story** | ✅ MVP 1.0 tecnicamente concluído | validação real na issue #1; features congeladas |
+| 2 | **TFT Board Museum** | ✅ MVP tecnicamente concluído | validação pós-MVP na issue #1; features congeladas |
+| 3 | **AgendaLeve** | ✅ MVP publicado | somente teste humano/configuração externa na issue #1 |
+| 4 | **DocPronto** | ✅ MVP publicado | somente homologação humana na issue #1 |
+| 5 | **PostPilot** | 🟡 gate final | ativar provedores reais + homologação na issue #8; não criar novas telas |
+| 6 | **LoL Champion Journey** | 🟡 gate final de infraestrutura | aplicar migration/redeploy de snapshots no Supabase gamer e validar a issue #4 |
+| 7 | **Riot Legacy** | ✅ MVP técnico concluído | validação multi-conta + Riot Developer Portal na issue #1; histórico maior fica para V2 |
+| 8 | **Ofertamática** | ✅ núcleo do MVP concluído | QA real de impressão/ERP/AdSense na issue #1; IA oficialmente na V2 |
+| 9 | **TFT Wrapped** | 🟡 núcleo real implementado | confirmar QA/Pages e Riot IDs reais na issue #1; depois congelar |
+| 10 | **VagaCerta** | 🔵 próximo foco pesado | implementar os quatro diferenciais definidos na issue #1 |
 
-## Definição de estados
+> **Ofertamática não faz parte das 41 ideias do Lab**, mas aparece nesta fila porque está na rodada atual de fechamento do portfólio.
 
-- **Ideia** — conceito registrado, ainda sem estrutura própria.
-- **Priorizada** — entrou na fila oficial.
-- **Preparada** — estrutura standalone/escopo já definidos.
-- **Em desenvolvimento** — implementação ativa.
-- **MVP** — fluxo principal funcional.
-- **Em QA** — testes de usabilidade, responsividade, erros e dados.
-- **Publicado** — versão utilizável acessível ao público-alvo.
-- **Validando** — coletando uso real antes de ampliar o escopo.
-- **Pausado** — não é prioridade atual, mas continua no portfólio.
+## Produtos que não ocupam mais implementação pesada
 
-## Gate para passar ao próximo projeto
+- **LoL Match Story** — manutenção/validação.
+- **TFT Board Museum** — manutenção/validação.
+- **AgendaLeve** — validação pós-MVP.
+- **DocPronto** — homologação pós-MVP.
+- **Riot Legacy** — validação/compliance antes de qualquer V2.
+- **Ofertamática** — núcleo fechado; IA e expansões ficam para V2.
 
-**AgendaLeve ✅ e DocPronto ✅ já cumpriram este gate e liberaram o WIP em 06/10/2026.**
+Esses projetos só voltam para implementação por:
 
-Um projeto pode deixar de ser foco principal quando cumprir:
+- bug P0/P1;
+- segurança/compliance;
+- mudança de API/plataforma;
+- feedback real com evidência;
+- decisão explícita de V2.
 
-- [ ] proposta de valor entendida rapidamente;
-- [ ] fluxo principal funcional;
-- [ ] interface utilizável no desktop e mobile;
-- [ ] estados de loading, vazio, erro e sucesso;
-- [ ] dados persistentes quando necessários;
-- [ ] QA dos fluxos críticos;
-- [ ] README do produto atualizado;
-- [ ] deploy funcional;
-- [ ] backlog V2 documentado;
-- [ ] nenhum bloqueador crítico conhecido.
+## Gates curtos ainda abertos
+
+### PostPilot
+
+Não falta outra rodada de UX. Falta:
+
+1. provedor real de IA;
+2. provedor real de transcrição;
+3. upload → transcrição → cortes → pacote com serviço real;
+4. quotas/rate limits;
+5. autenticação humana;
+6. E2E/axe/Lighthouse/snapshots depois das credenciais.
+
+Acompanhamento: `HelioConde/postpilot#8`.
+
+### LoL Champion Journey
+
+As correções de GitHub para histórico durável já foram aplicadas:
+
+- frontend usa `/champion-journey-history` por padrão;
+- ZeroTwo define `verify_jwt = false` para o preflight da função;
+- migration `20261007_champion_journey_snapshots.sql` está versionada no ZeroTwo.
+
+Falta aplicar/republicar no Supabase gamer e validar histórico entre sessões/dispositivos.
+
+Acompanhamento: `HelioConde/lol-champion-journey#4`.
+
+### TFT Wrapped
+
+Em 07/10/2026 foram adicionados:
+
+- backend TFT real;
+- 7 dias / 30 dias / Set;
+- comps/unidades/augments derivados da amostra;
+- estados loading/vazio/404/429;
+- deep links;
+- card PNG;
+- Browser E2E;
+- workflow QA;
+- workflow GitHub Pages.
+
+Só sai da fila depois de CI/Pages verdes e teste real com Riot IDs.
+
+Acompanhamento: `HelioConde/tft-personal-wrapped#1`.
+
+## Próximo desenvolvimento pesado — VagaCerta
+
+A fundação fullstack já existe. O próximo ciclo fica **travado nestes quatro diferenciais**, nesta ordem:
+
+1. compatibilidade explicada por requisito;
+2. currículo personalizado por candidatura;
+3. follow-up com fila de pendências;
+4. preparação de entrevista vinculada à candidatura.
+
+Importação automática de URL, novas automações e IA generativa vêm **depois** desse gate.
+
+Acompanhamento: `HelioConde/vagacerta#1`.
 
 ## Regra de WIP
 
-Para evitar dezenas de produtos incompletos:
+- máximo de **2 produtos em implementação pesada**;
+- até **1 protótipo exploratório**;
+- validação humana/credenciais externas não contam como nova frente pesada;
+- projeto tecnicamente fechado não recebe refinamento visual infinito;
+- uma nova feature só entra quando houver evidência de necessidade.
 
-- máximo recomendado de **2 produtos principais em implementação pesada**;
-- até **1 protótipo exploratório** em paralelo;
-- ideias restantes permanecem documentadas, sem expansão desnecessária;
-- uma nova ideia pode ser registrada a qualquer momento, mas só entra em execução se subir na fila oficial.
+## Gate para passar ao próximo produto
 
-## Próximos blocos
+- [ ] proposta de valor clara;
+- [ ] fluxo principal ponta a ponta;
+- [ ] desktop e mobile utilizáveis;
+- [ ] loading/vazio/erro/sucesso;
+- [ ] persistência quando necessária;
+- [ ] autenticação/permissões quando necessárias;
+- [ ] QA crítico;
+- [ ] CI verde;
+- [ ] deploy funcional;
+- [ ] PT-BR/EN;
+- [ ] monetização preparada sem bloquear UX;
+- [ ] README/backlog atualizados;
+- [ ] nenhum P0/P1 conhecido.
 
-### Bloco A — lançados / validação pós-MVP
-1. AgendaLeve — MVP técnico concluído; issue pós-MVP aberta
-2. DocPronto — MVP técnico concluído; issue pós-MVP aberta
-
-### Bloco B — provar diferencial gamer — **bloco atual**
-> Riot Legacy já possui protótipo standalone em `split/riot-legacy`, mas ainda não possui o repositório físico final. Os demais continuam aguardando materialização.
-
-1. Riot Legacy — **desenvolvimento pesado atual; protótipo standalone validado**
-2. LoL Match Story
-3. TFT Wrapped
-
-### Bloco C — monetização/uso recorrente
-6. VagaCerta
-7. PostPilot — P1 técnico concluído; RLS, PWA/offline, calendário, edição, templates, checklist, feedback e Browser E2E verdes; seguir apenas com autenticação humana/validação antes de P2
-8. MontaPC
-
-### Bloco D — expansão gamer
-9. **TFT Comp Evolution — MVP funcional; comparação, tabuleiro 4x7, import JSON e Static QA concluídos**
-10. **OW Hero Pool Builder — MVP funcional; recomendação complementar, pools locais e Static QA concluídos**
-11. **LoL Champion Journey — repositório físico ativo; MVP migrado, PT-BR/EN, backend gamer, fallback demo e QA E2E preparada**
-12. TFT Board Museum
-13. LoL Session Insights
-14. TFT Augment Memory
-15. OW VOD Timeline
-
-## Regra de revisão
-
-A ordem deve ser revisada quando algum projeto:
-
-- conseguir usuários reais;
-- gerar receita;
-- tiver uma limitação técnica importante;
-- puder ser lançado muito antes do esperado;
-- ganhar vantagem clara por reaproveitar infraestrutura existente.
+Quando o gate estiver completo: **parar de adicionar features e passar ao próximo**.
