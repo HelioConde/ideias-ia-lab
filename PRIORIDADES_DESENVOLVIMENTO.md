@@ -59,8 +59,8 @@ A ordem combina quatro fatores:
 | 14 | **OW VOD Timeline** | Overwatch | P1 | MVP local funcional para revisão por timestamps; falta validação/Pages | [MVP funcional · issue de validação](https://github.com/HelioConde/ow-vod-timeline/issues/1) |
 | 15 | **GameRadar** | Games | P1 | MVP funcional com ofertas e preço-alvo local; falta validação/Pages | [MVP funcional · issue de validação](https://github.com/HelioConde/gameradar/issues/1) |
 | 16 | **LoL Champion Pool** | LoL | P1 | MVP funcional com histórico Riot real e pool salvo; falta validação/Pages | [MVP funcional · issue de validação](https://github.com/HelioConde/lol-champion-pool/issues/1) |
-| 17 | **TFT Item Lab** | TFT | P1 | Próximo foco pesado; repositório já existe | [HelioConde/tft-item-lab](https://github.com/HelioConde/tft-item-lab) |
-| 18 | **OW Map Master** | Overwatch | P1 | Conteúdo visual evergreen, útil para aprendizado e SEO | `HelioConde/ow-map-master` — pendente |
+| 17 | **TFT Item Lab** | TFT | P1 | MVP funcional; validar dados reais/Pages | [MVP funcional · issue de validação](https://github.com/HelioConde/tft-item-lab/issues/1) |
+| 18 | **OW Map Master** | Overwatch | P1 | Próximo foco pesado; conteúdo evergreen/SEO | [HelioConde/ow-map-master](https://github.com/HelioConde/ow-map-master) |
 | 19 | **FalaPro** | Carreira | P2 | Bom produto, mas exige experiência de voz/feedback mais refinada | `HelioConde/falapro` — pendente |
 | 20 | **TFT Placement DNA** | TFT | P2 | Perfil de jogo por faixa de colocação | `HelioConde/tft-placement-dna` — pendente |
 | 21 | **LoL Loss Explorer** | LoL | P2 | Agrupa derrotas e padrões recorrentes | `HelioConde/lol-loss-explorer` — pendente |
