@@ -29,6 +29,7 @@ O `ideias-ia-lab` é somente o hub de organização. Frontend, backend, migratio
 | TFT Item Lab | `HelioConde/tft-item-lab` | MVP funcional · QA/E2E/Pages · validação real |
 | OW Map Master | `HelioConde/ow-map-master` | MVP funcional · QA/E2E/Pages · validação publicada |
 | FalaPro | `HelioConde/falapro` | MVP funcional · Supabase/RLS/QA/Pages · validação real |
+| TFT Placement DNA | `HelioConde/tft-placement-dna` | MVP funcional · Riot/QA/E2E/Pages · validação real |
 
 ## Produtos tecnicamente fechados
 
@@ -104,9 +105,13 @@ Núcleo técnico implementado: 65 componentes, fallback offline, compatibilidade
 
 `HelioConde/falapro` agora possui MVP funcional, Supabase seguro, QA/E2E, Pages e issue de validação.
 
+## TFT Placement DNA
+
+`HelioConde/tft-placement-dna` agora possui MVP funcional, QA/E2E, Pages e Live Riot Smoke.
+
 ## Próximo foco pesado
 
-**TFT Placement DNA** — próximo projeto da fila com implementação pesada.
+**LoL Loss Explorer** — próximo projeto da fila com implementação pesada.
 
 ## Branches `split/*`
 
