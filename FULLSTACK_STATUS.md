@@ -17,7 +17,7 @@ O `ideias-ia-lab` é somente o hub de organização. Frontend, backend, migratio
 | VagaCerta | `HelioConde/vagacerta` | 4 diferenciais implementados · migration/RLS/QA em validação |
 | LoL Match Story | `HelioConde/lol-match-story` | MVP 1.0 concluído · validação |
 | TFT Wrapped | `HelioConde/tft-personal-wrapped` | backend real/PNG/E2E implementados · gate final |
-| MontaPC | `HelioConde/montapc` | ativo · roadmap amplo |
+| MontaPC | `HelioConde/montapc` | núcleo técnico implementado · validação/RLS/CI |
 | LoL Champion Journey | `HelioConde/lol-champion-journey` | gate final de snapshots |
 | TFT Board Museum | `HelioConde/tft-board-museum` | MVP técnico concluído · validação |
 | Revisa | `HelioConde/revisa` | MVP funcional · validação/Pages |
@@ -85,9 +85,13 @@ O restante desses projetos é majoritariamente validação publicada/real: GitHu
 
 Os quatro diferenciais estão implementados, junto com Browser E2E, workflows QA/Pages e migration versionada. Falta aplicar a migration no `pizzaria-db`, validar RLS A ≠ B, sincronização entre dispositivos e confirmar CI/Pages verdes.
 
+## MontaPC — gate atual
+
+Núcleo técnico implementado: 65 componentes, fallback offline, compatibilidade avançada, explicabilidade por peça, alternativas equivalentes, comparação, PWA e Browser E2E. Falta aplicar o patch RLS/grants, validar duas contas e confirmar CI/Pages.
+
 ## Próximo foco pesado
 
-**MontaPC** — começar pela estabilização P0/P1 já registrada nas issues. VagaCerta fica congelado até concluir o gate de validação.
+**TFT Item Lab** — repositório `HelioConde/tft-item-lab` já existe e recebe agora o primeiro MVP funcional.
 
 ## Branches `split/*`
 
