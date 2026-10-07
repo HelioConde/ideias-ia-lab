@@ -55,7 +55,7 @@ A ordem combina quatro fatores:
 | 10 | **TFT Board Museum** | TFT | P1 | MVP técnico concluído; agora validação | [MVP concluído · validação](https://github.com/HelioConde/tft-board-museum/issues/1) |
 | 11 | **Revisa** | Educação | P1 | MVP local funcional criado; validar uso real antes de V2 | [MVP funcional · issue de validação](https://github.com/HelioConde/revisa/issues/1) |
 | 12 | **LoL Session Insights** | LoL | P1 | MVP funcional com dados Riot reais; falta validação/Pages | [MVP funcional · issue de validação](https://github.com/HelioConde/lol-session-insights/issues/1) |
-| 13 | **TFT Augment Memory** | TFT | P1 | Histórico pessoal de augments e combinações | `HelioConde/tft-augment-memory` — pendente |
+| 13 | **TFT Augment Memory** | TFT | P1 | MVP funcional com histórico Riot real; falta validação/Pages | [MVP funcional · issue de validação](https://github.com/HelioConde/tft-augment-memory/issues/1) |
 | 14 | **OW VOD Timeline** | Overwatch | P1 | Útil mesmo sem API oficial forte; revisão visual por vídeo | `HelioConde/ow-vod-timeline` — pendente |
 | 15 | **GameRadar** | Games | P1 | Wishlist, preço e alertas têm uso recorrente | `HelioConde/gameradar` — pendente |
 | 16 | **LoL Champion Pool** | LoL | P1 | Ajuda o jogador a construir um pool baseado no próprio histórico | `HelioConde/lol-champion-pool` — pendente |
