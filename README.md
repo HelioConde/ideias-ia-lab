@@ -47,14 +47,14 @@ A fila agora é organizada por **prioridade real**, considerando proximidade de 
 |---:|---|---|---|---|
 | 1 | **AgendaLeve** | SaaS | P0 | [MVP técnico concluído · validação pós-MVP](https://github.com/HelioConde/agendaleve/issues/1) |
 | 2 | **DocPronto** | SaaS | P0 | [MVP técnico concluído · validação pós-MVP](https://github.com/HelioConde/docpronto/issues/1) |
-| 3 | **Riot Legacy** | LoL + TFT | P0 | [Protótipo standalone em desenvolvimento](https://github.com/HelioConde/ideias-ia-lab/tree/split/riot-legacy) · repo físico pendente |
-| 4 | **VagaCerta** | Carreira | P0 | Repositório pendente |
-| 5 | **LoL Match Story** | LoL | P0 | Repositório pendente |
-| 6 | **TFT Wrapped** | TFT | P0 | [Repositório ativo](https://github.com/HelioConde/tft-personal-wrapped) · MVP migrado |
-| 7 | **PostPilot** | Criadores | P1 | [Repositório ativo](https://github.com/HelioConde/postpilot) |
-| 8 | **MontaPC** | Hardware | P1 | Repositório pendente |
-| 9 | **LoL Champion Journey** | LoL | P1 | [Repositório ativo](https://github.com/HelioConde/lol-champion-journey) · MVP migrado |
-| 10 | **TFT Board Museum** | TFT | P1 | Repositório pendente |
+| 3 | **Riot Legacy** | LoL + TFT | P0 | [MVP técnico concluído · validação/compliance](https://github.com/HelioConde/riot-legacy/issues/1) |
+| 4 | **VagaCerta** | Carreira | P0 | [Repositório ativo · próximo foco pesado](https://github.com/HelioConde/vagacerta/issues/1) |
+| 5 | **LoL Match Story** | LoL | P0 | [MVP 1.0 concluído · validação](https://github.com/HelioConde/lol-match-story/issues/1) |
+| 6 | **TFT Wrapped** | TFT | P0 | [Núcleo real implementado · gate final de QA/Pages](https://github.com/HelioConde/tft-personal-wrapped/issues/1) |
+| 7 | **PostPilot** | Criadores | P1 | [Gate final de provedores/homologação](https://github.com/HelioConde/postpilot/issues/8) |
+| 8 | **MontaPC** | Hardware | P1 | [Repositório ativo](https://github.com/HelioConde/montapc) |
+| 9 | **LoL Champion Journey** | LoL | P1 | [Gate final de snapshots server-side](https://github.com/HelioConde/lol-champion-journey/issues/4) |
+| 10 | **TFT Board Museum** | TFT | P1 | [MVP concluído · validação pós-MVP](https://github.com/HelioConde/tft-board-museum/issues/1) |
 
 ➡️ **[Ver a fila completa com 41 projetos e justificativas](./PRIORIDADES_DESENVOLVIMENTO.md)**
 
@@ -68,12 +68,25 @@ A fila agora é organizada por **prioridade real**, considerando proximidade de 
 
 ## Foco atual do portfólio
 
-**AgendaLeve e DocPronto concluíram o gate de saída da implementação pesada.**
+A partir de 07/10/2026, a execução usa a **fila de fechamento** registrada em [PAINEL_EXECUCAO.md](./PAINEL_EXECUCAO.md).
 
-- AgendaLeve: MVP técnico publicado; pendências humanas/externas centralizadas na [issue #1](https://github.com/HelioConde/agendaleve/issues/1).
-- DocPronto: MVP técnico publicado; homologação humana centralizada na [issue #1](https://github.com/HelioConde/docpronto/issues/1).
-- **Desenvolvimento pesado atual: Riot Legacy.** Protótipo standalone navegável com LoL + TFT reais via backend gamer, fallback demonstrativo explícito, PNG compartilhável e Static QA + Browser E2E verdes.
-- Novas features nos dois SaaS ficam pausadas até aparecer feedback real, bug crítico ou decisão explícita de retomada.
+Já saíram da implementação pesada:
+
+- AgendaLeve;
+- DocPronto;
+- LoL Match Story;
+- TFT Board Museum;
+- Riot Legacy.
+
+Gates curtos ainda abertos:
+
+- PostPilot — provedores reais + homologação;
+- LoL Champion Journey — deploy/ativação dos snapshots no Supabase gamer;
+- TFT Wrapped — confirmar QA/Pages e Riot IDs reais.
+
+**Próximo desenvolvimento pesado:** VagaCerta, com escopo fechado em compatibilidade explicada, currículo personalizado, follow-up e preparação de entrevista.
+
+A regra agora é simples: projeto que cumpre o gate técnico entra em validação/manutenção. Não continuar adicionando melhorias visuais sem evidência real.
 
 ## Destaque estratégico — Riot Legacy
 
@@ -83,7 +96,7 @@ O usuário informa o Riot ID e recebe uma página bonita sobre sua trajetória e
 
 A meta não é criar apenas outro tracker: é criar uma página em que o jogador queira permanecer para **rever sua história e o esforço acumulado ao longo dos anos**.
 
-Protótipo atual: [`split/riot-legacy`](https://github.com/HelioConde/ideias-ia-lab/tree/split/riot-legacy). Destino planejado: `HelioConde/riot-legacy`.
+Repositório oficial: [HelioConde/riot-legacy](https://github.com/HelioConde/riot-legacy). O MVP técnico já está fechado; validação/compliance estão centralizados na issue #1.
 
 ## Repositórios do portfólio geral
 
@@ -91,11 +104,11 @@ Protótipo atual: [`split/riot-legacy`](https://github.com/HelioConde/ideias-ia-
 |---|---|
 | AgendaLeve | [MVP técnico concluído](https://github.com/HelioConde/agendaleve) · [validação pós-MVP](https://github.com/HelioConde/agendaleve/issues/1) |
 | DocPronto | [MVP técnico concluído](https://github.com/HelioConde/docpronto) · [validação pós-MVP](https://github.com/HelioConde/docpronto/issues/1) |
-| PostPilot | https://github.com/HelioConde/postpilot |
-| TFT Wrapped | [repositório ativo](https://github.com/HelioConde/tft-personal-wrapped) · MVP migrado |
-| VagaCerta | [branch standalone pronta](https://github.com/HelioConde/ideias-ia-lab/tree/split/vagacerta) · `HelioConde/vagacerta` ainda será criado |
-| MontaPC | [branch standalone pronta](https://github.com/HelioConde/ideias-ia-lab/tree/split/montapc) · `HelioConde/montapc` ainda será criado |
-| Revisa | [branch standalone pronta](https://github.com/HelioConde/ideias-ia-lab/tree/split/revisa) · `HelioConde/revisa` ainda será criado |
+| PostPilot | [gate final de provedores/homologação](https://github.com/HelioConde/postpilot/issues/8) |
+| TFT Wrapped | [núcleo real implementado · gate final](https://github.com/HelioConde/tft-personal-wrapped/issues/1) |
+| VagaCerta | [repositório ativo · próximo foco pesado](https://github.com/HelioConde/vagacerta/issues/1) |
+| MontaPC | [repositório ativo](https://github.com/HelioConde/montapc) |
+| Revisa | [repositório ativo · ainda em estágio inicial](https://github.com/HelioConde/revisa) |
 | GameRadar | [branch standalone pronta](https://github.com/HelioConde/ideias-ia-lab/tree/split/gameradar) · `HelioConde/gameradar` ainda será criado |
 | FalaPro | [branch standalone pronta](https://github.com/HelioConde/ideias-ia-lab/tree/split/falapro) · `HelioConde/falapro` ainda será criado |
 | PratoPronto | [branch standalone pronta](https://github.com/HelioConde/ideias-ia-lab/tree/split/pratopronto) · `HelioConde/pratopronto` ainda será criado |
@@ -103,25 +116,20 @@ Protótipo atual: [`split/riot-legacy`](https://github.com/HelioConde/ideias-ia-
 
 As novas ideias de LoL, TFT e Overwatch estão organizadas na fila oficial e devem receber repositórios independentes quando entrarem em desenvolvimento.
 
-## Protótipo gamer standalone em desenvolvimento
+## Produto gamer standalone fechado tecnicamente
 
-- **Riot Legacy** — [`split/riot-legacy`](https://github.com/HelioConde/ideias-ia-lab/tree/split/riot-legacy)
-  - landing + perfil híbrido com LoL/TFT reais e fallback demonstrativo;
-  - Riot ID + servidor + deep link;
-  - backend gamer ZeroTwo.gg (`bieihhaobdztjyoweewa`);
-  - `public-lol-profile` + `public-tft-profile`;
-  - PT-BR/EN;
-  - timeline recente baseada na amostra Riot;
-  - atualização de dados sem reload;
-  - card compartilhável + download PNG;
-  - anúncios preparados;
-  - Static QA ✅;
-  - Browser E2E ✅;
-  - repositório físico, validação com Riot IDs reais e GitHub Pages ainda pendentes.
+- **Riot Legacy** — [repositório oficial](https://github.com/HelioConde/riot-legacy)
+  - LoL + TFT reais;
+  - snapshots server-side;
+  - comparações históricas/mensais;
+  - compartilhamento e PNG;
+  - QA e snapshots visuais;
+  - validação multi-conta + Riot Developer Portal ainda externos;
+  - novas features históricas ficam para V2.
 
 ## Branches standalone preparadas
 
-Os sete MVPs antigos já possuem uma branch com o projeto na raiz, canonical do futuro GitHub Pages, configuração Supabase própria e CI próprio:
+As branches `split/*` abaixo foram usadas como etapa histórica de separação. **Elas não são mais fonte de status** quando já existe repositório físico; o repositório próprio sempre prevalece:
 
 - `split/vagacerta`
 - `split/falapro`
@@ -131,7 +139,7 @@ Os sete MVPs antigos já possuem uma branch com o projeto na raiz, canonical do 
 - `split/pratopronto`
 - `split/revisa`
 
-A etapa pendente é somente criar cada repositório físico e importar a branch correspondente.
+VagaCerta, MontaPC e Revisa já possuem repositórios físicos. Para os demais, confirmar a existência atual antes de executar automações de criação.
 
 ## Automação para todas as 41 ideias
 
