@@ -57,7 +57,7 @@ A ordem combina quatro fatores:
 | 12 | **LoL Session Insights** | LoL | P1 | MVP funcional com dados Riot reais; falta validação/Pages | [MVP funcional · issue de validação](https://github.com/HelioConde/lol-session-insights/issues/1) |
 | 13 | **TFT Augment Memory** | TFT | P1 | MVP funcional com histórico Riot real; falta validação/Pages | [MVP funcional · issue de validação](https://github.com/HelioConde/tft-augment-memory/issues/1) |
 | 14 | **OW VOD Timeline** | Overwatch | P1 | MVP local funcional para revisão por timestamps; falta validação/Pages | [MVP funcional · issue de validação](https://github.com/HelioConde/ow-vod-timeline/issues/1) |
-| 15 | **GameRadar** | Games | P1 | Wishlist, preço e alertas têm uso recorrente | `HelioConde/gameradar` — pendente |
+| 15 | **GameRadar** | Games | P1 | MVP funcional com ofertas e preço-alvo local; falta validação/Pages | [MVP funcional · issue de validação](https://github.com/HelioConde/gameradar/issues/1) |
 | 16 | **LoL Champion Pool** | LoL | P1 | Ajuda o jogador a construir um pool baseado no próprio histórico | `HelioConde/lol-champion-pool` — pendente |
 | 17 | **TFT Item Lab** | TFT | P1 | Exploração de itemização baseada no histórico do jogador | `HelioConde/tft-item-lab` — pendente |
 | 18 | **OW Map Master** | Overwatch | P1 | Conteúdo visual evergreen, útil para aprendizado e SEO | `HelioConde/ow-map-master` — pendente |
