@@ -62,8 +62,8 @@ A ordem combina quatro fatores:
 | 17 | **TFT Item Lab** | TFT | P1 | MVP funcional; validar dados reais/Pages | [MVP funcional · issue de validação](https://github.com/HelioConde/tft-item-lab/issues/1) |
 | 18 | **OW Map Master** | Overwatch | P1 | MVP funcional; validar Pages/uso real | [MVP funcional · issue de validação](https://github.com/HelioConde/ow-map-master/issues/1) |
 | 19 | **FalaPro** | Carreira | P2 | MVP funcional; validar sync/voz/uso real | [MVP funcional · issue de validação](https://github.com/HelioConde/falapro/issues/1) |
-| 20 | **TFT Placement DNA** | TFT | P2 | Próximo foco pesado; perfil pessoal por colocação | [HelioConde/tft-placement-dna](https://github.com/HelioConde/tft-placement-dna) |
-| 21 | **LoL Loss Explorer** | LoL | P2 | Agrupa derrotas e padrões recorrentes | `HelioConde/lol-loss-explorer` — pendente |
+| 20 | **TFT Placement DNA** | TFT | P2 | MVP funcional; validar dados reais/Pages | [MVP funcional · issue de validação](https://github.com/HelioConde/tft-placement-dna/issues/1) |
+| 21 | **LoL Loss Explorer** | LoL | P2 | Próximo foco pesado; padrões pessoais de derrota | [HelioConde/lol-loss-explorer](https://github.com/HelioConde/lol-loss-explorer) |
 | 22 | **TFT Comp Evolution** | TFT | P2 | Mostra evolução pessoal de comps entre partidas e patches | `HelioConde/tft-comp-evolution` — pendente |
 | 23 | **OW Scrim Manager** | Overwatch | P2 | Bom B2B/team utility, porém público menor | `HelioConde/ow-scrim-manager` — pendente |
 | 24 | **LoL Role Mastery** | LoL | P2 | Árvore visual de evolução por função | `HelioConde/lol-role-mastery` — pendente |
