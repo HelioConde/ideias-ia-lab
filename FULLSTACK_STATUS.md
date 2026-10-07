@@ -27,6 +27,7 @@ O `ideias-ia-lab` é somente o hub de organização. Frontend, backend, migratio
 | GameRadar | `HelioConde/gameradar` | MVP funcional · Browser E2E adicionado · validação/Pages |
 | LoL Champion Pool | `HelioConde/lol-champion-pool` | MVP funcional · Browser E2E adicionado · validação/Pages |
 | TFT Item Lab | `HelioConde/tft-item-lab` | MVP funcional · QA/E2E/Pages · validação real |
+| OW Map Master | `HelioConde/ow-map-master` | MVP funcional · QA/E2E/Pages · validação publicada |
 
 ## Produtos tecnicamente fechados
 
@@ -94,9 +95,13 @@ Núcleo técnico implementado: 65 componentes, fallback offline, compatibilidade
 
 `HelioConde/tft-item-lab` agora possui MVP funcional, QA/E2E, Pages e issue de validação. Fica congelado até validar dados reais.
 
+## OW Map Master
+
+`HelioConde/ow-map-master` agora possui MVP funcional, QA/E2E, Pages e issue de validação. Fica congelado até validação publicada.
+
 ## Próximo foco pesado
 
-**OW Map Master** — repositório `HelioConde/ow-map-master` existe e é o próximo P1 de implementação.
+**FalaPro** — repositório `HelioConde/falapro` é o próximo projeto com desenvolvimento pesado.
 
 ## Branches `split/*`
 
