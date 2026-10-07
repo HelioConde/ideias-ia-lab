@@ -1,121 +1,97 @@
 # Status do portfólio
 
-Atualizado em 2026-10-06.
+Atualizado em 2026-10-07.
 
-## Estrutura atual
+## Estrutura
 
-O `ideias-ia-lab` é somente hub de organização na branch `main`.
+O `ideias-ia-lab` é somente o hub de organização. Frontend, backend, migrations e configuração de produto ficam nos repositórios independentes.
 
-Nenhum frontend, backend, configuração Supabase ou migration de produto deve ser desenvolvido diretamente na `main`.
+## Repositórios confirmados nesta rodada
 
-## Repositórios independentes ativos
+| Projeto | Repositório | Estado |
+|---|---|---|
+| AgendaLeve | `HelioConde/agendaleve` | MVP publicado · validação pós-MVP |
+| DocPronto | `HelioConde/docpronto` | MVP publicado · homologação pós-MVP |
+| PostPilot | `HelioConde/postpilot` | gate final de provedores/homologação |
+| Riot Legacy | `HelioConde/riot-legacy` | MVP técnico concluído · validação/compliance |
+| VagaCerta | `HelioConde/vagacerta` | ativo · próximo foco pesado |
+| LoL Match Story | `HelioConde/lol-match-story` | MVP 1.0 concluído · validação |
+| TFT Wrapped | `HelioConde/tft-personal-wrapped` | backend real/PNG/E2E implementados · gate final |
+| MontaPC | `HelioConde/montapc` | ativo · roadmap amplo |
+| LoL Champion Journey | `HelioConde/lol-champion-journey` | gate final de snapshots |
+| TFT Board Museum | `HelioConde/tft-board-museum` | MVP técnico concluído · validação |
+| Revisa | `HelioConde/revisa` | ativo · estágio inicial |
 
-- PostPilot — `HelioConde/postpilot`
-- AgendaLeve — `HelioConde/agendaleve` — **MVP técnico concluído / validação pós-MVP**
-- DocPronto — `HelioConde/docpronto` — **MVP técnico concluído / validação pós-MVP**
+## Produtos tecnicamente fechados
 
-## MVPs técnicos concluídos
+- **AgendaLeve** — issue #1 contém somente validação humana/configuração externa.
+- **DocPronto** — issue #1 contém somente homologação humana.
+- **LoL Match Story** — MVP 1.0 fechado; issue #1 é pós-MVP.
+- **TFT Board Museum** — MVP fechado; issue #1 é pós-MVP.
+- **Riot Legacy** — MVP técnico fechado; issue #1 concentra validação multi-conta e Riot Developer Portal.
 
-- **AgendaLeve** — publicado, CI verde e backend ativo; pendências externas/manuais na [issue #1](https://github.com/HelioConde/agendaleve/issues/1).
-- **DocPronto** — publicado, CI verde e backend ativo; homologação humana na [issue #1](https://github.com/HelioConde/docpronto/issues/1).
+Esses projetos não devem voltar para implementação pesada por refinamento visual.
 
-Os dois projetos liberaram vagas de WIP para o próximo ciclo.
+## Gates finais ainda abertos
 
-## Protótipo gamer atual
+### PostPilot
 
-- **Riot Legacy** — `split/riot-legacy` — **em desenvolvimento**
-  - árvore standalone própria;
-  - fluxo Riot ID + servidor → perfil LoL/TFT;
-  - dados reais via `public-lol-profile` e `public-tft-profile`;
-  - fallback demonstrativo apenas quando a fonte estiver indisponível;
-  - timeline recente baseada na amostra Riot;
-  - PT-BR/EN;
-  - compartilhamento, deep link e card PNG;
-  - atualização dos dados sem reload;
-  - slots de anúncios;
-  - Static QA e Browser E2E verdes;
-  - validação com Riot IDs reais e repositório físico `HelioConde/riot-legacy` ainda pendentes.
+Issue #8:
+- provedores reais de IA/transcrição;
+- fluxo completo com serviços reais;
+- quotas;
+- autenticação humana;
+- E2E/axe/Lighthouse/Visual Snapshot final.
 
-## Sete MVPs antigos — preparação concluída
+### LoL Champion Journey
 
-Os projetos abaixo já foram convertidos para uma estrutura standalone, cada um em sua própria branch:
+Issue #4:
+- migration de snapshots já versionada no ZeroTwo;
+- endpoint remoto habilitado no frontend;
+- preflight configurado com `verify_jwt = false`;
+- falta aplicar/republicar no Supabase gamer e validar histórico entre sessões/dispositivos.
 
-- VagaCerta — `split/vagacerta`
-- FalaPro — `split/falapro`
-- MontaPC — `split/montapc`
-- GameRadar — `split/gameradar`
-- Perto — `split/perto`
-- PratoPronto — `split/pratopronto`
-- Revisa — `split/revisa`
+### TFT Wrapped
 
-Cada branch possui:
-- arquivos do produto na raiz;
-- canonical para o futuro GitHub Pages;
-- configuração pública própria do Supabase;
-- README e documentação fullstack;
-- Static QA próprio;
-- migrations específicas que já existiam no Lab.
+Issue #1:
+- integração TFT real implementada;
+- períodos e agregações implementados;
+- PNG implementado;
+- Browser E2E e workflow QA implementados;
+- QA automatizado já passou após a mudança;
+- GitHub Pages precisa estar habilitado/configurado para concluir o deploy;
+- falta rodada com Riot IDs reais.
 
-## Repositórios físicos ainda pendentes
+## Próximo foco pesado
 
-- `HelioConde/vagacerta`
-- `HelioConde/falapro`
-- `HelioConde/montapc`
-- `HelioConde/gameradar`
-- `HelioConde/perto`
-- `HelioConde/pratopronto`
-- `HelioConde/revisa`
+**VagaCerta**.
 
-A integração GitHub disponível nesta sessão não expõe criação de repositórios. Portanto, a etapa de empacotamento foi concluída, mas a criação física dos sete destinos ainda depende dessa operação ficar disponível ou ser feita externamente.
+Issue #1 define quatro entregas obrigatórias:
 
-## Backup
+1. compatibilidade explicada;
+2. currículo personalizado;
+3. follow-up;
+4. preparação de entrevista.
 
-Snapshot integral anterior à separação:
+Importação por URL, IA generativa e automações extras ficam depois desse gate.
 
-`archive/pre-split-2026-10-06`
+## Branches `split/*`
 
-Commit:
+As branches `split/*` são histórico de empacotamento e **não são fonte atual de status** quando o repositório físico já existe.
 
-`689ed2d0961c13f15ceaf60ccb06403f965a9714`
-
-Não remover esse backup até os sete repositórios físicos estarem criados, publicados e testados.
+Antes de executar qualquer script de criação, verificar se `HelioConde/<repo>` já existe e preservar a `main` existente.
 
 ## Backend
 
-- Produtos gerais/SaaS continuam usando a infraestrutura compartilhada definida para o portfólio, incluindo `pizzaria-db` quando aplicável.
-- **Projetos gamer Riot/TFT usam o Supabase gamer do ZeroTwo.gg** (`bieihhaobdztjyoweewa`).
-- Riot Legacy **não usa `pizzaria-db`**.
-- `RIOT_API_KEY` permanece exclusivamente nas Edge Functions do backend gamer.
+- produtos gerais/SaaS: infraestrutura compartilhada, incluindo `pizzaria-db` quando aplicável;
+- produtos Riot/TFT: Supabase gamer do ZeroTwo.gg (`bieihhaobdztjyoweewa`);
+- Riot API keys e service-role ficam exclusivamente no backend;
+- nenhum projeto gamer deve usar `pizzaria-db` como fallback.
 
-## Próxima etapa operacional
+## Fonte operacional
 
-Para cada branch `split/<produto>`:
+- `PRIORIDADES_DESENVOLVIMENTO.md` — ranking estratégico;
+- `PAINEL_EXECUCAO.md` — ordem operacional/fechamento;
+- `PLANO_MESTRE_FULLSTACK.md` — gates e processo.
 
-1. criar `HelioConde/<produto>`;
-2. importar a branch como `main`;
-3. habilitar GitHub Pages;
-4. confirmar CI;
-5. validar login/Supabase;
-6. validar o fluxo principal;
-7. atualizar o hub para “repositório ativo”.
-
-
-## Prioridade operacional atual
-
-A ordem oficial não é mais definida por este arquivo. Consultar:
-
-- `PRIORIDADES_DESENVOLVIMENTO.md` — ranking global;
-- `PAINEL_EXECUCAO.md` — trabalho atual e próximos blocos;
-- `ROADMAP_GAMES.md` — LoL, TFT e Overwatch.
-
-### Foco imediato
-
-1. **Riot Legacy — desenvolvimento pesado atual; protótipo standalone já iniciado e validado**;
-2. VagaCerta — materializar o repositório standalone;
-3. LoL Match Story;
-4. TFT Wrapped;
-5. PostPilot — manter apenas evolução leve enquanto o novo P0 inicia.
-
-AgendaLeve e DocPronto saíram da implementação pesada. Suas pendências restantes estão em issues pós-MVP e não bloqueiam o próximo projeto.
-
-A regra de WIP recomendada é manter no máximo dois produtos em implementação pesada e um protótipo exploratório em paralelo.
+A regra continua: **terminou o gate técnico, congela features e passa ao próximo**.
