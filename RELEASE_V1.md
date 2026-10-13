@@ -30,3 +30,11 @@ Leia `DEPLOY.md` antes de migrar ou abrir o beta.
 - Testes Playwright adicionados para cadastro/edição de perfil e moderação autorizada/não autorizada (simulados).
 - Sem atribuir um moderador real nem publicar a página; testar duas contas reais continua obrigatório.
 
+
+## Continuação — acompanhamento de pedidos e autenticação
+
+- Aplicada no banco a migration `20261013_perto_recipient_request_workflow.sql`, com RPC restrita ao prestador destinatário e auditoria de todas as atualizações de status.
+- Criados botões acessíveis no painel de pedidos recebidos para marcar visualização, registrar contato e encerrar atendimento.
+- Traduções PT-BR/EN adicionadas ao fluxo.
+- Redirecionamento de confirmação e recuperação de conta configurado para o endereço base deste app; interface de nova senha com confirmação de dois campos.
+- Novos testes Playwright cobrindo solicitação enviada, progressão do prestador, cancelamento pelo cliente, estados terminais e recuperação de conta. Os testes são simulados e não substituem homologação de duas contas reais.
