@@ -18,35 +18,35 @@
     <header class="topbar">
       <a class="brand" href="./">Perto<span>.</span></a>
       <div class="top-actions">
-        <span id="sync-status" class="sync-status" role="status">Busca pública</span>
-        <button id="account-open" class="button ghost" type="button">Entrar</button>
+        <span id="sync-status" class="sync-status" role="status" data-perto-text="searchStatus">Busca pública</span>
+        <button id="account-open" class="button ghost" type="button" data-perto-text="signIn">Entrar</button>
       </div>
     </header>
 
     <main>
       <section class="hero">
         <div>
-          <p class="eyebrow">SERVIÇOS LOCAIS</p>
-          <h1>Procure pelo serviço.<br><span>Converse com quem atende.</span></h1>
-          <p class="hero-copy">O Perto exibe somente perfis ativos no banco. Nenhum prestador fictício é inserido para preencher resultados.</p>
+          <p class="eyebrow" data-perto-text="localEyebrow">SERVIÇOS LOCAIS</p>
+          <h1 data-perto-html="heroTitle">Procure pelo serviço.<br><span>Converse com quem atende.</span></h1>
+          <p class="hero-copy" data-perto-text="heroCopy">O Perto exibe somente perfis ativos no banco. Nenhum prestador fictício é inserido para preencher resultados.</p>
         </div>
         <aside class="hero-card">
-          <span>Profissionais ativos</span>
+          <span data-perto-text="activePros">Profissionais ativos</span>
           <strong id="hero-count">0</strong>
-          <small>disponíveis no catálogo agora</small>
+          <small data-perto-text="available">disponíveis no catálogo agora</small>
         </aside>
       </section>
 
       <section class="search-panel">
         <div class="search-grid">
           <label class="field">
-            <span>Cidade</span>
-            <input id="city" type="text" maxlength="100" placeholder="Ex.: Brasília">
+            <span data-perto-text="city">Cidade</span>
+            <input id="city" type="text" maxlength="100" data-perto-placeholder="cityExample" placeholder="Ex.: Brasília">
           </label>
           <label class="field">
-            <span>Estado</span>
+            <span data-perto-text="state">Estado</span>
             <select id="state">
-              <option value="">Todos</option>
+              <option value="" data-perto-text="allStates">Todos</option>
               <option>AC</option><option>AL</option><option>AP</option><option>AM</option>
               <option>BA</option><option>CE</option><option>DF</option><option>ES</option>
               <option>GO</option><option>MA</option><option>MT</option><option>MS</option>
@@ -57,32 +57,32 @@
             </select>
           </label>
           <label class="field">
-            <span>Categoria</span>
+            <span data-perto-text="category">Categoria</span>
             <select id="category">
-              <option value="">Todas</option>
-              <option>Eletricista</option>
-              <option>Encanador</option>
-              <option>Montador</option>
-              <option>Diarista</option>
-              <option>Reformas</option>
-              <option>Beleza</option>
-              <option>Aulas</option>
-              <option>Informática</option>
-              <option>Serviços domésticos</option>
+              <option value="" data-perto-text="allCategories">Todas</option>
+              <option value="Eletricista" data-perto-text="categoryElectrician">Eletricista</option>
+              <option value="Encanador" data-perto-text="categoryPlumber">Encanador</option>
+              <option value="Montador" data-perto-text="categoryFurniture">Montador</option>
+              <option value="Diarista" data-perto-text="categoryCleaner">Diarista</option>
+              <option value="Reformas" data-perto-text="categoryRenovation">Reformas</option>
+              <option value="Beleza" data-perto-text="categoryBeauty">Beleza</option>
+              <option value="Aulas" data-perto-text="categoryLessons">Aulas</option>
+              <option value="Informática" data-perto-text="categoryIT">Informática</option>
+              <option value="Serviços domésticos" data-perto-text="categoryHome">Serviços domésticos</option>
             </select>
           </label>
           <label class="field search-term">
-            <span>Busca</span>
-            <input id="term" type="search" maxlength="120" placeholder="Nome ou descrição">
+            <span data-perto-text="term">Busca</span>
+            <input id="term" type="search" maxlength="120" data-perto-placeholder="termExample" placeholder="Nome ou descrição">
           </label>
         </div>
-        <button id="search-button" class="button primary" type="button">Buscar profissionais</button>
+        <button id="search-button" class="button primary" type="button" data-perto-text="searchAction">Buscar profissionais</button>
       </section>
 
       <section class="results-section">
         <div class="section-heading">
-          <div><p class="eyebrow">RESULTADOS</p><h2>Profissionais encontrados</h2></div>
-          <p id="result-summary">Faça uma busca para começar.</p>
+          <div><p class="eyebrow" data-perto-text="resultsEyebrow">RESULTADOS</p><h2 data-perto-text="resultsTitle">Profissionais encontrados</h2></div>
+          <p id="result-summary" data-perto-text="searchToStart">Faça uma busca para começar.</p>
         </div>
         <div id="results" class="results"></div>
       </section>
@@ -90,7 +90,7 @@
       <section class="account-area">
         <section class="panel">
           <div class="panel-heading">
-            <div><p class="eyebrow">PARA CLIENTES</p><h2>Meus pedidos</h2></div>
+            <div><p class="eyebrow" data-perto-text="clientEyebrow">PARA CLIENTES</p><h2 data-perto-text="myRequests">Meus pedidos</h2></div>
             <span id="request-count" class="count-badge">0</span>
           </div>
           <div id="request-list" class="request-list"></div>
@@ -98,7 +98,7 @@
 
         <section class="panel">
           <div class="panel-heading">
-            <div><p class="eyebrow">PARA PROFISSIONAIS</p><h2>Meu perfil</h2></div>
+            <div><p class="eyebrow" data-perto-text="proEyebrow">PARA PROFISSIONAIS</p><h2 data-perto-text="myProfile">Meu perfil</h2></div>
           </div>
           <div id="professional-profile"></div>
         </section>
@@ -107,39 +107,39 @@
 
     <footer class="footer">
       <strong>Perto</strong>
-      <span>Perfis novos passam por moderação antes de aparecer na busca pública. Pedidos ficam privados entre as partes envolvidas.</span>
+      <span data-perto-text="footer">Perfis novos passam por moderação antes de aparecer na busca pública. Pedidos ficam privados entre as partes envolvidas.</span>
     </footer>
   </div>
 
   <dialog id="request-dialog" class="dialog" aria-labelledby="request-title">
     <div class="dialog-head">
-      <div><p class="eyebrow">PEDIDO DE ORÇAMENTO</p><h2 id="request-title">Falar com profissional</h2></div>
-      <button id="request-close" class="icon-button" type="button" aria-label="Fechar">×</button>
+      <div><p class="eyebrow" data-perto-text="quoteEyebrow">PEDIDO DE ORÇAMENTO</p><h2 id="request-title" data-perto-text="quoteTitle">Falar com profissional</h2></div>
+      <button id="request-close" class="icon-button" type="button" aria-label="Fechar" data-perto-aria="close">×</button>
     </div>
     <div id="request-professional" class="request-professional"></div>
     <form id="request-form">
       <input name="professionalId" type="hidden">
       <input name="category" type="hidden">
       <input name="city" type="hidden">
-      <label class="field"><span>Contato para retorno</span><input name="contact" maxlength="200" placeholder="WhatsApp ou e-mail" required></label>
-      <label class="field"><span>Explique o que precisa</span><textarea name="message" maxlength="1600" placeholder="Ex.: Preciso instalar duas tomadas e revisar um disjuntor..." required></textarea></label>
-      <button class="button primary full" type="submit">Enviar pedido privado</button>
+      <label class="field"><span data-perto-text="replyContact">Contato para retorno</span><input name="contact" maxlength="200" data-perto-placeholder="contactExample" placeholder="WhatsApp ou e-mail" required></label>
+      <label class="field"><span data-perto-text="explainNeed">Explique o que precisa</span><textarea name="message" maxlength="1600" data-perto-placeholder="needExample" placeholder="Ex.: Preciso instalar duas tomadas e revisar um disjuntor..." required></textarea></label>
+      <button class="button primary full" type="submit" data-perto-text="sendQuote">Enviar pedido privado</button>
       <p id="request-message" class="form-message" role="status" aria-live="polite"></p>
     </form>
   </dialog>
 
   <dialog id="profile-dialog" class="dialog" aria-labelledby="profile-title">
     <div class="dialog-head">
-      <div><p class="eyebrow">PERFIL PROFISSIONAL</p><h2 id="profile-title">Cadastrar serviço</h2></div>
-      <button id="profile-close" class="icon-button" type="button" aria-label="Fechar">×</button>
+      <div><p class="eyebrow" data-perto-text="profileEyebrow">PERFIL PROFISSIONAL</p><h2 id="profile-title" data-perto-text="createProfile">Cadastrar serviço</h2></div>
+      <button id="profile-close" class="icon-button" type="button" aria-label="Fechar" data-perto-aria="close">×</button>
     </div>
-    <p class="dialog-copy">Novos perfis entram como <strong>pendentes</strong> e não aparecem publicamente até moderação.</p>
+    <p class="dialog-copy" data-perto-html="moderationCopy">Novos perfis entram como <strong>pendentes</strong> e não aparecem publicamente até moderação.</p>
     <form id="profile-form">
-      <label class="field"><span>Nome profissional</span><input name="displayName" maxlength="120" required placeholder="Ex.: João Elétrica"></label>
+      <label class="field"><span data-perto-text="professionalName">Nome profissional</span><input name="displayName" maxlength="120" required data-perto-placeholder="nameExample" placeholder="Ex.: João Elétrica"></label>
       <div class="form-grid">
-        <label class="field"><span>Cidade</span><input name="city" maxlength="100" required></label>
-        <label class="field"><span>Estado</span><select name="state" required>
-          <option value="">Selecione</option>
+        <label class="field"><span data-perto-text="city">Cidade</span><input name="city" maxlength="100" required></label>
+        <label class="field"><span data-perto-text="state">Estado</span><select name="state" required>
+          <option value="" data-perto-text="select">Selecione</option>
           <option>AC</option><option>AL</option><option>AP</option><option>AM</option>
           <option>BA</option><option>CE</option><option>DF</option><option>ES</option>
           <option>GO</option><option>MA</option><option>MT</option><option>MS</option>
@@ -149,32 +149,32 @@
           <option>SP</option><option>SE</option><option>TO</option>
         </select></label>
       </div>
-      <label class="field"><span>Categoria</span><input name="category" maxlength="100" required placeholder="Ex.: Eletricista"></label>
-      <label class="field"><span>Descrição do serviço</span><textarea name="description" maxlength="1200" required placeholder="Descreva o que você faz e sua área de atendimento."></textarea></label>
-      <label class="field"><span>Preço a partir de (opcional)</span><input name="priceFrom" type="number" min="0" step="0.01" placeholder="Ex.: 80"></label>
-      <button class="button primary full" type="submit">Salvar perfil</button>
+      <label class="field"><span data-perto-text="category">Categoria</span><input name="category" maxlength="100" required placeholder="Ex.: Eletricista"></label>
+      <label class="field"><span data-perto-text="serviceDescription">Descrição do serviço</span><textarea name="description" maxlength="1200" required data-perto-placeholder="descriptionExample" placeholder="Descreva o que você faz e sua área de atendimento."></textarea></label>
+      <label class="field"><span data-perto-text="priceFrom">Preço a partir de (opcional)</span><input name="priceFrom" type="number" min="0" step="0.01" data-perto-placeholder="priceExample" placeholder="Ex.: 80"></label>
+      <button class="button primary full" type="submit" data-perto-text="saveProfile">Salvar perfil</button>
       <p id="profile-message" class="form-message" role="status" aria-live="polite"></p>
     </form>
   </dialog>
 
   <dialog id="account-dialog" class="dialog account-dialog" aria-labelledby="account-title">
     <div class="dialog-head">
-      <div><p class="eyebrow">SUA CONTA</p><h2 id="account-title">Entrar no Perto</h2></div>
-      <button id="account-close" class="icon-button" type="button" aria-label="Fechar">×</button>
+      <div><p class="eyebrow" data-perto-text="accountEyebrow">SUA CONTA</p><h2 id="account-title" data-perto-text="accountTitle">Entrar no Perto</h2></div>
+      <button id="account-close" class="icon-button" type="button" aria-label="Fechar" data-perto-aria="close">×</button>
     </div>
-    <p class="dialog-copy">A busca pública não exige conta. Conta é necessária para enviar pedidos ou cadastrar perfil profissional.</p>
+    <p class="dialog-copy" data-perto-text="accountCopy">A busca pública não exige conta. Conta é necessária para enviar pedidos ou cadastrar perfil profissional.</p>
     <form id="auth-form">
-      <label class="field"><span>E-mail</span><input name="email" type="email" autocomplete="email" required></label>
-      <label class="field"><span>Senha</span><input name="password" type="password" minlength="8" autocomplete="current-password" required></label>
-      <button class="button primary full" type="submit">Entrar</button>
+      <label class="field"><span data-perto-text="email">E-mail</span><input name="email" type="email" autocomplete="email" required></label>
+      <label class="field"><span data-perto-text="password">Senha</span><input name="password" type="password" minlength="8" autocomplete="current-password" required></label>
+      <button class="button primary full" type="submit" data-perto-text="signIn">Entrar</button>
       <div class="account-actions">
-        <button id="sign-up" class="button ghost" type="button">Criar conta</button>
-        <button id="reset-password" class="button text" type="button">Esqueci a senha</button>
+        <button id="sign-up" class="button ghost" type="button" data-perto-text="createAccount">Criar conta</button>
+        <button id="reset-password" class="button text" type="button" data-perto-text="forgotPassword">Esqueci a senha</button>
       </div>
     </form>
     <div id="account-profile" hidden>
-      <p>Conectado como <strong id="account-email"></strong></p>
-      <button id="sign-out" class="button ghost full" type="button">Sair da conta</button>
+      <p><span data-perto-text="connectedAs">Conectado como</span> <strong id="account-email"></strong></p>
+      <button id="sign-out" class="button ghost full" type="button" data-perto-text="signOut">Sair da conta</button>
     </div>
     <p id="account-message" class="form-message" role="status" aria-live="polite"></p>
   </dialog>
@@ -182,6 +182,7 @@
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
   <script src="supabase-config.js"></script>
+  <script src="i18n.js"></script>
   <script src="app.js"></script>
   <script src="live-update.js" defer></script>
 </body>
