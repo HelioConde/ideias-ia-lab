@@ -19,3 +19,14 @@ O **núcleo técnico** foi atualizado na branch `split/perto`, com melhorias de 
 A verificação técnica de SQL confirma as políticas, grants e triggers instalados. Não alegar que os testes simulados substituem dois usuários autenticados reais.
 
 Leia `DEPLOY.md` antes de migrar ou abrir o beta.
+
+## Complemento da rodada seguinte
+
+- Corrigido UPDATE de perfil: não envia mais `user_id` (campo imutável).
+- Revisão automática de informações: perfis `active`, `paused` e `rejected` voltam a `pending` ao editar campos públicos importantes.
+- Adicionadas tabelas `perto_moderators` e `perto_moderation_events` (RLS ativo e sem permissões de leitura direta no navegador).
+- RPCs `perto_pending_moderation` e `perto_moderate_profile` validam o usuário e auditam decisões.
+- Página `admin.html` restrita, com fila e diálogo de aprovação/rejeição, sem token administrativo no navegador.
+- Testes Playwright adicionados para cadastro/edição de perfil e moderação autorizada/não autorizada (simulados).
+- Sem atribuir um moderador real nem publicar a página; testar duas contas reais continua obrigatório.
+
