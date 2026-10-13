@@ -13,7 +13,7 @@
 | 4 | MontaPC | [montapc](https://github.com/HelioConde/montapc) | MVP anterior concluído; Browser E2E 14/14 e Pages verde em 09/10; segurança do banco já aplicada | Validar duas contas e builds reais; sem V2 |
 | 5 | GameRadar | [gameradar](https://github.com/HelioConde/gameradar) | Browser E2E/Static QA verdes; cache corrigido; Pages não habilitado. Live API Smoke não encontra elemento da página publicada | Habilitar Pages antes de concluir testes reais da CheapShark, CORS, links e preços-alvo |
 | 6 | AgendaLeve | [agendaleve](https://github.com/HelioConde/agendaleve) | MVP publicado; Static QA/Browser E2E/Pages verdes em 09/10 | Homologação humana e integrações externas; features congeladas |
-| 7 | Perto | [split/perto](https://github.com/HelioConde/ideias-ia-lab/tree/split/perto) | Segurança reforçada, reaprovação ao editar perfis, painel administrativo com RPC protegida/auditoria, PT/EN e QA desktop/mobile aprovado; Supabase migrado | Criar `HelioConde/perto`, ativar Pages, atribuir moderador autorizado e homologar com duas contas reais |
+| 7 | Perto | [HelioConde/perto](https://github.com/HelioConde/perto) | Repositório independente criado, 37 arquivos idênticos importados em `main`, backend/migrations integrados e Static QA aprovado no novo repo | Habilitar Pages em Settings, validar E2E no novo repo, atribuir moderador e homologar duas contas reais |
 | 8 | PratoPronto | [split/pratopronto](https://github.com/HelioConde/ideias-ia-lab/tree/split/pratopronto) | Guards RESTRICTIVE aplicados: refeições e lista de compras pertencem ao plano do usuário | Criar repositório físico `HelioConde/pratopronto`, importar branch, ativar Pages, QA e duas contas |
 | 9 | Revisa | [revisa](https://github.com/HelioConde/revisa) | Browser E2E/Static QA anteriores verdes; cache corrigido; workflow de Pages com diagnóstico explícito | Ativar Pages em Settings > Pages e validar site publicado/usabilidade |
 | 10 | DocPronto | [docpronto](https://github.com/HelioConde/docpronto) | MVP publicado; Quality Checks, Static QA e Pages verdes em 09/10; backend já passou homologações documentadas | Beta com pessoas/negócios reais; sem expansão de escopo |
@@ -32,7 +32,7 @@ As consultas a `pg_policies` confirmaram a instalação dos novos guards. **Isso
 
 Nos projetos **VagaCerta, FalaPro, GameRadar e Revisa**, habilitar manualmente GitHub Pages em **Settings → Pages → Build and deployment → Source: GitHub Actions**. Os workflows não têm permissão para criar um Pages site automaticamente. Rerodar os deploys após configurar.
 
-**Perto e PratoPronto** estão somente em branches standalone do hub; ainda não têm repositórios físicos. Não desenvolver seus produtos na `main` do `ideias-ia-lab`; manter cada código isolado na branch atual até haver destino independente.
+**PratoPronto** ainda está somente na branch standalone do hub e não tem repositório físico. **Perto já foi migrado para `HelioConde/perto`**; as alterações futuras do Perto devem ocorrer no repositório próprio, mantendo a branch original como backup. Não desenvolver estes produtos na `main` do `ideias-ia-lab`.
 
 A próxima rodada deve validar **o gate real de cada produto, nessa mesma ordem**, corrigir P0/P1 e congelar quando estiver aprovado. Não anunciar como pronto um beta que dependa de credenciais ou configurações externas não homologadas.
 
@@ -46,10 +46,18 @@ A próxima rodada deve validar **o gate real de cada produto, nessa mesma ordem*
 - Não existe moderador pré-configurado; papel atribuído por administrador legítimo no Supabase SQL Editor.
 - Testes Playwright desktop/mobile para cadastro, edição, moderação e acesso negado; CI em verde nos commits verificados.
 - Guia técnico: [DEPLOY.md](https://github.com/HelioConde/ideias-ia-lab/blob/split/perto/DEPLOY.md).
-- Ainda faltam repositório próprio, publicação, permissão de moderação autorizada e teste com duas contas reais.
+- Repositório independente **criado e migrado em 13/10**. Falta habilitar o Pages, autorizar moderação e executar teste com duas contas reais.
 - **13/10:** acompanhamento de pedidos por RPC restrita ao prestador, com fluxo `new → viewed → contacted → closed`, auditoria interna e traduções PT-BR/EN; cliente apenas cancela.
 - **Autenticação:** cadastro e recuperação retornam ao próprio site; incluída tela de nova senha após `PASSWORD_RECOVERY`. A URL precisa estar autorizada na configuração do Supabase após o deploy.
 - **QA:** 42 testes Playwright desktop/mobile aprovados em [38342657126](https://github.com/HelioConde/ideias-ia-lab/actions/runs/38342657126); testes simulados não substituem homologação real.
 - **Rodada adicional:** banco impede auto-orçamentos e saltos no fluxo de status; frontend oferece filtros Todos/Enviados/Recebidos, atualização segura e erros específicos. Validação SQL confirmou a alteração aplicada. Pendências de publicação e de contas reais permanecem.
 
 - **Fechamento da rodada Perto:** 42 testes Playwright (desktop e mobile) aprovados em [38342657126](https://github.com/HelioConde/ideias-ia-lab/actions/runs/38342657126). Contratos reais de autenticação e RLS com dois usuários continuam pendentes.
+
+## Atualização Perto — importação concluída em 13/10
+
+- Repositório: [HelioConde/perto](https://github.com/HelioConde/perto), branch `main`.
+- Importação de 37 arquivos em um commit, com todos os blobs idênticos aos da branch `split/perto`.
+- [Static QA](https://github.com/HelioConde/perto/actions), Live Update QA e versionamento automáticos aprovados após importação.
+- [Deploy GitHub Pages](https://github.com/HelioConde/perto/actions): bloqueado porque o Pages ainda não foi habilitado em [Settings → Pages](https://github.com/HelioConde/perto/settings/pages). Selecionar `GitHub Actions` como Source.
+- Depois: confirmar Auth Redirect URLs no Supabase compartilhado e testar com contas reais antes do beta aberto.
