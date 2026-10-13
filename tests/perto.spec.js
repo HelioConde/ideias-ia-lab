@@ -315,3 +315,67 @@ test('password recovery event opens secure new-password UI and validates confirm
   calls = await page.evaluate(() => window.__pertoTest.authCalls);
   expect(calls.find(x => x.type === 'updateUser').options.password).toBe('senha-nova-123');
 });
+
+test('quote inbox filters sent and received requests independently', async ({ page }) => {
+  const otherProfile = {
+    ...activeProfile,
+    id: '12121212-1212-4212-8212-121212121212',
+    user_id: customerActor.id, display_name: 'Reparos Residenciais'
+  };
+  const outgoing = {
+    ...incomingRequest, id: '13131313-1313-4313-8313-131313131313',
+    user_id: professionalActor.id,
+    professional_id: otherProfile.id,
+    message: 'Preciso de ajuda em outro endereço.',
+    contact: 'prestador@example.test'
+  };
+  await installMock(page, {
+    user: professionalActor, profiles: [activeProfile, otherProfile],
+    requests: [incomingRequest, outgoing]
+  });
+  await page.goto('/');
+  await expect(page.locator('#request-count')).toHaveText('2');
+  await expect(page.locator('.request-item')).toHaveCount(2);
+  await page.locator('[data-request-filter="sent"]').click();
+  await expect(page.locator('.request-item')).toHaveCount(1);
+  await expect(page.locator('#request-list')).toContainText('outro endereço');
+  await expect(page.locator('[data-request-progress]')).toHaveCount(0);
+  await expect(page.locator('[data-request-filter="sent"]')).toHaveAttribute('aria-pressed','true');
+  await page.locator('[data-request-filter="received"]').click();
+  await expect(page.locator('.request-item')).toHaveCount(1);
+  await expect(page.locator('#request-list')).toContainText('instalar uma tomada');
+  await expect(page.locator('[data-cancel-request]')).toHaveCount(0);
+  await expect(page.locator('[data-request-progress]')).toHaveCount(1);
+  await page.locator('[data-request-filter="all"]').click();
+  await expect(page.locator('.request-item')).toHaveCount(2);
+});
+
+test('inbox refresh discovers new requests and preserves existing data on transient failure', async ({ page }) => {
+  await installMock(page, {
+    user: professionalActor, profiles: [activeProfile], requests: [incomingRequest]
+  });
+  await page.goto('/');
+  await expect(page.locator('#request-count')).toHaveText('1');
+  await page.evaluate(() => {
+    window.__pertoTest.requests.push({
+      ...window.__pertoTest.requests[0],
+      id: '14141414-1414-4414-8414-141414141414',
+      message: 'Preciso de orientação para instalação de disjuntor.'
+    });
+  });
+  await page.locator('#request-refresh').click();
+  await expect(page.locator('#request-count')).toHaveText('2');
+  await expect(page.locator('#request-list')).toContainText('disjuntor');
+  await page.evaluate(() => {window.__pertoTest.failNextRequestsLoad = true;});
+  await page.locator('#request-refresh').click();
+  await expect(page.locator('#request-count')).toHaveText('2');
+  await expect(page.locator('#request-list')).toContainText('disjuntor');
+});
+
+test('private inbox filters and refresh are hidden for signed-out visitors', async ({ page }) => {
+  await installMock(page);
+  await page.goto('/');
+  await expect(page.locator('#request-refresh')).toBeHidden();
+  await expect(page.locator('#request-filters')).toBeHidden();
+  await expect(page.locator('#request-list')).toContainText('Entre para acompanhar pedidos');
+});
