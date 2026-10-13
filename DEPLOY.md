@@ -114,3 +114,21 @@ A nova tela de alteração de senha reage ao evento `PASSWORD_RECOVERY` e utiliz
 - [ ] Pedido cancelado ou encerrado não pode ser reativado pelo profissional.
 - [ ] Mensagem original e contato continuam protegidos/imodificáveis.
 - [ ] Link de confirmação de e-mail e recuperação retornam para o Perto.
+
+## 11. Segurança de orçamentos e caixa de entrada — rodada de 13/10
+
+- Migration `20261013013000_perto_quote_integrity.sql` aplicada no Supabase compartilhado. O servidor rejeita envio de orçamento ao próprio perfil e exige as transições `new → viewed → contacted → closed`, sem saltar etapas.
+- A listagem privada possui os filtros **Todos**, **Enviados** e **Recebidos**, e botão **Atualizar** com estados e rótulos PT-BR/EN.
+- Erros de limite de pedidos, auto-solicitação e destino indisponível são explicados sem expor dados privados.
+- Em falha temporária de sincronização, a interface preserva os últimos pedidos carregados. Na troca de usuário, o filtro retorna ao padrão para evitar confusão entre contas.
+- CSS aplica `[hidden]{display:none!important}` para que os controles privados não reapareçam por sobrescrita de estilos.
+- Testes Playwright no GitHub Actions: cenários de filtro enviado/recebido, atualização posterior, erro temporário, sessão anônima, desktop e mobile. Não são teste com duas identidades reais em produção.
+- As tabelas administrativas `perto_moderators`, `perto_moderation_events` e `perto_request_status_events` têm RLS sem políticas deliberadamente e nenhuma concessão direta ao navegador. Avisos informativos `RLS Enabled No Policy` são esperados para essas tabelas, **não** indicam que seus dados estejam públicos.
+
+### Verificações restantes
+
+- [ ] Testar manualmente que a conta A não consegue solicitar orçamento ao próprio perfil aprovado.
+- [ ] Testar recarga do inbox com dois navegadores distintos após um cliente enviar solicitação.
+- [ ] Confirmar no painel do Supabase que as URLs de autenticação do site publicado são aceitas.
+- [ ] Validar a aprovação por moderador com pessoa real designada.
+- [ ] Completar suporte/LGPD antes de aceitar inscrições públicas.
