@@ -49,5 +49,7 @@ A próxima rodada deve validar **o gate real de cada produto, nessa mesma ordem*
 - Ainda faltam repositório próprio, publicação, permissão de moderação autorizada e teste com duas contas reais.
 - **13/10:** acompanhamento de pedidos por RPC restrita ao prestador, com fluxo `new → viewed → contacted → closed`, auditoria interna e traduções PT-BR/EN; cliente apenas cancela.
 - **Autenticação:** cadastro e recuperação retornam ao próprio site; incluída tela de nova senha após `PASSWORD_RECOVERY`. A URL precisa estar autorizada na configuração do Supabase após o deploy.
-- **QA:** 38 testes Playwright desktop/mobile aprovados em [38342417359](https://github.com/HelioConde/ideias-ia-lab/actions/runs/38342417359); testes simulados não substituem homologação real.
+- **QA:** 42 testes Playwright desktop/mobile aprovados em [38342657126](https://github.com/HelioConde/ideias-ia-lab/actions/runs/38342657126); testes simulados não substituem homologação real.
 - **Rodada adicional:** banco impede auto-orçamentos e saltos no fluxo de status; frontend oferece filtros Todos/Enviados/Recebidos, atualização segura e erros específicos. Validação SQL confirmou a alteração aplicada. Pendências de publicação e de contas reais permanecem.
+
+- **Fechamento da rodada Perto:** 42 testes Playwright (desktop e mobile) aprovados em [38342657126](https://github.com/HelioConde/ideias-ia-lab/actions/runs/38342657126). Contratos reais de autenticação e RLS com dois usuários continuam pendentes.
