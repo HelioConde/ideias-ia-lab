@@ -183,7 +183,8 @@ async function saveProfile(){
     updated_at:new Date().toISOString()
   };
   if(currentProfile){
-    const {data,error}=await supabaseClient.from('perto_professionals').update(payload).eq('id',currentProfile.id).select('id,user_id,display_name,city,state,category,description,price_from_cents,rating,status,created_at,updated_at').single();
+    const {user_id:_immutableOwner,...editable}=payload;
+    const {data,error}=await supabaseClient.from('perto_professionals').update(editable).eq('id',currentProfile.id).eq('user_id',currentUser.id).select('id,user_id,display_name,city,state,category,description,price_from_cents,rating,status,created_at,updated_at').single();
     if(error)throw error;currentProfile=data;
   }else{
     const {data,error}=await supabaseClient.from('perto_professionals').insert(payload).select('id,user_id,display_name,city,state,category,description,price_from_cents,rating,status,created_at,updated_at').single();
