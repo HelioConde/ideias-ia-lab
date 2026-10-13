@@ -47,3 +47,6 @@ A próxima rodada deve validar **o gate real de cada produto, nessa mesma ordem*
 - Testes Playwright desktop/mobile para cadastro, edição, moderação e acesso negado; CI em verde nos commits verificados.
 - Guia técnico: [DEPLOY.md](https://github.com/HelioConde/ideias-ia-lab/blob/split/perto/DEPLOY.md).
 - Ainda faltam repositório próprio, publicação, permissão de moderação autorizada e teste com duas contas reais.
+- **13/10:** acompanhamento de pedidos por RPC restrita ao prestador, com fluxo `new → viewed → contacted → closed`, auditoria interna e traduções PT-BR/EN; cliente apenas cancela.
+- **Autenticação:** cadastro e recuperação retornam ao próprio site; incluída tela de nova senha após `PASSWORD_RECOVERY`. A URL precisa estar autorizada na configuração do Supabase após o deploy.
+- **QA:** 32 testes Playwright desktop/mobile aprovados em [38341251121](https://github.com/HelioConde/ideias-ia-lab/actions/runs/38341251121); testes simulados não substituem homologação real.
