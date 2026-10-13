@@ -16,7 +16,7 @@ const pendingProfile = {
 async function installMock(page, { user = null, profiles = [activeProfile, pendingProfile] } = {}) {
   await page.route('https://cdn.jsdelivr.net/**', route => route.abort());
   await page.addInitScript(({ user, profiles }) => {
-    const state = { user, profiles, requests: [], inserted: [], errors: [] };
+    const state = { user, profiles, requests: [], inserted: [], updated: [], errors: [] };
     window.__pertoTest = state;
     function query(table) {
       const opts = { mode: 'read', filters: [], limit: 100 };
@@ -35,15 +35,26 @@ async function installMock(page, { user = null, profiles = [activeProfile, pendi
         run() {
           if (opts.mode === 'insert') {
             state.inserted.push({ table, payload: opts.payload });
-            const row = { id: crypto.randomUUID(), created_at: new Date().toISOString(), ...opts.payload, status: opts.payload.status || 'new' };
+            if (table === 'perto_professionals' && ['status', 'rating'].some(k => Object.hasOwn(opts.payload, k))) {
+              return { data: null, error: { message: 'Profile moderation fields are not writable by the client' } };
+            }
+            const row = { id: crypto.randomUUID(), created_at: new Date().toISOString(), ...opts.payload, status: table === 'perto_professionals' ? 'pending' : 'new' };
             if (table === 'perto_requests') state.requests.push(row);
             if (table === 'perto_professionals') state.profiles.push(row);
             return { data: row, error: null };
           }
           if (opts.mode === 'update') {
+            state.updated.push({ table, payload: opts.payload });
+            if (table === 'perto_professionals' && ['status', 'rating', 'user_id'].some(k => Object.hasOwn(opts.payload, k))) {
+              return { data: null, error: { message: 'Profile owner and moderation fields are immutable' } };
+            }
             const collection = table === 'perto_requests' ? state.requests : state.profiles;
             const row = collection.filter(p => opts.filters.every(f => f(p)))[0];
             if (!row) return { data: null, error: { message: 'No matching row' } };
+            if (table === 'perto_professionals' && ['active', 'paused', 'rejected'].includes(row.status) &&
+                ['display_name','city','state','category','description','price_from_cents'].some(k => Object.hasOwn(opts.payload, k) && row[k] !== opts.payload[k])) {
+              row.status = 'pending';
+            }
             Object.assign(row, opts.payload);
             return { data: row, error: null };
           }
@@ -132,4 +143,46 @@ test('English UI changes labels without changing canonical category values', asy
   await page.locator('#account-close').click();
   await page.locator('[data-perto-lang="pt-BR"]').click();
   await expect(page.locator('#search-button')).toHaveText('Buscar profissionais');
+});
+
+test('professional signup creates a pending, moderated profile', async ({ page }) => {
+  const user = { id: 'dddddddd-dddd-4ddd-8ddd-dddddddddddd', email: 'profissional@example.test' };
+  await installMock(page, { user, profiles: [activeProfile] });
+  await page.goto('/');
+  await expect(page.locator('[data-create-profile]')).toBeVisible();
+  await page.locator('[data-create-profile]').click();
+  await page.locator('#profile-form [name="displayName"]').fill('Maria Reparos');
+  await page.locator('#profile-form [name="city"]').fill('Goiânia');
+  await page.locator('#profile-form [name="state"]').selectOption('GO');
+  await page.locator('#profile-form [name="category"]').fill('Eletricista');
+  await page.locator('#profile-form [name="description"]').fill('Instalação e manutenção elétrica residencial');
+  await page.locator('#profile-form [name="priceFrom"]').fill('125');
+  await page.locator('#profile-form [type="submit"]').click();
+  await expect(page.locator('#profile-dialog')).not.toBeVisible();
+  await expect(page.locator('#professional-profile')).toContainText('Maria Reparos');
+  await expect(page.locator('.profile-status')).toHaveText('Em análise');
+  const payload = await page.evaluate(() => window.__pertoTest.inserted.find(x => x.table === 'perto_professionals')?.payload);
+  expect(payload.user_id).toBe(user.id);
+  expect(payload.price_from_cents).toBe(12500);
+  expect(payload).not.toHaveProperty('status');
+  expect(payload).not.toHaveProperty('rating');
+});
+
+test('editing an approved professional profile does not write immutable columns and requires reapproval', async ({ page }) => {
+  const user = { id: 'dddddddd-dddd-4ddd-8ddd-dddddddddddd', email: 'profissional@example.test' };
+  const owned = { ...activeProfile, id: 'eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee', user_id: user.id };
+  await installMock(page, { user, profiles: [activeProfile, owned] });
+  await page.goto('/');
+  await expect(page.locator('.profile-status')).toHaveText('Ativo');
+  await page.locator('[data-edit-profile]').click();
+  await page.locator('#profile-form [name="description"]').fill('Descrição atualizada e sujeita a nova revisão');
+  await page.locator('#profile-form [type="submit"]').click();
+  await expect(page.locator('#profile-dialog')).not.toBeVisible();
+  await expect(page.locator('#professional-profile')).toContainText('Descrição atualizada');
+  await expect(page.locator('.profile-status')).toHaveText('Em análise');
+  const payload = await page.evaluate(() => window.__pertoTest.updated.find(x => x.table === 'perto_professionals')?.payload);
+  expect(payload).toBeDefined();
+  expect(payload).not.toHaveProperty('user_id');
+  expect(payload).not.toHaveProperty('status');
+  expect(payload).not.toHaveProperty('rating');
 });
