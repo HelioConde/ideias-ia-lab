@@ -23,9 +23,9 @@ Tabelas:
 - estado vazio honesto: nenhum prestador fictício é criado;
 - cards com nome, categoria, descrição, cidade/UF, preço inicial e rating quando existir;
 - Supabase Auth para clientes/profissionais;
-- pedido privado de orçamento;
+- pedido privado de orçamento com bloqueio de solicitação ao próprio perfil;
 - contato de retorno armazenado no pedido e visível somente aos participantes;
-- histórico de pedidos enviados e recebidos;
+- histórico de pedidos enviados e recebidos com filtros e sincronização manual sem apagar dados após falha temporária;
 - cancelamento pelo solicitante;
 - cadastro/edição de perfil profissional;
 - novos perfis sempre entram como `pending`;
