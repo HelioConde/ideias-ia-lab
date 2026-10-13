@@ -61,3 +61,6 @@
 .request-filter.active{border-color:var(--accent);background:var(--accent);color:#fff}
 .request-filter:focus-visible{outline:3px solid #8cbc9c;outline-offset:2px}
 @media(max-width:580px){.request-header-actions{width:100%;justify-content:space-between}.request-filters{gap:4px}.request-filter{flex:1;padding:9px 7px}}
+
+/* Author display utilities must not override browser-level hidden state. */
+[hidden]{display:none!important}
