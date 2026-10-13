@@ -283,7 +283,15 @@ requestForm.addEventListener('submit',async event=>{
   event.preventDefault();if(!currentUser||!requestForm.reportValidity())return;
   const b=requestForm.querySelector('[type="submit"]');b.disabled=true;requestMessage.textContent=T('sending');
   try{await sendRequest();requestDialog.close();renderRequestList();showToast(T('quoteSent'));}
-  catch(error){console.error(error);requestMessage.textContent=T('quoteFailed');}
+  catch(error){
+    console.error(error);
+    const message=String(error?.message||'');
+    const key=message.includes('perto_request_hourly_limit')?'quoteRateLimited'
+      :message.includes('perto_professional_not_active')?'quoteInactive'
+      :message.includes('perto_self_request_forbidden')?'quoteSelfBlocked'
+      :'quoteFailed';
+    requestMessage.textContent=T(key);
+  }
   finally{b.disabled=false;}
 });
 
@@ -382,7 +390,9 @@ async function initAuth(){
   if(!supabaseClient){updateAccountUi();renderProfile();renderRequestList();return;}
   let activeUserId=null;
   const setSession=session=>{
-    const user=session?.user||null;if(user?.id===activeUserId)return;activeUserId=user?.id||null;currentUser=user;currentProfile=null;userRequests=[];updateAccountUi();
+    const user=session?.user||null;if(user?.id===activeUserId)return;activeUserId=user?.id||null;currentUser=user;currentProfile=null;userRequests=[];requestFilter='all';
+    document.querySelectorAll('[data-request-filter]').forEach(button=>{const active=button.dataset.requestFilter==='all';button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active));});
+    updateAccountUi();
     if(user){
       setTimeout(async()=>{await loadUserData();if(pendingRequestProfessionalId){const id=pendingRequestProfessionalId;pendingRequestProfessionalId='';accountDialog.close();openRequest(id);}},0);
     }else{renderProfile();renderRequestList();}
