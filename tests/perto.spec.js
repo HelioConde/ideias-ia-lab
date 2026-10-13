@@ -203,3 +203,49 @@ test('editing an approved professional profile does not write immutable columns 
   expect(payload).not.toHaveProperty('status');
   expect(payload).not.toHaveProperty('rating');
 });
+
+const professionalActor = { id: 'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb', email: 'prestador@example.test' };
+const customerActor = { id: 'dddddddd-dddd-4ddd-8ddd-dddddddddddd', email: 'cliente@example.test' };
+const incomingRequest = {
+  id: 'eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee',
+  user_id: customerActor.id,
+  professional_id: activeProfile.id,
+  category: 'Eletricista', city: 'Brasília',
+  message: 'Gostaria de instalar uma tomada na cozinha.',
+  contact: 'cliente@example.test', status: 'new', created_at: '2026-10-13T12:00:00Z'
+};
+
+test('recipient advances quote from new through contacted to closed without rewriting customer information', async ({ page }) => {
+  await installMock(page, { user: professionalActor, profiles: [activeProfile], requests: [incomingRequest] });
+  await page.goto('/');
+  await expect(page.locator('#request-list')).toContainText('cliente@example.test');
+  await expect(page.locator('[data-request-progress]')).toHaveText('Marcar como visualizado');
+  await page.locator('[data-request-progress]').click();
+  await expect(page.locator('.request-status')).toContainText('Visualizado');
+  await expect(page.locator('[data-request-progress]')).toHaveText('Registrar contato');
+  await page.locator('[data-request-progress]').click();
+  await expect(page.locator('.request-status')).toContainText('Contato realizado');
+  await expect(page.locator('[data-request-progress]')).toHaveText('Encerrar atendimento');
+  await page.locator('[data-request-progress]').click();
+  await expect(page.locator('.request-status')).toContainText('Encerrado');
+  await expect(page.locator('[data-request-progress]')).toHaveCount(0);
+  const state = await page.evaluate(() => window.__pertoTest);
+  expect(state.requests[0].message).toBe(incomingRequest.message);
+  expect(state.requests[0].contact).toBe(incomingRequest.contact);
+  expect(state.rpcCalls.map(x => x.args.p_new_status)).toEqual(['viewed', 'contacted', 'closed']);
+  expect(state.updated.filter(x => x.table === 'perto_requests')).toHaveLength(0);
+});
+
+test('customer can cancel a request but cannot update recipient workflow status', async ({ page }) => {
+  await installMock(page, { user: customerActor, profiles: [activeProfile], requests: [incomingRequest] });
+  await page.goto('/');
+  await expect(page.locator('[data-request-progress]')).toHaveCount(0);
+  await expect(page.locator('[data-cancel-request]')).toHaveCount(1);
+  page.once('dialog', dialog => dialog.accept());
+  await page.locator('[data-cancel-request]').click();
+  await expect(page.locator('.request-status')).toContainText('Cancelado');
+  await expect(page.locator('[data-cancel-request]')).toHaveCount(0);
+  const state = await page.evaluate(() => window.__pertoTest);
+  expect(state.requests[0].status).toBe('cancelled');
+  expect(state.rpcCalls).toHaveLength(0);
+});
