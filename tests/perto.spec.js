@@ -129,6 +129,7 @@ test('English UI changes labels without changing canonical category values', asy
   await expect(page.locator('.professional-card button')).toHaveText('Request a quote');
   await page.locator('.professional-card button').click();
   await expect(page.locator('#account-message')).toContainText('Sign in or create an account');
+  await page.locator('#account-close').click();
   await page.locator('[data-perto-lang="pt-BR"]').click();
   await expect(page.locator('#search-button')).toHaveText('Buscar profissionais');
 });
