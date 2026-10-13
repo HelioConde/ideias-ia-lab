@@ -64,7 +64,7 @@ O cliente informa uma forma de retorno dentro de `perto_requests.contact`; a pol
 - categorias padronizadas;
 - páginas SEO por categoria + cidade quando houver oferta real;
 - notificações de novo pedido;
-- profissional poder marcar pedido como visualizado/contatado por RPC restrita;
+- homologar com usuários reais a RPC de andamento do atendimento (já implementada);
 - verificação de identidade/empresa quando fizer sentido.
 
 ## Monetização
