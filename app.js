@@ -200,26 +200,26 @@ async function loadUserData(){
     supabaseClient.from('perto_requests').select('*').order('created_at',{ascending:false}).limit(100)
   ]);
   loadingAccount=false;if(currentUser?.id!==owner)return;
-  if(profileResult.error)accountMessage.textContent='Não foi possível carregar seu perfil profissional.';
+  if(profileResult.error)accountMessage.textContent=T('loadProfileFailed');
   currentProfile=profileResult.data||null;
-  if(requestsResult.error)accountMessage.textContent='Não foi possível carregar seus pedidos.';
+  if(requestsResult.error)accountMessage.textContent=T('loadRequestsFailed');
   userRequests=requestsResult.data||[];
   updateAccountUi();renderProfile();renderRequestList();
 }
 
 function authErrorText(error){
   const m=String(error?.message||'').toLowerCase();
-  if(m.includes('invalid login credentials'))return'E-mail ou senha incorretos.';
-  if(m.includes('email not confirmed'))return'Confirme seu e-mail antes de entrar.';
-  if(m.includes('already registered'))return'Este e-mail já possui conta.';
-  if(m.includes('password should be at least'))return'Use uma senha com pelo menos 8 caracteres.';
-  return'Não foi possível concluir. Confira os dados e tente novamente.';
+  if(m.includes('invalid login credentials'))return T('invalidCredentials');
+  if(m.includes('email not confirmed'))return T('emailNotConfirmed');
+  if(m.includes('already registered'))return T('emailAlready');
+  if(m.includes('password should be at least'))return T('shortPassword');
+  return T('authError');
 }
 function updateAccountUi(){
-  accountOpen.disabled=!supabaseClient;accountOpen.textContent=currentUser?'Minha conta':'Entrar';
-  syncStatus.textContent=currentUser?(loadingAccount?'Carregando conta…':'Conectado · '+(currentUser.email||'conta')):'Busca pública';
+  accountOpen.disabled=!supabaseClient;accountOpen.textContent=currentUser?T('myAccount'):T('signIn');
+  syncStatus.textContent=currentUser?(loadingAccount?T('loadingAccount'):T('connected')+' · '+(currentUser.email||T('myAccount'))):T('searchStatus');
   accountForm.hidden=Boolean(currentUser)||!supabaseClient;accountProfile.hidden=!currentUser;
-  if(currentUser)document.querySelector('#account-email').textContent=currentUser.email||'Conta conectada';
+  if(currentUser)document.querySelector('#account-email').textContent=currentUser.email||T('accountConnected');
 }
 
 document.querySelector('#search-button').addEventListener('click',searchProfessionals);
@@ -230,20 +230,20 @@ document.querySelector('#request-close').addEventListener('click',()=>requestDia
 requestDialog.addEventListener('click',e=>{if(e.target===requestDialog)requestDialog.close();});
 requestForm.addEventListener('submit',async event=>{
   event.preventDefault();if(!currentUser||!requestForm.reportValidity())return;
-  const b=requestForm.querySelector('[type="submit"]');b.disabled=true;requestMessage.textContent='Enviando pedido…';
-  try{await sendRequest();requestDialog.close();renderRequestList();showToast('Pedido enviado com privacidade.');}
-  catch(error){console.error(error);requestMessage.textContent='Não foi possível enviar o pedido.';}
+  const b=requestForm.querySelector('[type="submit"]');b.disabled=true;requestMessage.textContent=T('sending');
+  try{await sendRequest();requestDialog.close();renderRequestList();showToast(T('quoteSent'));}
+  catch(error){console.error(error);requestMessage.textContent=T('quoteFailed');}
   finally{b.disabled=false;}
 });
 
 requestList.addEventListener('click',async event=>{
   const cancel=event.target.closest('[data-cancel-request]');if(!cancel)return;
-  if(!window.confirm('Cancelar este pedido?'))return;
+  if(!window.confirm(T('confirmCancel')))return;
   cancel.disabled=true;
   try{
     const {data,error}=await supabaseClient.from('perto_requests').update({status:'cancelled',updated_at:new Date().toISOString()}).eq('id',cancel.dataset.cancelRequest).eq('user_id',currentUser.id).select('*').single();
-    if(error)throw error;userRequests=userRequests.map(item=>item.id===data.id?data:item);renderRequestList();showToast('Pedido cancelado.');
-  }catch(error){console.error(error);showToast('Não foi possível cancelar.');}
+    if(error)throw error;userRequests=userRequests.map(item=>item.id===data.id?data:item);renderRequestList();showToast(T('cancelled'));
+  }catch(error){console.error(error);showToast(T('cancelFailed'));}
   finally{cancel.disabled=false;}
 });
 
@@ -255,9 +255,9 @@ document.querySelector('#profile-close').addEventListener('click',()=>profileDia
 profileDialog.addEventListener('click',e=>{if(e.target===profileDialog)profileDialog.close();});
 profileForm.addEventListener('submit',async event=>{
   event.preventDefault();if(!currentUser||!profileForm.reportValidity())return;
-  const b=profileForm.querySelector('[type="submit"]');b.disabled=true;profileMessage.textContent='Salvando perfil…';
-  try{await saveProfile();profileDialog.close();renderProfile();showToast(currentProfile.status==='pending'?'Perfil salvo e enviado para análise.':'Perfil atualizado.');}
-  catch(error){console.error(error);profileMessage.textContent=String(error?.message||'').includes('moderation')?'O status do perfil só pode ser alterado pela moderação.':'Não foi possível salvar o perfil.';}
+  const b=profileForm.querySelector('[type="submit"]');b.disabled=true;profileMessage.textContent=T('savingProfile');
+  try{await saveProfile();profileDialog.close();renderProfile();showToast(currentProfile.status==='pending'?T('profileSaved'):T('profileUpdated'));}
+  catch(error){console.error(error);profileMessage.textContent=String(error?.message||'').includes('moderation')?T('profileModerationError'):T('profileSaveError');}
   finally{b.disabled=false;}
 });
 
@@ -265,23 +265,23 @@ accountOpen.addEventListener('click',()=>accountDialog.showModal());
 document.querySelector('#account-close').addEventListener('click',()=>accountDialog.close());
 accountDialog.addEventListener('click',e=>{if(e.target===accountDialog)accountDialog.close();});
 accountForm.addEventListener('submit',async event=>{
-  event.preventDefault();if(!supabaseClient)return;const b=accountForm.querySelector('[type="submit"]');b.disabled=true;accountMessage.textContent='Entrando…';
-  try{const {error}=await supabaseClient.auth.signInWithPassword({email:accountForm.elements.email.value.trim(),password:accountForm.elements.password.value});if(error)throw error;accountMessage.textContent='Conta conectada.';}
+  event.preventDefault();if(!supabaseClient)return;const b=accountForm.querySelector('[type="submit"]');b.disabled=true;accountMessage.textContent=T('signingIn');
+  try{const {error}=await supabaseClient.auth.signInWithPassword({email:accountForm.elements.email.value.trim(),password:accountForm.elements.password.value});if(error)throw error;accountMessage.textContent=T('accountConnected');}
   catch(error){accountMessage.textContent=authErrorText(error);}finally{b.disabled=false;}
 });
 document.querySelector('#sign-up').addEventListener('click',async()=>{
   if(!supabaseClient)return;const email=accountForm.elements.email.value.trim(),password=accountForm.elements.password.value;
-  if(!email||password.length<8){accountMessage.textContent='Informe um e-mail e uma senha com pelo menos 8 caracteres.';return;}
-  const b=document.querySelector('#sign-up');b.disabled=true;accountMessage.textContent='Criando conta…';
-  try{const {data,error}=await supabaseClient.auth.signUp({email,password});if(error)throw error;accountMessage.textContent=data.session?'Conta criada e conectada.':'Conta criada. Confirme seu e-mail e depois entre.';}
+  if(!email||password.length<8){accountMessage.textContent=T('signupInvalid');return;}
+  const b=document.querySelector('#sign-up');b.disabled=true;accountMessage.textContent=T('creatingAccount');
+  try{const {data,error}=await supabaseClient.auth.signUp({email,password});if(error)throw error;accountMessage.textContent=data.session?T('accountCreated'):T('confirmEmail');}
   catch(error){accountMessage.textContent=authErrorText(error);}finally{b.disabled=false;}
 });
 document.querySelector('#reset-password').addEventListener('click',async()=>{
-  if(!supabaseClient)return;const email=accountForm.elements.email.value.trim();if(!email){accountMessage.textContent='Informe seu e-mail primeiro.';return;}
-  try{const {error}=await supabaseClient.auth.resetPasswordForEmail(email,{redirectTo:window.location.href.split('#')[0]});if(error)throw error;accountMessage.textContent='Se o e-mail estiver cadastrado, enviaremos um link de recuperação.';}
+  if(!supabaseClient)return;const email=accountForm.elements.email.value.trim();if(!email){accountMessage.textContent=T('emailRequired');return;}
+  try{const {error}=await supabaseClient.auth.resetPasswordForEmail(email,{redirectTo:window.location.href.split('#')[0]});if(error)throw error;accountMessage.textContent=T('resetSent');}
   catch(error){accountMessage.textContent=authErrorText(error);}
 });
-document.querySelector('#sign-out').addEventListener('click',async()=>{if(!supabaseClient)return;const {error}=await supabaseClient.auth.signOut();accountMessage.textContent=error?'Não foi possível sair.':'Você saiu da conta.';});
+document.querySelector('#sign-out').addEventListener('click',async()=>{if(!supabaseClient)return;const {error}=await supabaseClient.auth.signOut();accountMessage.textContent=error?T('signOutError'):T('signedOut');});
 
 async function initAuth(){
   if(!supabaseClient){updateAccountUi();renderProfile();renderRequestList();return;}
@@ -293,13 +293,26 @@ async function initAuth(){
     }else{renderProfile();renderRequestList();}
   };
   supabaseClient.auth.onAuthStateChange((_e,s)=>setTimeout(()=>setSession(s),0));
-  const {data,error}=await supabaseClient.auth.getSession();if(error){accountMessage.textContent='Não foi possível verificar a sessão.';renderProfile();renderRequestList();return;}setSession(data.session);
+  const {data,error}=await supabaseClient.auth.getSession();if(error){accountMessage.textContent=T('sessionError');renderProfile();renderRequestList();return;}setSession(data.session);
 }
 
 async function init(){
   updateAccountUi();renderProfile();renderRequestList();
   await loadActiveCount();
-  searchResults=[];resultsEl.innerHTML='<div class="empty-box"><strong>Busque por cidade ou categoria.</strong><span>Somente perfis ativos e aprovados serão exibidos.</span></div>';
+  searchResults=[];resultsEl.innerHTML='<div class="empty-box"><strong>'+escapeHtml(T('initialSearch'))+'</strong><span>'+escapeHtml(T('onlyApproved'))+'</span></div>';
   await initAuth();
 }
 init();
+
+// Language changes preserve filters, session and user-supplied content.
+window.addEventListener('perto:language-change',()=>{
+  updateAccountUi();
+  renderProfile();
+  renderRequestList();
+  if(searchResults.length)renderResults();
+  else if(resultsEl.querySelector('.empty-box') && resultsEl.textContent.includes('Busque por cidade ou categoria.')){
+    resultsEl.innerHTML='<div class="empty-box"><strong>'+escapeHtml(T('initialSearch'))+'</strong><span>'+escapeHtml(T('onlyApproved'))+'</span></div>';
+  } else if(resultsEl.querySelector('.empty-box') && resultsEl.textContent.includes('Search by city or category.')){
+    resultsEl.innerHTML='<div class="empty-box"><strong>'+escapeHtml(T('initialSearch'))+'</strong><span>'+escapeHtml(T('onlyApproved'))+'</span></div>';
+  }
+});
