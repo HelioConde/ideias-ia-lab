@@ -20,6 +20,9 @@ const accountOpen=document.querySelector('#account-open');
 const accountForm=document.querySelector('#auth-form');
 const accountProfile=document.querySelector('#account-profile');
 const accountMessage=document.querySelector('#account-message');
+const passwordDialog=document.querySelector('#password-dialog');
+const passwordForm=document.querySelector('#new-password-form');
+const passwordMessage=document.querySelector('#password-message');
 const syncStatus=document.querySelector('#sync-status');
 
 let currentUser=null;
@@ -300,15 +303,36 @@ document.querySelector('#sign-up').addEventListener('click',async()=>{
   if(!supabaseClient)return;const email=accountForm.elements.email.value.trim(),password=accountForm.elements.password.value;
   if(!email||password.length<8){accountMessage.textContent=T('signupInvalid');return;}
   const b=document.querySelector('#sign-up');b.disabled=true;accountMessage.textContent=T('creatingAccount');
-  try{const {data,error}=await supabaseClient.auth.signUp({email,password});if(error)throw error;accountMessage.textContent=data.session?T('accountCreated'):T('confirmEmail');}
+  try{const {data,error}=await supabaseClient.auth.signUp({email,password,options:{emailRedirectTo:new URL('./',window.location.href).href}});if(error)throw error;accountMessage.textContent=data.session?T('accountCreated'):T('confirmEmail');}
   catch(error){accountMessage.textContent=authErrorText(error);}finally{b.disabled=false;}
 });
 document.querySelector('#reset-password').addEventListener('click',async()=>{
   if(!supabaseClient)return;const email=accountForm.elements.email.value.trim();if(!email){accountMessage.textContent=T('emailRequired');return;}
-  try{const {error}=await supabaseClient.auth.resetPasswordForEmail(email,{redirectTo:window.location.href.split('#')[0]});if(error)throw error;accountMessage.textContent=T('resetSent');}
+  try{const {error}=await supabaseClient.auth.resetPasswordForEmail(email,{redirectTo:new URL('./',window.location.href).href});if(error)throw error;accountMessage.textContent=T('resetSent');}
   catch(error){accountMessage.textContent=authErrorText(error);}
 });
 document.querySelector('#sign-out').addEventListener('click',async()=>{if(!supabaseClient)return;const {error}=await supabaseClient.auth.signOut();accountMessage.textContent=error?T('signOutError'):T('signedOut');});
+
+document.querySelector('#password-close').addEventListener('click',()=>passwordDialog.close());
+passwordForm.addEventListener('submit',async event=>{
+  event.preventDefault();
+  if(!supabaseClient||!passwordForm.reportValidity())return;
+  const password=passwordForm.elements.password.value;
+  const confirmation=passwordForm.elements.confirmPassword.value;
+  if(password!==confirmation){passwordMessage.textContent=T('passwordsDoNotMatch');return;}
+  const button=passwordForm.querySelector('[type="submit"]');
+  button.disabled=true;passwordMessage.textContent=T('updatingPassword');
+  try{
+    const {error}=await supabaseClient.auth.updateUser({password});
+    if(error)throw error;
+    passwordForm.reset();
+    passwordDialog.close();
+    showToast(T('passwordChanged'));
+  }catch(error){
+    console.error(error);
+    passwordMessage.textContent=T('passwordChangeFailed');
+  }finally{button.disabled=false;}
+});
 
 async function initAuth(){
   if(!supabaseClient){updateAccountUi();renderProfile();renderRequestList();return;}
@@ -319,7 +343,14 @@ async function initAuth(){
       setTimeout(async()=>{await loadUserData();if(pendingRequestProfessionalId){const id=pendingRequestProfessionalId;pendingRequestProfessionalId='';accountDialog.close();openRequest(id);}},0);
     }else{renderProfile();renderRequestList();}
   };
-  supabaseClient.auth.onAuthStateChange((_e,s)=>setTimeout(()=>setSession(s),0));
+  supabaseClient.auth.onAuthStateChange((event,s)=>setTimeout(()=>{
+    setSession(s);
+    if(event==='PASSWORD_RECOVERY'){
+      if(accountDialog.open)accountDialog.close();
+      passwordMessage.textContent='';
+      if(!passwordDialog.open)passwordDialog.showModal();
+    }
+  },0));
   const {data,error}=await supabaseClient.auth.getSession();if(error){accountMessage.textContent=T('sessionError');renderProfile();renderRequestList();return;}setSession(data.session);
 }
 
