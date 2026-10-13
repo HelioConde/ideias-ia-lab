@@ -132,3 +132,5 @@ A nova tela de alteração de senha reage ao evento `PASSWORD_RECOVERY` e utiliz
 - [ ] Confirmar no painel do Supabase que as URLs de autenticação do site publicado são aceitas.
 - [ ] Validar a aprovação por moderador com pessoa real designada.
 - [ ] Completar suporte/LGPD antes de aceitar inscrições públicas.
+
+**Regressão de segurança:** 42 testes Chromium desktop/mobile aprovados em https://github.com/HelioConde/ideias-ia-lab/actions/runs/38342657126, incluindo bloqueio de auto-orçamento e limite por hora.
