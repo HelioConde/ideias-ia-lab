@@ -15,6 +15,10 @@ Marketplace local moderado para encontrar profissionais ativos por cidade/catego
 - Banco com RLS, grants mínimos, quota inicial de 5 pedidos por conta/hora e um perfil por conta.
 - Browser E2E desktop/mobile no GitHub Actions.
 
+## Moderação segura
+
+O painel administrativo fica em `admin.html` depois do deploy e requer uma conta cadastrada como moderadora no banco. Aprovações e rejeições são auditadas. Alterações relevantes em perfis antes aprovados devolvem o cadastro para revisão. Consulte [DEPLOY.md](DEPLOY.md) para conceder permissão sem expor chaves privadas.
+
 ## Arquitetura e QA
 
 - Frontend HTML/CSS/JS.
