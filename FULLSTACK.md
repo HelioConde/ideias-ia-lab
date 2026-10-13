@@ -34,6 +34,12 @@ Tabelas:
 - índices de pedidos;
 - colunas antigas `phone` e `whatsapp` não possuem permissão SELECT para `anon` nem `authenticated`;
 - frontend seleciona apenas colunas públicas seguras;
+- grants por coluna para impedir alterar proprietário, notas, status de moderação e texto original dos pedidos;
+- quota inicial de 5 solicitações de orçamento por usuário/hora e validação de destino ativo no banco;
+- perfil editado exige reaprovação; índice único evita múltiplos perfis por conta;
+- painel administrativo com funções protegidas, auditoria e justificativa de rejeição;
+- suporte a PT-BR e inglês;
+- testes E2E simulados para desktop/mobile e fluxo da moderação;
 - UI própria responsiva;
 - CI dedicado.
 
@@ -41,7 +47,7 @@ Tabelas:
 
 O proprietário do perfil pode editar as informações, mas não pode promover o próprio `status` para `active`.
 
-A ativação deve ocorrer por fluxo administrativo/backend com privilégio apropriado. Isso evita que a busca pública seja preenchida sem revisão.
+A moderação usa `admin.html` com Supabase Auth e RPCs `perto_pending_moderation` / `perto_moderate_profile`. Apenas usuários registrados em `perto_moderators` pelo administrador legítimo conseguem utilizar as funções. Aprovações e rejeições geram auditoria em `perto_moderation_events`. Alterações relevantes em perfis já aprovados retornam a `pending`. É proibido moderar o próprio perfil.
 
 ## Privacidade
 
@@ -51,11 +57,10 @@ O cliente informa uma forma de retorno dentro de `perto_requests.contact`; a pol
 
 ## Próximas entregas
 
-- painel administrativo de moderação;
-- aprovação/rejeição com motivo;
+- homologação de cadastro/aprovação/rejeição com dois usuários reais e permissão de moderador configurada;
 - avaliações verificadas;
 - denúncia e bloqueio;
-- prevenção de spam/rate limit;
+- rate limit avançado por IP/dispositivo e CAPTCHA quando houver público (quota por usuário já aplicada);
 - categorias padronizadas;
 - páginas SEO por categoria + cidade quando houver oferta real;
 - notificações de novo pedido;
