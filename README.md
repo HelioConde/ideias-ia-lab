@@ -1,5 +1,7 @@
 # Ideias IA Lab
 
+**[Rodada de fechamento das 10 ideias originais — 12/10/2026](./RODADA_10_IDEIAS_20261012.md)** — ordem, correções aplicadas e gates externos ainda abertos.
+
 Este repositório é **somente o hub de organização** do portfólio.
 
 O código de cada produto deve viver em um repositório GitHub próprio. A `main` não contém frontend, backend, migrations ou configuração Supabase dos produtos.
