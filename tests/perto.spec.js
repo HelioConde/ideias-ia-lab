@@ -114,3 +114,21 @@ test('empty public catalog stays honest, no fictitious professionals', async ({ 
   await expect(page.locator('#results')).toContainText('Nenhum profissional ativo encontrado');
   await expect(page.locator('.professional-card')).toHaveCount(0);
 });
+
+test('English UI changes labels without changing canonical category values', async ({ page }) => {
+  await installMock(page);
+  await page.goto('/');
+  await page.locator('[data-perto-lang="en"]').click();
+  await expect(page).toHaveTitle('Perto — Find local professionals');
+  await expect(page.locator('#search-button')).toHaveText('Find professionals');
+  await expect(page.locator('#city')).toHaveAttribute('placeholder','e.g. Brasília');
+  await page.locator('#category').selectOption('Eletricista');
+  await expect(page.locator('#category')).toHaveValue('Eletricista');
+  await page.locator('#search-button').click();
+  await expect(page.locator('.professional-card')).toHaveCount(1);
+  await expect(page.locator('.professional-card button')).toHaveText('Request a quote');
+  await page.locator('.professional-card button').click();
+  await expect(page.locator('#account-message')).toContainText('Sign in or create an account');
+  await page.locator('[data-perto-lang="pt-BR"]').click();
+  await expect(page.locator('#search-button')).toHaveText('Buscar profissionais');
+});
