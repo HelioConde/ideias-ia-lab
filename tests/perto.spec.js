@@ -16,7 +16,7 @@ const pendingProfile = {
 async function installMock(page, { user = null, profiles = [activeProfile, pendingProfile], requests = [] } = {}) {
   await page.route('https://cdn.jsdelivr.net/**', route => route.abort());
   await page.addInitScript(({ user, profiles, requests }) => {
-    const state = { user, profiles, requests, inserted: [], updated: [], rpcCalls: [], authCalls: [], authCallback: null, errors: [] };
+    const state = { user, profiles, requests, inserted: [], updated: [], rpcCalls: [], authCalls: [], authCallback: null, failNextRequestsLoad: false, errors: [] };
     window.__pertoTest = state;
     function query(table) {
       const opts = { mode: 'read', filters: [], limit: 100 };
@@ -58,7 +58,14 @@ async function installMock(page, { user = null, profiles = [activeProfile, pendi
             Object.assign(row, opts.payload);
             return { data: row, error: null };
           }
-          const source = table === 'perto_requests' ? state.requests : state.profiles;
+          if (table === 'perto_requests' && state.failNextRequestsLoad) {
+            state.failNextRequestsLoad = false;
+            return { data: null, error: { message: 'Temporary network error' } };
+          }
+          const source = table === 'perto_requests'
+            ? state.requests.filter(row => row.user_id === state.user?.id ||
+                state.profiles.some(p => p.id === row.professional_id && p.user_id === state.user?.id))
+            : state.profiles;
           const rows = source.filter(p => opts.filters.every(f => f(p))).slice(0, opts.limit);
           return { data: opts.head ? null : rows, error: null, count: rows.length };
         },
