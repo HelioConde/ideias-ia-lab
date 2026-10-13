@@ -52,3 +52,12 @@
 .request-item .request-progress{width:100%;min-height:44px;border-color:#98c3a8;background:#f3faf5}
 .request-item .request-progress:hover{background:#e5f4ea}
 .request-item [data-cancel-request]{justify-self:start;min-height:40px}
+
+/* Quote inbox tabs and refresh use distinct controls with accessible touch targets. */
+.request-header-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+#request-refresh{font-size:12px;min-height:40px;padding:7px 12px}
+.request-filters{display:flex;gap:5px;flex-wrap:wrap;margin:0 0 13px}
+.request-filter{border:1px solid var(--line);border-radius:100px;background:#fff;color:var(--muted);padding:9px 15px;min-height:42px;font-size:13px;font-weight:700;cursor:pointer}
+.request-filter.active{border-color:var(--accent);background:var(--accent);color:#fff}
+.request-filter:focus-visible{outline:3px solid #8cbc9c;outline-offset:2px}
+@media(max-width:580px){.request-header-actions{width:100%;justify-content:space-between}.request-filters{gap:4px}.request-filter{flex:1;padding:9px 7px}}
