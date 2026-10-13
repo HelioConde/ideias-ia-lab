@@ -60,3 +60,30 @@ Não divulgar como verificados: aprovação de conteúdo ainda não é validaç�
 ## Próxima fase (V2)
 
 Avaliações verificadas, denúncias, moderação em painel restrito, prevenção de abuso por IP/CAPTCHA, categorias normalizadas, notificações e páginas SEO de locais com oferta real. Publicidade é o modelo principal previsto para o portfólio e permanece desativada até revisão de consentimento e política publicitária.
+
+## 6. Autorizar moderadores (obrigatório antes de aprovar perfis)
+
+O painel restrito está em `/admin.html`, após a publicação. A fila usa a RPC `perto_pending_moderation` e as decisões auditadas usam `perto_moderate_profile`. A atribuição da função de moderador **não** é automática.
+
+Após a conta real do moderador estar cadastrada no Auth, um administrador do Supabase pode executar no SQL Editor, trocando o endereço de exemplo por um email verificado/autorizado:
+
+```sql
+insert into public.perto_moderators (user_id, is_active)
+select id, true from auth.users
+where lower(email) = lower('EMAIL_DO_MODERADOR_AQUI')
+on conflict (user_id) do update set is_active = true;
+```
+
+**Nunca** adicionar essa operação ao frontend ou publicar tokens administrativos. A tabela de moderadores e a auditoria não têm acesso direto para `anon` ou `authenticated`. As RPCs verificam a associação ativa em cada chamada. Nenhuma conta recebe esse papel por padrão.
+
+Teste com duas contas reais: uma moderadora e uma não autorizada; a segunda deve receber acesso negado ao tentar chamar ambas as RPCs. Perfis editados após aprovação voltam para `pending` e devem ser revisados novamente.
+
+## 7. Homologação da moderação
+
+- [ ] Conta moderadora devidamente autorizada via SQL administrativo.
+- [ ] Listagem pendente real acessível apenas ao moderador autorizado.
+- [ ] Aprovar/rejeitar, exigir justificativa de rejeição e registrar auditoria.
+- [ ] Usuário comum incapaz de acessar fila e alterar decisões via chamadas diretas.
+- [ ] Profissional incapaz de autoaprovar ou moderar seu próprio perfil.
+- [ ] Atualização de perfil aprovado retorna a `pending` sem quebrar a edição.
+
