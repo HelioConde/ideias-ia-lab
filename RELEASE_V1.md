@@ -38,3 +38,13 @@ Leia `DEPLOY.md` antes de migrar ou abrir o beta.
 - Traduções PT-BR/EN adicionadas ao fluxo.
 - Redirecionamento de confirmação e recuperação de conta configurado para o endereço base deste app; interface de nova senha com confirmação de dois campos.
 - Novos testes Playwright cobrindo solicitação enviada, progressão do prestador, cancelamento pelo cliente, estados terminais e recuperação de conta. Os testes são simulados e não substituem homologação de duas contas reais.
+
+## Revisão de integridade e usabilidade — rodada 13/10
+
+- Validação SQL de auto-orçamento bloqueado e mudança obrigatória de status em sequência.
+- Inbox privado com filtros de enviados/recebidos e atualização sob demanda; mantém o histórico visível se a busca falhar temporariamente.
+- Mensagens detalhadas para limite por hora, perfil inativo e auto-orçamento.
+- Atributo `hidden` reforçado no CSS para não exibir controles privados quando não há sessão.
+- Fixtures de testes agora imitam a política de leitura por participante dos pedidos, evitando falsos positivos por retorno irrestrito do mock.
+- Testes QA executados no GitHub Actions em Chromium desktop e celular: 38 aprovados na execução 38342417359.
+- Repositório standalone `HelioConde/perto` ainda não encontrado; publicação e teste de ponta a ponta em contas reais continuam pendentes.
