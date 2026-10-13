@@ -249,3 +249,25 @@ test('customer can cancel a request but cannot update recipient workflow status'
   expect(state.requests[0].status).toBe('cancelled');
   expect(state.rpcCalls).toHaveLength(0);
 });
+
+test('closed or cancelled quotes expose no actions to professionals', async ({ page }) => {
+  const requests = [
+    { ...incomingRequest, status: 'closed' },
+    { ...incomingRequest, id: 'ffffffff-ffff-4fff-8fff-ffffffffffff', status: 'cancelled' }
+  ];
+  await installMock(page, { user: professionalActor, profiles: [activeProfile], requests });
+  await page.goto('/');
+  await expect(page.locator('[data-request-progress]')).toHaveCount(0);
+  const state = await page.evaluate(() => window.__pertoTest);
+  expect(state.rpcCalls).toHaveLength(0);
+});
+
+test('recipient workflow labels translate into English and keep statuses unchanged', async ({ page }) => {
+  await installMock(page, { user: professionalActor, profiles: [activeProfile], requests: [incomingRequest] });
+  await page.goto('/');
+  await page.locator('[data-perto-lang="en"]').click();
+  await expect(page.locator('[data-request-progress]')).toHaveText('Mark as viewed');
+  await page.locator('[data-request-progress]').click();
+  await expect(page.locator('.request-status')).toContainText('Viewed');
+  await expect(page.locator('[data-request-progress]')).toHaveText('Mark as contacted');
+});
