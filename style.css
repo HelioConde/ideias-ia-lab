@@ -46,3 +46,9 @@
 .footer-links nav{display:flex;flex-wrap:wrap;gap:8px;color:var(--accent);font-weight:700}
 .footer-links nav a{text-decoration:underline;text-underline-offset:3px}
 @media(max-width:580px){.footer-links{text-align:left;justify-items:start}}
+
+/* Professional inbox: prominent and tappable progress controls. */
+.request-item{display:grid;gap:8px}
+.request-item .request-progress{width:100%;min-height:44px;border-color:#98c3a8;background:#f3faf5}
+.request-item .request-progress:hover{background:#e5f4ea}
+.request-item [data-cancel-request]{justify-self:start;min-height:40px}
