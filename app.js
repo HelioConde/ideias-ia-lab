@@ -1,4 +1,6 @@
 const supabaseClient=window.IDEIAS_SUPABASE?.client||null;
+const T=(key,vars)=>window.PERTO_I18N?.t(key,vars)||key;
+const locale=()=>window.PERTO_I18N?.lang||'pt-BR';
 
 const resultsEl=document.querySelector('#results');
 const cityInput=document.querySelector('#city');
@@ -28,10 +30,10 @@ let pendingRequestProfessionalId='';
 let loadingAccount=false;
 
 function escapeHtml(value=''){return String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-function money(cents){return cents==null?'Consultar':(Number(cents)/100).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});}
+function money(cents){return cents==null?T('consult'):(Number(cents)/100).toLocaleString(locale(),{style:'currency',currency:'BRL'});}
 function showToast(message){const t=document.querySelector('#toast');t.textContent=message;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),1800);}
-function statusLabel(status){return{pending:'Em análise',active:'Ativo',paused:'Pausado',rejected:'Não aprovado'}[status]||status;}
-function requestStatusLabel(status){return{new:'Novo',viewed:'Visualizado',contacted:'Contato realizado',closed:'Encerrado',cancelled:'Cancelado'}[status]||status;}
+function statusLabel(status){return T(({pending:'statePending',active:'stateActive',paused:'statePaused',rejected:'stateRejected'})[status]||status);}
+function requestStatusLabel(status){return T(({new:'quoteNew',viewed:'quoteViewed',contacted:'quoteContacted',closed:'quoteClosed',cancelled:'quoteCancelled'})[status]||status);}
 function safeText(value,max=180){return String(value||'').trim().slice(0,max);}
 function normalize(value){return String(value||'').toLocaleLowerCase('pt-BR').normalize('NFD').replace(/\p{M}/gu,'');}
 
@@ -42,28 +44,28 @@ async function loadActiveCount(){
 }
 
 function professionalCard(profile){
-  const rating=profile.rating==null?'<span class="rating new">Novo no Perto</span>':'<span class="rating">★ '+Number(profile.rating).toFixed(1)+'</span>';
+  const rating=profile.rating==null?'<span class="rating new">'+escapeHtml(T('ratingNew'))+'</span>':'<span class="rating">★ '+Number(profile.rating).toFixed(1)+'</span>';
   return '<article class="professional-card">'+
     '<div class="professional-top"><div><strong>'+escapeHtml(profile.display_name)+'</strong><span>'+escapeHtml(profile.category)+'</span></div>'+rating+'</div>'+
     '<p>'+escapeHtml(profile.description||'')+'</p>'+
-    '<div class="professional-meta"><span>⌖ '+escapeHtml(profile.city)+'/'+escapeHtml(profile.state)+'</span><span>A partir de '+escapeHtml(money(profile.price_from_cents))+'</span></div>'+
-    '<button class="button primary full" type="button" data-request="'+escapeHtml(profile.id)+'">Pedir orçamento</button>'+
+    '<div class="professional-meta"><span>⌖ '+escapeHtml(profile.city)+'/'+escapeHtml(profile.state)+'</span><span>'+escapeHtml(T('from'))+' '+escapeHtml(money(profile.price_from_cents))+'</span></div>'+
+    '<button class="button primary full" type="button" data-request="'+escapeHtml(profile.id)+'">'+escapeHtml(T('requestQuote'))+'</button>'+
   '</article>';
 }
 
 function renderResults(){
   resultsEl.innerHTML=searchResults.length
     ?searchResults.map(professionalCard).join('')
-    :'<div class="empty-box"><strong>Nenhum profissional ativo encontrado.</strong><span>Isso significa que não há perfil aprovado para esses filtros agora — não exibimos prestadores fictícios.</span></div>';
+    :'<div class="empty-box"><strong>'+escapeHtml(T('noProfessionals'))+'</strong><span>'+escapeHtml(T('noProfessionalsHelp'))+'</span></div>';
   document.querySelector('#result-summary').textContent=searchResults.length
-    ?searchResults.length+' profissional(is) ativo(s) encontrado(s).'
-    :'Nenhum resultado ativo para os filtros informados.';
+    ?T('professionalsFound',{count:searchResults.length})
+    :T('noResults');
 }
 
 async function searchProfessionals(){
-  if(!supabaseClient){showToast('Busca temporariamente indisponível.');return;}
+  if(!supabaseClient){showToast(T('searchUnavailable'));return;}
   const button=document.querySelector('#search-button');button.disabled=true;
-  document.querySelector('#result-summary').textContent='Buscando perfis ativos…';
+  document.querySelector('#result-summary').textContent=T('searching');
   try{
     let query=supabaseClient.from('perto_professionals')
       .select('id,display_name,city,state,category,description,price_from_cents,rating,status')
@@ -81,14 +83,14 @@ async function searchProfessionals(){
       return [profile.display_name,profile.category,profile.description].some(v=>normalize(v).includes(term));
     });
     renderResults();
-  }catch(error){console.error(error);searchResults=[];resultsEl.innerHTML='<div class="empty-box error"><strong>Não foi possível concluir a busca.</strong><span>Tente novamente.</span></div>';document.querySelector('#result-summary').textContent='Falha na busca.';}
+  }catch(error){console.error(error);searchResults=[];resultsEl.innerHTML='<div class="empty-box error"><strong>'+escapeHtml(T('searchFailedTitle'))+'</strong><span>'+escapeHtml(T('tryAgain'))+'</span></div>';document.querySelector('#result-summary').textContent=T('searchFailed');}
   finally{button.disabled=false;}
 }
 
 function openRequest(profileId){
   const profile=searchResults.find(item=>item.id===profileId);
   if(!profile)return;
-  if(!currentUser){pendingRequestProfessionalId=profileId;accountMessage.textContent='Entre ou crie uma conta para enviar o pedido.';accountDialog.showModal();return;}
+  if(!currentUser){pendingRequestProfessionalId=profileId;accountMessage.textContent=T('mustLogin');accountDialog.showModal();return;}
   requestForm.reset();
   requestForm.elements.professionalId.value=profile.id;
   requestForm.elements.category.value=profile.category;
