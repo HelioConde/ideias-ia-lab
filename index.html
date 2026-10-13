@@ -179,6 +179,20 @@
     <p id="account-message" class="form-message" role="status" aria-live="polite"></p>
   </dialog>
 
+  <dialog id="password-dialog" class="dialog account-dialog" aria-labelledby="password-title">
+    <div class="dialog-head">
+      <div><p class="eyebrow" data-perto-text="passwordRecoveryEyebrow">RECUPERAÇÃO DE CONTA</p><h2 id="password-title" data-perto-text="newPasswordTitle">Criar nova senha</h2></div>
+      <button id="password-close" class="icon-button" type="button" aria-label="Fechar" data-perto-aria="close">×</button>
+    </div>
+    <p class="dialog-copy" data-perto-text="newPasswordHelp">Escolha uma nova senha com pelo menos 8 caracteres.</p>
+    <form id="new-password-form">
+      <label class="field"><span data-perto-text="newPassword">Nova senha</span><input name="password" type="password" minlength="8" autocomplete="new-password" required></label>
+      <label class="field"><span data-perto-text="confirmNewPassword">Confirmar senha</span><input name="confirmPassword" type="password" minlength="8" autocomplete="new-password" required></label>
+      <button type="submit" class="button primary full" data-perto-text="saveNewPassword">Atualizar senha</button>
+      <p id="password-message" class="form-message" role="status" aria-live="polite"></p>
+    </form>
+  </dialog>
+
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
   <script src="supabase-config.js"></script>
