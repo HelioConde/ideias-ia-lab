@@ -46,5 +46,7 @@ Leia `DEPLOY.md` antes de migrar ou abrir o beta.
 - Mensagens detalhadas para limite por hora, perfil inativo e auto-orçamento.
 - Atributo `hidden` reforçado no CSS para não exibir controles privados quando não há sessão.
 - Fixtures de testes agora imitam a política de leitura por participante dos pedidos, evitando falsos positivos por retorno irrestrito do mock.
-- Testes QA executados no GitHub Actions em Chromium desktop e celular: 38 aprovados na execução 38342417359.
+- Testes QA executados no GitHub Actions em Chromium desktop e celular: 42 aprovados na execução 38342657126.
 - Repositório standalone `HelioConde/perto` ainda não encontrado; publicação e teste de ponta a ponta em contas reais continuam pendentes.
+
+- Validados também erros de auto-orçamento e limite de cinco pedidos/hora no frontend, em PT-BR, como parte da rodada de 42 testes aprovados no CI.
