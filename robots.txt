@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /perto/admin.html
 
 Sitemap: https://helioconde.github.io/perto/sitemap.xml
