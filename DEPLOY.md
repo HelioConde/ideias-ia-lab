@@ -87,3 +87,30 @@ Teste com duas contas reais: uma moderadora e uma não autorizada; a segunda dev
 - [ ] Profissional incapaz de autoaprovar ou moderar seu próprio perfil.
 - [ ] Atualização de perfil aprovado retorna a `pending` sem quebrar a edição.
 
+
+## 8. Fluxo de acompanhamento de orçamentos
+
+O destinatário do pedido pode atualizar somente o próprio orçamento pela RPC `perto_set_request_status`:
+
+`new → viewed → contacted → closed`.
+
+O cliente mantém exclusivamente o cancelamento de um pedido não encerrado por meio da policy RLS existente. O profissional não altera o texto, o contato, o autor ou o destinatário. O trigger `perto_audit_request_status` registra as alterações, inclusive cancelamentos; a tabela de auditoria não é legível diretamente via API pública. O campo `contact` continua visível apenas aos participantes conforme a policy de leitura.
+
+A migration `20261013_perto_recipient_request_workflow.sql` já foi aplicada ao backend compartilhado. **Não reaplicar manualmente em produção**. Verifique migration history antes de importar o repositório.
+
+## 9. Redirecionamento de autenticação e recuperação de senha
+
+O frontend envia `emailRedirectTo` na criação de conta e `redirectTo` na recuperação, ambos apontando para o endereço base da instalação atual. No Supabase Auth → URL Configuration → Redirect URLs, autorize o endereço exato de produção `https://helioconde.github.io/perto/**` antes de abrir cadastro e recuperação de senha.
+
+A nova tela de alteração de senha reage ao evento `PASSWORD_RECOVERY` e utiliza `auth.updateUser({password})` após confirmação. **Valide com um e-mail real**: criar conta, confirmar e-mail, recuperar senha, cadastrar e autenticar novamente. Não mudar a configuração global `Site URL` do Supabase compartilhado sem avaliar o impacto nos outros sites.
+
+## 10. Homologação real do atendimento
+
+- [ ] Cliente A envia orçamento a um prestador aprovado B.
+- [ ] Prestador B recebe e pode avançar `new → viewed → contacted → closed`.
+- [ ] Cliente A acompanha status e não pode avançá-lo como prestador.
+- [ ] Conta C sem vínculo não recebe o pedido nem altera o status via RPC.
+- [ ] Cliente A pode cancelar antes do encerramento, mas não depois.
+- [ ] Pedido cancelado ou encerrado não pode ser reativado pelo profissional.
+- [ ] Mensagem original e contato continuam protegidos/imodificáveis.
+- [ ] Link de confirmação de e-mail e recuperação retornam para o Perto.
