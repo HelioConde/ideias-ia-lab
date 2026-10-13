@@ -70,6 +70,23 @@ async function installMock(page, { user = null, profiles = [activeProfile, pendi
     }
     const client = {
       from: query,
+      rpc: async (name, args = {}) => {
+        state.rpcCalls.push({ name, args });
+        if (name !== 'perto_set_request_status') {
+          return { data: null, error: { code: '42883' } };
+        }
+        const request = state.requests.find(row => row.id === args.p_request_id);
+        const recipient = state.profiles.find(row => row.id === request?.professional_id);
+        if (!request || recipient?.user_id !== state.user?.id || request.user_id === state.user?.id) {
+          return { data: null, error: { code: '42501' } };
+        }
+        const valid = { new: 'viewed', viewed: 'contacted', contacted: 'closed' }[request.status];
+        if (valid !== args.p_new_status) {
+          return { data: null, error: { code: '22023' } };
+        }
+        request.status = valid;
+        return { data: valid, error: null };
+      },
       auth: {
         getSession: async () => ({ data: { session: state.user ? { user: state.user } : null }, error: null }),
         onAuthStateChange: () => ({ data: { subscription: { unsubscribe() {} } } }),
