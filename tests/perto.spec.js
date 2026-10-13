@@ -16,7 +16,7 @@ const pendingProfile = {
 async function installMock(page, { user = null, profiles = [activeProfile, pendingProfile], requests = [] } = {}) {
   await page.route('https://cdn.jsdelivr.net/**', route => route.abort());
   await page.addInitScript(({ user, profiles, requests }) => {
-    const state = { user, profiles, requests, inserted: [], updated: [], rpcCalls: [], errors: [] };
+    const state = { user, profiles, requests, inserted: [], updated: [], rpcCalls: [], authCalls: [], authCallback: null, errors: [] };
     window.__pertoTest = state;
     function query(table) {
       const opts = { mode: 'read', filters: [], limit: 100 };
@@ -89,10 +89,11 @@ async function installMock(page, { user = null, profiles = [activeProfile, pendi
       },
       auth: {
         getSession: async () => ({ data: { session: state.user ? { user: state.user } : null }, error: null }),
-        onAuthStateChange: () => ({ data: { subscription: { unsubscribe() {} } } }),
+        onAuthStateChange: callback => { state.authCallback = callback; return { data: { subscription: { unsubscribe() {} } } }; },
         signInWithPassword: async () => ({ error: { message: 'Not a real account' } }),
-        signUp: async () => ({ data: { session: null }, error: null }),
-        resetPasswordForEmail: async () => ({ error: null }),
+        signUp: async options => { state.authCalls.push({ type: 'signUp', options }); return { data: { session: null }, error: null }; },
+        resetPasswordForEmail: async (email, options) => { state.authCalls.push({ type: 'reset', email, options }); return { error: null }; },
+        updateUser: async options => { state.authCalls.push({ type: 'updateUser', options }); return { error: null }; },
         signOut: async () => { state.user = null; return { error: null }; }
       }
     };
