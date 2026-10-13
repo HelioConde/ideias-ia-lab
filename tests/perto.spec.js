@@ -272,3 +272,39 @@ test('recipient workflow labels translate into English and keep statuses unchang
   await expect(page.locator('.request-status')).toContainText('Viewed');
   await expect(page.locator('[data-request-progress]')).toHaveText('Mark as contacted');
 });
+
+test('email signup and reset links return to the Perto origin and path', async ({ page }) => {
+  await installMock(page);
+  await page.goto('/');
+  await page.locator('#account-open').click();
+  await page.locator('#auth-form [name="email"]').fill('cliente@example.test');
+  await page.locator('#auth-form [name="password"]').fill('senha-segura-123');
+  await page.locator('#sign-up').click();
+  await expect(page.locator('#account-message')).toContainText('Confirme seu e-mail');
+  await page.locator('#reset-password').click();
+  await expect(page.locator('#account-message')).toContainText('link de recuperação');
+  const calls = await page.evaluate(() => window.__pertoTest.authCalls);
+  const expected = 'http://127.0.0.1:4179/';
+  expect(calls.find(x => x.type === 'signUp').options.options.emailRedirectTo).toBe(expected);
+  expect(calls.find(x => x.type === 'reset').options.redirectTo).toBe(expected);
+});
+
+test('password recovery event opens secure new-password UI and validates confirmation', async ({ page }) => {
+  await installMock(page);
+  await page.goto('/');
+  await page.evaluate(() => window.__pertoTest.authCallback('PASSWORD_RECOVERY', {
+    user: { id: 'dddddddd-dddd-4ddd-8ddd-dddddddddddd', email: 'cliente@example.test' }
+  }));
+  await expect(page.locator('#password-dialog')).toBeVisible();
+  await page.locator('#new-password-form [name="password"]').fill('senha-nova-123');
+  await page.locator('#new-password-form [name="confirmPassword"]').fill('senha-diferente');
+  await page.locator('#new-password-form button[type="submit"]').click();
+  await expect(page.locator('#password-message')).toContainText('não conferem');
+  let calls = await page.evaluate(() => window.__pertoTest.authCalls);
+  expect(calls.filter(x => x.type === 'updateUser')).toHaveLength(0);
+  await page.locator('#new-password-form [name="confirmPassword"]').fill('senha-nova-123');
+  await page.locator('#new-password-form button[type="submit"]').click();
+  await expect(page.locator('#password-dialog')).toBeHidden();
+  calls = await page.evaluate(() => window.__pertoTest.authCalls);
+  expect(calls.find(x => x.type === 'updateUser').options.password).toBe('senha-nova-123');
+});
