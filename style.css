@@ -41,3 +41,8 @@
   .hero h1{font-size:clamp(34px,9vw,44px)}
   .professional-card>p{min-height:0}
 }
+
+.footer-links{display:grid;justify-items:end;gap:8px;text-align:right;max-width:690px}
+.footer-links nav{display:flex;flex-wrap:wrap;gap:8px;color:var(--accent);font-weight:700}
+.footer-links nav a{text-decoration:underline;text-underline-offset:3px}
+@media(max-width:580px){.footer-links{text-align:left;justify-items:start}}
