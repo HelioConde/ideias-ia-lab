@@ -106,8 +106,7 @@ async function sendRequest(){
     category:safeText(values.category,100),
     city:safeText(values.city,100),
     message:safeText(values.message,1600),
-    contact:safeText(values.contact,200),
-    status:'new'
+    contact:safeText(values.contact,200)
   };
   const {data,error}=await supabaseClient.from('perto_requests').insert(payload).select('*').single();
   if(error)throw error;
@@ -185,7 +184,7 @@ async function saveProfile(){
     const {data,error}=await supabaseClient.from('perto_professionals').update(payload).eq('id',currentProfile.id).select('id,user_id,display_name,city,state,category,description,price_from_cents,rating,status,created_at,updated_at').single();
     if(error)throw error;currentProfile=data;
   }else{
-    const {data,error}=await supabaseClient.from('perto_professionals').insert({...payload,status:'pending'}).select('id,user_id,display_name,city,state,category,description,price_from_cents,rating,status,created_at,updated_at').single();
+    const {data,error}=await supabaseClient.from('perto_professionals').insert(payload).select('id,user_id,display_name,city,state,category,description,price_from_cents,rating,status,created_at,updated_at').single();
     if(error)throw error;currentProfile=data;
   }
 }
@@ -240,7 +239,7 @@ requestList.addEventListener('click',async event=>{
   if(!window.confirm('Cancelar este pedido?'))return;
   cancel.disabled=true;
   try{
-    const {data,error}=await supabaseClient.from('perto_requests').update({status:'cancelled',updated_at:new Date().toISOString()}).eq('id',cancel.dataset.cancelRequest).select('*').single();
+    const {data,error}=await supabaseClient.from('perto_requests').update({status:'cancelled',updated_at:new Date().toISOString()}).eq('id',cancel.dataset.cancelRequest).eq('user_id',currentUser.id).select('*').single();
     if(error)throw error;userRequests=userRequests.map(item=>item.id===data.id?data:item);renderRequestList();showToast('Pedido cancelado.');
   }catch(error){console.error(error);showToast('Não foi possível cancelar.');}
   finally{cancel.disabled=false;}
