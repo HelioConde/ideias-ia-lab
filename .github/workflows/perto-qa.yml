@@ -28,7 +28,7 @@ jobs:
           grep -q 'perto_requests' app.js
           grep -q "name=\"description\"" index.html
           grep -q 'perto_requests_active_professional_guard' supabase/migrations/20261012225500_active_professional_quote_guard.sql
-          grep -q 'perto_least_privilege' supabase/migrations/20261012232000_perto_least_privilege.sql
+          grep -q 'revoke all privileges' supabase/migrations/20261012232000_perto_least_privilege.sql
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
       - name: Browser E2E
