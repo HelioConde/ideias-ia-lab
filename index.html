@@ -91,7 +91,15 @@
         <section class="panel">
           <div class="panel-heading">
             <div><p class="eyebrow" data-perto-text="clientEyebrow">PARA CLIENTES</p><h2 data-perto-text="myRequests">Meus pedidos</h2></div>
-            <span id="request-count" class="count-badge">0</span>
+            <div class="request-header-actions">
+              <span id="request-count" class="count-badge" aria-label="Total de pedidos">0</span>
+              <button id="request-refresh" class="button ghost" type="button" hidden data-perto-text="refreshRequests">Atualizar</button>
+            </div>
+          </div>
+          <div id="request-filters" class="request-filters" role="group" aria-label="Filtrar pedidos" hidden>
+            <button type="button" class="request-filter active" data-request-filter="all" aria-pressed="true" data-perto-text="allRequests">Todos</button>
+            <button type="button" class="request-filter" data-request-filter="sent" aria-pressed="false" data-perto-text="sentRequests">Enviados</button>
+            <button type="button" class="request-filter" data-request-filter="received" aria-pressed="false" data-perto-text="receivedRequests">Recebidos</button>
           </div>
           <div id="request-list" class="request-list"></div>
         </section>
