@@ -13,10 +13,10 @@ const pendingProfile = {
   display_name: 'Perfil ainda pendente', status: 'pending'
 };
 
-async function installMock(page, { user = null, profiles = [activeProfile, pendingProfile] } = {}) {
+async function installMock(page, { user = null, profiles = [activeProfile, pendingProfile], requests = [] } = {}) {
   await page.route('https://cdn.jsdelivr.net/**', route => route.abort());
-  await page.addInitScript(({ user, profiles }) => {
-    const state = { user, profiles, requests: [], inserted: [], updated: [], errors: [] };
+  await page.addInitScript(({ user, profiles, requests }) => {
+    const state = { user, profiles, requests, inserted: [], updated: [], rpcCalls: [], errors: [] };
     window.__pertoTest = state;
     function query(table) {
       const opts = { mode: 'read', filters: [], limit: 100 };
@@ -80,7 +80,7 @@ async function installMock(page, { user = null, profiles = [activeProfile, pendi
       }
     };
     window.supabase = { createClient: () => client };
-  }, { user, profiles });
+  }, { user, profiles, requests });
 }
 
 test('filters public active profiles and does not show pending profiles', async ({ page }) => {
