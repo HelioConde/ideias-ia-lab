@@ -393,3 +393,35 @@ test('private inbox filters and refresh are hidden for signed-out visitors', asy
   await expect(page.locator('#request-filters')).toBeHidden();
   await expect(page.locator('#request-list')).toContainText('Entre para acompanhar pedidos');
 });
+
+test('self-directed quotes are refused with an understandable message', async ({ page }) => {
+  await installMock(page, { user: professionalActor, profiles: [activeProfile] });
+  await page.goto('/');
+  await page.locator('#search-button').click();
+  await page.locator('[data-request]').click();
+  await page.locator('#request-form [name="contact"]').fill('prestador@example.test');
+  await page.locator('#request-form [name="message"]').fill('Preciso de um orçamento para meu próprio perfil.');
+  await page.locator('#request-form [type="submit"]').click();
+  await expect(page.locator('#request-dialog')).toBeVisible();
+  await expect(page.locator('#request-message')).toContainText('não pode solicitar orçamento ao próprio perfil');
+  const submitted = await page.evaluate(() => window.__pertoTest.requests.length);
+  expect(submitted).toBe(0);
+});
+
+test('five recent quotes trigger a localized hourly limit message', async ({ page }) => {
+  const requests = Array.from({ length: 5 }, (_, index) => ({
+    ...incomingRequest, id: '22222222-2222-4222-8222-' + String(index + 1).padStart(12, '0'),
+    user_id: customerActor.id, created_at: new Date().toISOString()
+  }));
+  await installMock(page, { user: customerActor, profiles: [activeProfile], requests });
+  await page.goto('/');
+  await page.locator('#search-button').click();
+  await page.locator('[data-request]').click();
+  await page.locator('#request-form [name="contact"]').fill('cliente@example.test');
+  await page.locator('#request-form [name="message"]').fill('Outro serviço que preciso orçar nesta semana.');
+  await page.locator('#request-form [type="submit"]').click();
+  await expect(page.locator('#request-dialog')).toBeVisible();
+  await expect(page.locator('#request-message')).toContainText('Limite de 5 pedidos por hora');
+  const count = await page.evaluate(() => window.__pertoTest.requests.length);
+  expect(count).toBe(5);
+});
