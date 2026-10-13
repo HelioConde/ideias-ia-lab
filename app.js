@@ -211,12 +211,38 @@ async function loadUserData(){
     supabaseClient.from('perto_professionals').select('id,user_id,display_name,city,state,category,description,price_from_cents,rating,status,created_at,updated_at').eq('user_id',currentUser.id).maybeSingle(),
     supabaseClient.from('perto_requests').select('*').order('created_at',{ascending:false}).limit(100)
   ]);
-  loadingAccount=false;if(currentUser?.id!==owner)return;
+  if(currentUser?.id!==owner)return;
+  loadingAccount=false;
   if(profileResult.error)accountMessage.textContent=T('loadProfileFailed');
-  currentProfile=profileResult.data||null;
+  else currentProfile=profileResult.data||null;
   if(requestsResult.error)accountMessage.textContent=T('loadRequestsFailed');
-  userRequests=requestsResult.data||[];
+  else userRequests=requestsResult.data||[];
   updateAccountUi();renderProfile();renderRequestList();
+}
+
+async function refreshRequestInbox(){
+  const owner=currentUser?.id;
+  if(!owner||loadingAccount)return;
+  const button=document.querySelector('#request-refresh');
+  button.disabled=true;
+  button.textContent=T('refreshingRequests');
+  try{
+    const {data,error}=await supabaseClient.from('perto_requests')
+      .select('*').order('created_at',{ascending:false}).limit(100);
+    if(currentUser?.id!==owner)return;
+    if(error)throw error;
+    userRequests=data||[];
+    renderRequestList();
+    showToast(T('requestsRefreshed'));
+  }catch(error){
+    if(currentUser?.id===owner){
+      console.error(error);
+      showToast(T('requestsRefreshFailed'));
+    }
+  }finally{
+    button.disabled=false;
+    button.textContent=T('refreshRequests');
+  }
 }
 
 function authErrorText(error){
@@ -233,6 +259,19 @@ function updateAccountUi(){
   accountForm.hidden=Boolean(currentUser)||!supabaseClient;accountProfile.hidden=!currentUser;
   if(currentUser)document.querySelector('#account-email').textContent=currentUser.email||T('accountConnected');
 }
+
+document.querySelector('#request-refresh').addEventListener('click',refreshRequestInbox);
+document.querySelector('#request-filters').addEventListener('click',event=>{
+  const button=event.target.closest('[data-request-filter]');
+  if(!button||!currentUser)return;
+  requestFilter=button.dataset.requestFilter;
+  document.querySelectorAll('[data-request-filter]').forEach(filter=>{
+    const active=filter.dataset.requestFilter===requestFilter;
+    filter.classList.toggle('active',active);
+    filter.setAttribute('aria-pressed',String(active));
+  });
+  renderRequestList();
+});
 
 document.querySelector('#search-button').addEventListener('click',searchProfessionals);
 [cityInput,stateSelect,categorySelect,termInput].forEach(el=>el.addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();searchProfessionals();}}));
