@@ -31,6 +31,7 @@ let userRequests=[];
 let searchResults=[];
 let pendingRequestProfessionalId='';
 let loadingAccount=false;
+let requestFilter='all';
 
 function escapeHtml(value=''){return String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function money(cents){return cents==null?T('consult'):(Number(cents)/100).toLocaleString(locale(),{style:'currency',currency:'BRL'});}
@@ -120,11 +121,15 @@ async function sendRequest(){
 
 function renderRequestList(){
   document.querySelector('#request-count').textContent=String(userRequests.length);
+  document.querySelector('#request-refresh').hidden=!currentUser;
+  document.querySelector('#request-filters').hidden=!currentUser;
+  const filteredRequests=userRequests.filter(request=>
+    requestFilter==='all'||(requestFilter==='sent')===(request.user_id===currentUser?.id));
   if(!currentUser){
     requestList.innerHTML='<div class="empty-box compact"><strong>'+escapeHtml(T('noLoginRequests'))+'</strong><span>'+escapeHtml(T('privateRequests'))+'</span></div>';
     return;
   }
-  requestList.innerHTML=userRequests.length?userRequests.map(request=>{
+  requestList.innerHTML=filteredRequests.length?filteredRequests.map(request=>{
     const outgoing=request.user_id===currentUser.id;
     return '<article class="request-item">'+
       '<div><strong>'+escapeHtml(request.category)+'</strong><span>'+escapeHtml(request.city)+' · '+new Date(request.created_at).toLocaleDateString(locale())+'</span></div>'+
@@ -136,7 +141,7 @@ function renderRequestList(){
         ?'<button class="button ghost request-progress" type="button" data-request-progress="'+escapeHtml(request.id)+'" data-next-status="'+(request.status==='new'?'viewed':request.status==='viewed'?'contacted':'closed')+'">'+escapeHtml(T(request.status==='new'?'markViewed':request.status==='viewed'?'markContacted':'closeRequest'))+'</button>'
         :'')+
     '</article>';
-  }).join(''):'<div class="empty-box compact"><strong>'+escapeHtml(T('noRequests'))+'</strong><span>'+escapeHtml(T('noRequestsHelp'))+'</span></div>';
+  }).join(''):'<div class="empty-box compact"><strong>'+escapeHtml(T(requestFilter==='all'?'noRequests':'noRequestsFilter'))+'</strong><span>'+escapeHtml(T('noRequestsHelp'))+'</span></div>';
 }
 
 function renderProfile(){
