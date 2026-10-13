@@ -118,36 +118,36 @@ async function sendRequest(){
 function renderRequestList(){
   document.querySelector('#request-count').textContent=String(userRequests.length);
   if(!currentUser){
-    requestList.innerHTML='<div class="empty-box compact"><strong>Entre para acompanhar pedidos.</strong><span>Os pedidos são privados.</span></div>';
+    requestList.innerHTML='<div class="empty-box compact"><strong>'+escapeHtml(T('noLoginRequests'))+'</strong><span>'+escapeHtml(T('privateRequests'))+'</span></div>';
     return;
   }
   requestList.innerHTML=userRequests.length?userRequests.map(request=>{
     const outgoing=request.user_id===currentUser.id;
     return '<article class="request-item">'+
-      '<div><strong>'+escapeHtml(request.category)+'</strong><span>'+escapeHtml(request.city)+' · '+new Date(request.created_at).toLocaleDateString('pt-BR')+'</span></div>'+
+      '<div><strong>'+escapeHtml(request.category)+'</strong><span>'+escapeHtml(request.city)+' · '+new Date(request.created_at).toLocaleDateString(locale())+'</span></div>'+
       '<p>'+escapeHtml(request.message)+'</p>'+
-      (outgoing?'':'<div class="private-contact"><span>Contato informado pelo cliente</span><strong>'+escapeHtml(request.contact||'Não informado')+'</strong></div>')+
-      '<span class="request-status">'+escapeHtml(outgoing?'Enviado · '+requestStatusLabel(request.status):'Recebido · '+requestStatusLabel(request.status))+'</span>'+
-      (outgoing&&request.status!=='cancelled'&&request.status!=='closed'?'<button class="button text danger-text" data-cancel-request="'+escapeHtml(request.id)+'" type="button">Cancelar pedido</button>':'')+
+      (outgoing?'':'<div class="private-contact"><span>'+escapeHtml(T('contactProvided'))+'</span><strong>'+escapeHtml(request.contact||T('notProvided'))+'</strong></div>')+
+      '<span class="request-status">'+escapeHtml(outgoing?T('sent')+' · '+requestStatusLabel(request.status):T('received')+' · '+requestStatusLabel(request.status))+'</span>'+
+      (outgoing&&request.status!=='cancelled'&&request.status!=='closed'?'<button class="button text danger-text" data-cancel-request="'+escapeHtml(request.id)+'" type="button">'+escapeHtml(T('cancelQuote'))+'</button>':'')+
     '</article>';
-  }).join(''):'<div class="empty-box compact"><strong>Nenhum pedido ainda.</strong><span>Escolha um profissional ativo na busca para começar.</span></div>';
+  }).join(''):'<div class="empty-box compact"><strong>'+escapeHtml(T('noRequests'))+'</strong><span>'+escapeHtml(T('noRequestsHelp'))+'</span></div>';
 }
 
 function renderProfile(){
   if(!currentUser){
-    profileBox.innerHTML='<div class="empty-box compact"><strong>Quer oferecer um serviço?</strong><span>Entre para cadastrar seu perfil profissional.</span><button class="button ghost" type="button" data-open-account>Entrar</button></div>';
+    profileBox.innerHTML='<div class="empty-box compact"><strong>'+escapeHtml(T('offerService'))+'</strong><span>'+escapeHtml(T('loginForProfile'))+'</span><button class="button ghost" type="button" data-open-account>'+escapeHtml(T('signIn'))+'</button></div>';
     return;
   }
   if(!currentProfile){
-    profileBox.innerHTML='<div class="empty-box compact"><strong>Você ainda não tem perfil profissional.</strong><span>O cadastro entra em análise antes de aparecer publicamente.</span><button class="button primary" type="button" data-create-profile>Cadastrar serviço</button></div>';
+    profileBox.innerHTML='<div class="empty-box compact"><strong>'+escapeHtml(T('noProfile'))+'</strong><span>'+escapeHtml(T('profilePendingHelp'))+'</span><button class="button primary" type="button" data-create-profile>'+escapeHtml(T('createProfile'))+'</button></div>';
     return;
   }
   profileBox.innerHTML='<article class="my-profile">'+
     '<div class="profile-head"><div><strong>'+escapeHtml(currentProfile.display_name)+'</strong><span>'+escapeHtml(currentProfile.category)+' · '+escapeHtml(currentProfile.city)+'/'+escapeHtml(currentProfile.state)+'</span></div><span class="profile-status '+escapeHtml(currentProfile.status)+'">'+escapeHtml(statusLabel(currentProfile.status))+'</span></div>'+
     '<p>'+escapeHtml(currentProfile.description||'')+'</p>'+
-    '<div class="profile-price">Preço inicial: <strong>'+escapeHtml(money(currentProfile.price_from_cents))+'</strong></div>'+
-    '<button class="button ghost full" type="button" data-edit-profile>Editar informações</button>'+
-    (currentProfile.status==='pending'?'<small class="moderation-note">Seu perfil ainda não aparece na busca pública. A ativação exige moderação.</small>':'')+
+    '<div class="profile-price">'+escapeHtml(T('profileCost'))+' <strong>'+escapeHtml(money(currentProfile.price_from_cents))+'</strong></div>'+
+    '<button class="button ghost full" type="button" data-edit-profile>'+escapeHtml(T('editProfile'))+'</button>'+
+    (currentProfile.status==='pending'?'<small class="moderation-note">'+escapeHtml(T('awaitingModeration'))+'</small>':'')+
   '</article>';
 }
 
@@ -161,9 +161,9 @@ function openProfileEditor(){
     profileForm.elements.category.value=currentProfile.category||'';
     profileForm.elements.description.value=currentProfile.description||'';
     profileForm.elements.priceFrom.value=currentProfile.price_from_cents==null?'':(Number(currentProfile.price_from_cents)/100).toFixed(2);
-    document.querySelector('#profile-title').textContent='Editar perfil';
+    document.querySelector('#profile-title').textContent=T('editProfile');
   }else{
-    document.querySelector('#profile-title').textContent='Cadastrar serviço';
+    document.querySelector('#profile-title').textContent=T('createProfile');
   }
   profileMessage.textContent='';
   profileDialog.showModal();
