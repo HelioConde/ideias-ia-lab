@@ -35,6 +35,20 @@ async function installMock(page, { user = null, profiles = [activeProfile, pendi
         run() {
           if (opts.mode === 'insert') {
             state.inserted.push({ table, payload: opts.payload });
+            if (table === 'perto_requests') {
+              const target = state.profiles.find(p => p.id === opts.payload.professional_id);
+              if (!target || target.status !== 'active') {
+                return { data: null, error: { message: 'perto_professional_not_active' } };
+              }
+              if (target.user_id === state.user?.id) {
+                return { data: null, error: { message: 'perto_self_request_forbidden' } };
+              }
+              const recent=state.requests.filter(p => p.user_id === state.user?.id &&
+                Date.now() - new Date(p.created_at).getTime() < 3600000);
+              if (recent.length >= 5) {
+                return { data: null, error: { message: 'perto_request_hourly_limit' } };
+              }
+            }
             if (table === 'perto_professionals' && ['status', 'rating'].some(k => Object.hasOwn(opts.payload, k))) {
               return { data: null, error: { message: 'Profile moderation fields are not writable by the client' } };
             }
