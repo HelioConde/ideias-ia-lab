@@ -128,7 +128,10 @@ function renderRequestList(){
       '<p>'+escapeHtml(request.message)+'</p>'+
       (outgoing?'':'<div class="private-contact"><span>'+escapeHtml(T('contactProvided'))+'</span><strong>'+escapeHtml(request.contact||T('notProvided'))+'</strong></div>')+
       '<span class="request-status">'+escapeHtml(outgoing?T('sent')+' · '+requestStatusLabel(request.status):T('received')+' · '+requestStatusLabel(request.status))+'</span>'+
-      (outgoing&&request.status!=='cancelled'&&request.status!=='closed'?'<button class="button text danger-text" data-cancel-request="'+escapeHtml(request.id)+'" type="button">'+escapeHtml(T('cancelQuote'))+'</button>':'')+
+      (outgoing&&['new','viewed','contacted'].includes(request.status)?'<button class="button text danger-text" data-cancel-request="'+escapeHtml(request.id)+'" type="button">'+escapeHtml(T('cancelQuote'))+'</button>':'')+
+      (!outgoing&&currentProfile?.id===request.professional_id&&['new','viewed','contacted'].includes(request.status)
+        ?'<button class="button ghost request-progress" type="button" data-request-progress="'+escapeHtml(request.id)+'" data-next-status="'+(request.status==='new'?'viewed':request.status==='viewed'?'contacted':'closed')+'">'+escapeHtml(T(request.status==='new'?'markViewed':request.status==='viewed'?'markContacted':'closeRequest'))+'</button>'
+        :'')+
     '</article>';
   }).join(''):'<div class="empty-box compact"><strong>'+escapeHtml(T('noRequests'))+'</strong><span>'+escapeHtml(T('noRequestsHelp'))+'</span></div>';
 }
@@ -238,6 +241,29 @@ requestForm.addEventListener('submit',async event=>{
 });
 
 requestList.addEventListener('click',async event=>{
+  const progress=event.target.closest('[data-request-progress]');
+  if(progress){
+    if(!currentUser||!currentProfile)return;
+    const id=progress.dataset.requestProgress;
+    const next=progress.dataset.nextStatus;
+    const request=userRequests.find(item=>item.id===id);
+    if(!request||request.user_id===currentUser.id||request.professional_id!==currentProfile.id)return;
+    const permitted={new:'viewed',viewed:'contacted',contacted:'closed'};
+    if(permitted[request.status]!==next)return;
+    progress.disabled=true;
+    try{
+      const {data,error}=await supabaseClient.rpc('perto_set_request_status',{p_request_id:id,p_new_status:next});
+      if(error)throw error;
+      userRequests=userRequests.map(item=>item.id===id?{...item,status:data}:item);
+      renderRequestList();
+      showToast(T('requestProgressSaved'));
+    }catch(error){
+      console.error(error);
+      progress.disabled=false;
+      showToast(T('requestProgressFailed'));
+    }
+    return;
+  }
   const cancel=event.target.closest('[data-cancel-request]');if(!cancel)return;
   if(!window.confirm(T('confirmCancel')))return;
   cancel.disabled=true;
