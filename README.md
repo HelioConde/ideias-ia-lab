@@ -1,4 +1,19 @@
-# Ideias IA Lab
+# Ideias IA Lab — Laboratório de produtos digitais
+
+**Hub de organização para ideias, experimentos e produtos independentes — cada aplicação tem seu próprio repositório.**
+
+## Como usar este hub
+
+- **Descobrir os projetos:** consulte a relação e a ordem de desenvolvimento abaixo.
+- **Entender decisões:** leia as regras comuns de idioma, monetização, design e publicação.
+- **Acompanhar pendências:** veja os marcos, documentos de execução e validações externas.
+- **Encontrar código:** abra o repositório do produto correspondente; este hub não concentra os seus frontends ou backends.
+
+> Este repositório é de planejamento e documentação, não um aplicativo para instalar.
+
+[**Perfil de projetos**](https://github.com/HelioConde?tab=repositories)
+
+---
 
 **[Rodada de fechamento das 10 ideias originais — 12/10/2026](./RODADA_10_IDEIAS_20261012.md)** — ordem, correções aplicadas e gates externos ainda abertos.
 
