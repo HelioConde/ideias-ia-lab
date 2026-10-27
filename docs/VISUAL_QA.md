@@ -17,3 +17,12 @@ O Pages não executa PHP, MySQL ou autenticação de produção. Site estático 
 Um deploy verde não garante fidelidade visual. Para avaliar o redesenho Image to Code, compare as capturas geradas com referências aprovadas por projeto. Este teste não mede Lighthouse, acessibilidade WCAG completa nem compatibilidade de integração com APIs externas.
 
 **Bloqueio de configuração:** para repositórios ainda sem Pages habilitado, é necessário abrir **Settings > Pages > Source: GitHub Actions** com acesso de administrador. Não adicione URLs inexistentes à lista de publicação ativa.
+
+
+## Recursos críticos e severidade
+
+Além de screenshot, inventário de componentes e acessibilidade, o monitor considera **erro** quando JavaScript ou CSS do diretório daquele projeto retornam HTTP 4xx/5xx ou falham na rede. Isso detecta publicações com caminhos de assets inválidos (por exemplo, compilação Vite usando `/src/main.jsx` em vez de `/nome-repo/assets/...`).
+
+Imagens, fontes e favicons quebrados continuam registrados como **avisos** para triagem visual. Uma requisição abortada por troca de página não é automaticamente interpretada como erro. Somente recursos dentro do caminho do repositório hospedado são considerados — falhas de APIs externas não devem ser confundidas com bugs do servidor GitHub Pages.
+
+**Execução em lote:** o arquivo `scripts/pages-targets.json` controla os sites conhecidos, e o GitHub Actions produz screenshots, `report.md`, `ui-inventory.md` e `diagnostics.json`. Adicione apenas URLs cuja publicação já esteja verificada. Conserte recursos quebrados no repositório de origem e rode o workflow novamente.
