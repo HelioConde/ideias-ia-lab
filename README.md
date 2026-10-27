@@ -81,6 +81,6 @@ Mantido por [Hélio Conde](https://github.com/HelioConde).
 
 O hub foi redesenhado com um Design System documentado em [`docs/DESIGN_SYSTEM.md`](docs/DESIGN_SYSTEM.md), mantendo sua identidade verde e layout sem banco de dados.
 
-A [auditoria visual multiprojeto](docs/VISUAL_QA.md) acompanha **9 sites estáticos** em **3 resoluções**, totalizando **27 cenários Playwright** por execução. Os relatórios de erros JavaScript, HTTP, overflow e capturas de tela ficam nos artefatos do GitHub Actions.
+A [auditoria visual multiprojeto](docs/VISUAL_QA.md) acompanha **18 sites estáticos** em **3 resoluções**, totalizando **54 cenários Playwright** por execução. Os relatórios de erros JavaScript, HTTP, overflow e capturas de tela ficam nos artefatos do GitHub Actions.
 
 A publicação estática não oferece login real, compartilhamento de dados entre usuários ou execução de PHP. Cada projeto conserva seu repositório próprio para funcionalidades de produção.
