@@ -105,7 +105,11 @@ try {
             },
           };
         });
-        if (item.metrics.horizontalOverflow) errors.push('Overflow horizontal detectado');
+        if (item.metrics.horizontalOverflow && !site.horizontalScrollExpected) {
+          errors.push('Overflow horizontal detectado');
+        } else if (item.metrics.horizontalOverflow) {
+          warnings.push('Rolagem horizontal intencional: mundo de jogo com camera lateral');
+        }
         if (!item.metrics.hasHeading) warnings.push('Nenhum H1 encontrado');
         if (!item.metrics.hasMain) warnings.push('Nenhuma região main encontrada');
         if (item.metrics.unnamedControls) warnings.push(item.metrics.unnamedControls + ' controles sem nome acessível');
