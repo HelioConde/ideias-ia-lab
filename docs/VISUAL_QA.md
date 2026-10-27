@@ -17,3 +17,14 @@ O Pages não executa PHP, MySQL ou autenticação de produção. Site estático 
 Um deploy verde não garante fidelidade visual. Para avaliar o redesenho Image to Code, compare as capturas geradas com referências aprovadas por projeto. Este teste não mede Lighthouse, acessibilidade WCAG completa nem compatibilidade de integração com APIs externas.
 
 **Bloqueio de configuração:** para repositórios ainda sem Pages habilitado, é necessário abrir **Settings > Pages > Source: GitHub Actions** com acesso de administrador. Não adicione URLs inexistentes à lista de publicação ativa.
+
+
+## Rodada ampliada — 23 sites / 69 capturas
+
+Foram adicionados ao catálogo Office-Ordem, CheckLoss, League Friends, Chat Arena e Super Mario. Os sites entram em auditoria somente após haver evidência de workflows de publicação aprovados. O status HTTP real e a responsividade ainda são checados em cada execução.
+
+### Exceção documentada de rolagem horizontal
+
+O Super Mario clássico utiliza um mundo de aproximadamente **12.680 px** e move a câmera com `window.scrollTo({left: camera})` durante a partida. Portanto, `horizontalScrollExpected: true` no cadastro desse **único** site converte o overflow horizontal esperado em aviso, não em erro. **Não aplique `overflow-x:hidden` como correção genérica no jogo:** isso impediria o movimento da câmera e afetaria a jogabilidade.
+
+Nos demais sites, overflow horizontal continua sendo falha do QA. Para jogos, telas com rolagem ou editores de canvas, exceções devem ser motivadas por implementação verificável, nunca criadas apenas para deixar o workflow verde.
