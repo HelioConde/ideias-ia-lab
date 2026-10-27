@@ -21,13 +21,26 @@ try {
       page.on('console', message => {
         if (message.type() === 'error') warnings.push('Console: ' + message.text().slice(0, 280));
       });
-      page.on('response', response => {
-        if (response.status() < 400) return;
+      const belongsToSite = url => {
         try {
-          const source = new URL(response.url());
-          const target = new URL(page.url() || site.url);
-          if (source.origin === target.origin) warnings.push('HTTP ' + response.status() + ': ' + source.pathname);
-        } catch {}
+          const resource = new URL(url);
+          const target = new URL(site.url);
+          return resource.origin === target.origin && resource.pathname.startsWith(target.pathname);
+        } catch { return false; }
+      };
+      const isCriticalAsset = url => /\.(?:js|mjs|css)(?:[?#]|$)/i.test(url);
+      page.on('response', response => {
+        if (response.status() < 400 || !belongsToSite(response.url())) return;
+        const message = 'HTTP ' + response.status() + ': ' + new URL(response.url()).pathname;
+        (isCriticalAsset(response.url()) ? errors : warnings).push(message);
+      });
+      page.on('requestfailed', request => {
+        if (!belongsToSite(request.url())) return;
+        // Abortions caused by navigation are not missing assets.
+        if (request.failure()?.errorText === 'net::ERR_ABORTED') return;
+        const message = 'Falha de recurso: ' + new URL(request.url()).pathname +
+          ' — ' + (request.failure()?.errorText || 'desconhecida');
+        (isCriticalAsset(request.url()) ? errors : warnings).push(message);
       });
       const item = { site: site.id, url: site.url, viewport, ok: false, errors, warnings, screenshot: null };
       try {
