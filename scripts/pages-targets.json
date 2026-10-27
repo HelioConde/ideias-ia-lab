@@ -1,0 +1,50 @@
+{
+  "viewports": [
+    {
+      "width": 390,
+      "height": 844
+    },
+    {
+      "width": 768,
+      "height": 1024
+    },
+    {
+      "width": 1440,
+      "height": 900
+    }
+  ],
+  "sites": [
+    {
+      "id": "portfolio2.0",
+      "url": "https://helioconde.github.io/portfolio2.0/"
+    },
+    {
+      "id": "Projeto_CRUD",
+      "url": "https://helioconde.github.io/Projeto_CRUD/"
+    },
+    {
+      "id": "SalesSite",
+      "url": "https://helioconde.github.io/SalesSite/"
+    },
+    {
+      "id": "e-consignado",
+      "url": "https://helioconde.github.io/e-consignado/"
+    },
+    {
+      "id": "Rebbity",
+      "url": "https://helioconde.github.io/Rebbity/"
+    },
+    {
+      "id": "Image_Gallery",
+      "url": "https://helioconde.github.io/Image_Gallery/"
+    },
+    {
+      "id": "one-piece-fan-page",
+      "url": "https://helioconde.github.io/one-piece-fan-page/"
+    },
+    {
+      "id": "Game-clicker-in-Jquery",
+      "url": "https://helioconde.github.io/Game-clicker-in-Jquery/"
+    }
+  ]
+}
