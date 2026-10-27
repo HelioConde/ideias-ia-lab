@@ -26,3 +26,12 @@ Além de screenshot, inventário de componentes e acessibilidade, o monitor cons
 Imagens, fontes e favicons quebrados continuam registrados como **avisos** para triagem visual. Uma requisição abortada por troca de página não é automaticamente interpretada como erro. Somente recursos dentro do caminho do repositório hospedado são considerados — falhas de APIs externas não devem ser confundidas com bugs do servidor GitHub Pages.
 
 **Execução em lote:** o arquivo `scripts/pages-targets.json` controla os sites conhecidos, e o GitHub Actions produz screenshots, `report.md`, `ui-inventory.md` e `diagnostics.json`. Adicione apenas URLs cuja publicação já esteja verificada. Conserte recursos quebrados no repositório de origem e rode o workflow novamente.
+
+
+## Ampliação de cobertura — 23 sites e 69 cenários
+
+A lista de auditoria inclui agora Office-Ordem, checkLoss, League Friends, Chat Arena e Super Mario. Cada endereço passa por 390×844, 768×1024 e 1440×900. O monitor registra HTTP real, JavaScript, carregamento de CSS/JS, screenshots, tokens de design, controles acessíveis e overflow.
+
+**Exceção importante:** o Super Mario clássico usa um mundo horizontal de aproximadamente 12.680 px e `window.scrollTo({left: camera})` durante a partida. O cadastro `horizontalScrollExpected:true` converte **somente nesse site** o overflow horizontal em aviso, preservando a câmera e o gameplay. Outros sites permanecem sujeitos à falha normal por overflow. Não use esse marcador apenas para esconder layout quebrado.
+
+A publicação no GitHub Pages continua independente dos dados: o workflow central **lê páginas públicas**, não modifica repositórios nem depende de banco de dados.
