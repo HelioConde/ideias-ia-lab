@@ -104,7 +104,8 @@
     },
     {
       "id": "Super-Mario-in-JavaScript-html",
-      "url": "https://helioconde.github.io/Super-Mario-in-JavaScript-html/"
+      "url": "https://helioconde.github.io/Super-Mario-in-JavaScript-html/",
+      "horizontalScrollExpected": true
     }
   ]
 }
